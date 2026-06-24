@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal</title>
+  <link rel="stylesheet" href="/assets/merit-surface.css">
+  <link rel="stylesheet" href="https://pkg-meritutils.vercel.app/journal/0.2.2/journal.css" integrity="sha384-5yxx9KbJ9X6gcIyv2XdjIbc5GyCn5N0KRHwmWIIWG9mI3Z7+iwu6IwJGqd+Pxdj2" crossorigin="anonymous">
+</head>
+<body>
+  <header id="merit-header"></header>
+  <main>
+    <h1>Journal</h1>
+    <p id="tier-hint"></p>
+    <textarea id="entry" placeholder="Write an entry…"></textarea>
+    <p><button id="save">Save entry</button></p>
+    <ul id="list"></ul>
+    <div id="journal-par-mount"></div>
+  </main>
+  <footer id="merit-footer"></footer>
+  <script src="/config.js"></script>
+  <script src="/assets/merit-shell.js"></script>
+  <script type="module">
+    const cfg = window.MERIT_DEMO_CONFIG || {};
+    const hint = document.getElementById('tier-hint');
+    const cap = cfg.freemium?.journal_entries_per_day ?? 2;
+    hint.textContent = `Free tier: ${cap} entries per day. Plus uncaps via meritstore.`;
+
+    async function load() {
+      const res = await fetch('/api/journal');
+      const data = await res.json();
+      const list = document.getElementById('list');
+      list.innerHTML = '';
+      (data.entries || []).forEach((e) => {
+        const li = document.createElement('li');
+        li.textContent = e.body;
+        list.appendChild(li);
+      });
+      if (data.mode === 'local_only') {
+        const local = JSON.parse(localStorage.getItem('merit-demo-journal') || '[]');
+        local.forEach((t) => {
+          const li = document.createElement('li');
+          li.textContent = t + ' (local)';
+          list.appendChild(li);
+        });
+      }
+    }
+
+    document.getElementById('save').onclick = async () => {
+      const text = document.getElementById('entry').value.trim();
+      if (!text) return;
+      const res = await fetch('/api/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+      if (res.status === 402) {
+        alert('Daily limit reached. Upgrade to Plus.');
+        return;
+      }
+      if (res.status === 503) {
+        const local = JSON.parse(localStorage.getItem('merit-demo-journal') || '[]');
+        local.push(text);
+        localStorage.setItem('merit-demo-journal', JSON.stringify(local.slice(-cap)));
+        document.getElementById('entry').value = '';
+        load();
+        return;
+      }
+      if (!res.ok) { alert('Save failed'); return; }
+      document.getElementById('entry').value = '';
+      load();
+    };
+    load();
+  </script>
+  <script type="module" src="https://pkg-meritutils.vercel.app/journal/0.2.2/journal.mjs" integrity="sha384-uN5FVzY4tGN5Z4CtuSNyfe3pZKmC/3Fu5Ht9ArYIFFpPKHzJmOHTlUo9EbWSabwm" crossorigin="anonymous"></script>
+</body>
+</html>

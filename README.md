@@ -29,11 +29,19 @@ Edit `cfg/branding.json`, `cfg/flask_deploy.json` (your Vercel scope), and `cfg/
 | Route | PAR / service | here.now portal |
 |-------|---------------|-----------------|
 | `/play/` | merit_workbench@0.4.x | main hub |
-| `/journal/` | journal@0.2.x | portal/journal/ |
-| `/ama/` | AMA (journal primitives) | portal/ama/ |
+| `/journal/` | journal@0.2.x + `/api/journal` | portal/journal/ |
+| `/ama/` | AMA API + journal patterns | portal/ama/ |
+| `/api/meritsubs` | entitlements stub → wire production meritsubs | — |
 | Register | meritstore | portal/subs/ |
 
-`consumer_id`: **merit-demo** — `https://meritstore.vercel.app/merit-demo/register`
+## Build & deploy
+
+```powershell
+npm install && npm run verify && npm run build
+.\merit-live.ps1 deploy vercel --path .   # from merit-agent-skills; your Vercel scope
+```
+
+Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_demo.sql`.
 
 ## Freemium → Plus
 

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMA</title>
+  <link rel="stylesheet" href="/assets/merit-surface.css">
+</head>
+<body>
+  <header id="merit-header"></header>
+  <main>
+    <h1>Ask Me Anything</h1>
+    <p id="tier-hint"></p>
+    <textarea id="question" placeholder="Your question…"></textarea>
+    <p><button id="ask">Ask</button></p>
+    <h2>Leaderboard</h2>
+    <ol id="board"></ol>
+  </main>
+  <footer id="merit-footer"></footer>
+  <script src="/config.js"></script>
+  <script src="/assets/merit-shell.js"></script>
+  <script type="module">
+    const cfg = window.MERIT_DEMO_CONFIG || {};
+    const f = cfg.freemium || {};
+    document.getElementById('tier-hint').textContent =
+      `Free: ${f.ama_questions_per_day ?? 2} questions, ${f.ama_votes_per_day ?? 2} votes/day; top ${f.ama_leaderboard_visible ?? 25} shown.`;
+
+    async function loadBoard() {
+      const res = await fetch('/api/ama');
+      const data = await res.json();
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+      (data.questions || []).forEach((q) => {
+        const li = document.createElement('li');
+        const who = q.anonymous_leaderboard ? `Anon (${q.region_geo || q.region_profile || '—'})` : (q.handle || 'Anon');
+        li.innerHTML = `<strong>${who}</strong> — ${q.body} <button data-id="${q.id}">Vote</button> (${q.votes || 0})`;
+        board.appendChild(li);
+      });
+      board.querySelectorAll('button[data-id]').forEach((btn) => {
+        btn.onclick = async () => {
+          await fetch('/api/ama', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }) });
+          loadBoard();
+        };
+      });
+    }
+
+    document.getElementById('ask').onclick = async () => {
+      const text = document.getElementById('question').value.trim();
+      if (!text) return;
+      const res = await fetch('/api/ama', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+      if (res.status === 402) { alert('Daily AMA limit. Upgrade to Plus.'); return; }
+      if (res.status === 503) { alert('Configure Supabase for cloud AMA or use merit-demo deployed with env.'); return; }
+      if (!res.ok) { alert('Ask failed'); return; }
+      document.getElementById('question').value = '';
+      loadBoard();
+    };
+    loadBoard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diag</title>
+  <link rel="stylesheet" href="/assets/merit-surface.css">
+</head>
+<body>
+  <header id="merit-header"></header>
+  <main>
+    <h1>Deployment diagnostics</h1>
+    <pre id="manifest">Loading…</pre>
+  </main>
+  <footer id="merit-footer"></footer>
+  <script src="/config.js"></script>
+  <script src="/assets/merit-shell.js"></script>
+  <script>
+    fetch('/diag/manifest.json').then((r) => r.json()).then((j) => {
+      document.getElementById('manifest').textContent = JSON.stringify(j, null, 2);
+    }).catch(() => { document.getElementById('manifest').textContent = 'manifest unavailable'; });
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "schema": "meritstore.tenant.v1",
+  "consumer_id": "merit-demo",
+  "source_project": "merit-demo",
+  "registration_slug": "merit-demo",
+  "offerings_seed": [
+    {
+      "id": "free",
+      "name": "Free",
+      "price_usd": 0,
+      "interval": "month",
+      "entitlement_tier": "guest"
+    },
+    {
+      "id": "plus-monthly",
+      "name": "Plus",
+      "price_usd": 10.79,
+      "interval": "month",
+      "weekly_equivalent_usd": 2.49,
+      "entitlement_tier": "plus",
+      "covers": ["journal", "ama"]
+    },
+    {
+      "id": "plus-six-month",
+      "name": "Plus 6 months",
+      "discount_percent": 20,
+      "entitlement_tier": "plus"
+    },
+    {
+      "id": "plus-annual",
+      "name": "Plus Annual",
+      "discount_percent": 50,
+      "entitlement_tier": "plus"
+    }
+  ],
+  "revenue_split": {
+    "operator_share_percent": 90,
+    "processing_fee_percent": 4,
+    "processing_fee_fixed_usd": 0.5
+  },
+  "status": "pending_platform_provision",
+  "notes": "Operator provisions tenant on meritstore after integration cert. Flexible price points via operator-admin."
+}

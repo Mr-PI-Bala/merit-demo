@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/meritsubs/(.*)", "destination": "/api/meritsubs" },
+    { "source": "/api/ama", "destination": "/api/ama" },
+    { "source": "/api/journal", "destination": "/api/journal" },
+    { "source": "/legal/terms", "destination": "/api/meritsubs" },
+    { "source": "/play", "destination": "/play/index.html" },
+    { "source": "/play/", "destination": "/play/index.html" },
+    { "source": "/journal", "destination": "/journal/index.html" },
+    { "source": "/journal/", "destination": "/journal/index.html" },
+    { "source": "/ama", "destination": "/ama/index.html" },
+    { "source": "/ama/", "destination": "/ama/index.html" },
+    { "source": "/portal", "destination": "/portal/index.html" },
+    { "source": "/portal/", "destination": "/portal/index.html" },
+    { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/admin/", "destination": "/admin/index.html" },
+    { "source": "/diag", "destination": "/diag/index.html" },
+    { "source": "/diag/", "destination": "/diag/index.html" },
+    { "source": "/legal.html", "destination": "/legal.html" }
+  ]
+}
