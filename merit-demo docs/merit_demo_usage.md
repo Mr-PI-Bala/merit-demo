@@ -55,7 +55,8 @@ Register: `https://meritstore.vercel.app/merit-demo/register`
 
 ## Smokes
 
-- `GET /diag/manifest.json` — consumer, version, supabase flag
+- `npm run verify` — scaffold files
+- `npm run e2e` — PAR CDN HEAD (set `MERIT_DEMO_BASE_URL` for live host)
 - `GET /api/meritsubs` — health
 - `GET /api/meritsubs/api/v1/entitlements` — guest tier
 - `/journal/` — save entry (local or Supabase)

@@ -1,12 +1,13 @@
 {
   "name": "merit-demo",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "MERIT freemium showcase consumer — workbench, journal, AMA, meritsubs",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "verify": "node scripts/build.mjs && node scripts/verify.mjs"
+    "verify": "node scripts/build.mjs && node scripts/verify.mjs",
+    "e2e": "node scripts/build.mjs && node scripts/e2e-smoke.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.0"
