@@ -78,6 +78,9 @@ for (const slug of ['play', 'journal', 'ama', 'admin', 'diag']) {
 if (fs.existsSync(path.join(root, 'portal', 'legal.html'))) {
   copyFile(path.join(root, 'portal', 'legal.html'), path.join(dist, 'legal.html'));
 }
+if (fs.existsSync(path.join(root, 'portal', 'terms.html'))) {
+  copyFile(path.join(root, 'portal', 'terms.html'), path.join(dist, 'legal', 'terms.html'));
+}
 
 const pins = readJson('cfg/par_pins.json');
 const diag = {

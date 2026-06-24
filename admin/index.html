@@ -5,17 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
+  <style>
+    label { display: block; margin: 0.5rem 0; }
+    input[type="number"] { width: 6rem; }
+    .status { font-size: 0.9rem; color: #444; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 0.4rem; text-align: left; }
+  </style>
 </head>
 <body>
   <header id="merit-header"></header>
   <main>
     <h1>Operator admin</h1>
     <p>MeritAdminGate phrase: <code>adjective-noun-####</code> (see <code>cfg/operator_gate_wordlists.json</code>).</p>
-    <p>Production hashes via vault <code>merit.ps1 admin operator-gate hash</code> — never commit phrases.</p>
-    <p>Flexible Plus pricing: edit <code>cfg/plus_sku.json</code> and meritstore offerings seed.</p>
+    <p class="status" id="tenant-status"></p>
+
+    <h2>Plus pricing (flexible)</h2>
+    <form id="pricing-form">
+      <label>Monthly USD <input type="number" step="0.01" id="monthly" required /></label>
+      <label>Weekly equivalent USD <input type="number" step="0.01" id="weekly" /></label>
+      <label>6-month discount % <input type="number" id="disc6" value="20" /></label>
+      <label>Annual discount % <input type="number" id="disc12" value="50" /></label>
+      <p><button type="submit">Save pricing</button> <span id="save-msg"></span></p>
+    </form>
+
+    <h3>Approved price points</h3>
+    <table>
+      <thead><tr><th>Label</th><th>Monthly USD</th><th></th></tr></thead>
+      <tbody id="price-points"></tbody>
+    </table>
+    <p>
+      <input id="pp-label" placeholder="Label" />
+      <input id="pp-usd" type="number" step="0.01" placeholder="USD" />
+      <button type="button" id="add-pp">Add point</button>
+    </p>
+
+    <p class="status">After save: sync <code>cfg/meritstore_tenant.json</code> offerings to meritstore via vault integration cert.</p>
   </main>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
+  <script type="module">
+    let approved = [];
+
+    async function loadPricing() {
+      const res = await fetch('/api/admin/pricing');
+      const data = await res.json();
+      document.getElementById('tenant-status').textContent =
+        `meritstore tenant: ${data.meritstore_tenant?.status || 'unknown'} · consumer ${data.consumer_id}`;
+      const d = data.override?.config?.default || data.plus_sku?.default || {};
+      document.getElementById('monthly').value = d.monthly_billed_usd ?? 10.79;
+      document.getElementById('weekly').value = d.weekly_rate_usd ?? 2.49;
+      approved = data.override?.config?.approved_price_points || [];
+      renderPoints();
+    }
+
+    function renderPoints() {
+      const tb = document.getElementById('price-points');
+      tb.innerHTML = '';
+      approved.forEach((p, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${p.label}</td><td>${p.monthly_usd}</td><td><button data-i="${i}">Remove</button></td>`;
+        tr.querySelector('button').onclick = () => { approved.splice(i, 1); renderPoints(); };
+        tb.appendChild(tr);
+      });
+    }
+
+    document.getElementById('add-pp').onclick = () => {
+      const label = document.getElementById('pp-label').value.trim();
+      const monthly_usd = parseFloat(document.getElementById('pp-usd').value);
+      if (!label || !monthly_usd) return;
+      approved.push({ label, monthly_usd });
+      document.getElementById('pp-label').value = '';
+      document.getElementById('pp-usd').value = '';
+      renderPoints();
+    };
+
+    document.getElementById('pricing-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const payload = {
+        default: {
+          monthly_billed_usd: parseFloat(document.getElementById('monthly').value),
+          weekly_rate_usd: parseFloat(document.getElementById('weekly').value),
+          billing_options: [
+            { id: 'monthly', discount_percent: 0 },
+            { id: 'six_month', discount_percent: parseInt(document.getElementById('disc6').value, 10) },
+            { id: 'annual', discount_percent: parseInt(document.getElementById('disc12').value, 10) },
+          ],
+        },
+        approved_price_points: approved,
+      };
+      const res = await fetch('/api/admin/pricing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const msg = document.getElementById('save-msg');
+      if (res.ok) { msg.textContent = 'Saved to Supabase operator_pricing.'; return; }
+      const err = await res.json().catch(() => ({}));
+      msg.textContent = err.hint || err.error || 'Save failed — configure Supabase or edit cfg locally.';
+    };
+
+    loadPricing();
+  </script>
 </body>
 </html>

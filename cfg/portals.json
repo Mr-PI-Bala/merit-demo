@@ -1,9 +1,10 @@
 {
   "schema": "merit.portals.v1",
   "surfaces": [
-    { "id": "main", "path": "portal/", "slug": "{{MAIN_SLUG}}" },
-    { "id": "journal", "path": "portal/journal/", "slug": "{{JOURNAL_SLUG}}" },
-    { "id": "ama", "path": "portal/ama/", "slug": "{{AMA_SLUG}}" },
-    { "id": "subs", "path": "portal/subs/", "slug": "{{SUBS_SLUG}}" }
-  ]
+    { "id": "main", "path": "portal/", "slug": "merit-demo" },
+    { "id": "journal", "path": "portal/journal/", "slug": "merit-demo-journal" },
+    { "id": "ama", "path": "portal/ama/", "slug": "merit-demo-ama" },
+    { "id": "subs", "path": "portal/subs/", "slug": "merit-demo-subs" }
+  ],
+  "notes": "Operators may rename slugs before merit-live portal publish --all (BYOK HERENOW_API_KEY)."
 }

@@ -10,9 +10,10 @@
 | `/`, `/portal/` | Marketing (here.now publishes `portal/` only) |
 | `/play/` | merit_workbench PAR `@0.4.x` |
 | `/journal/` | journal PAR + API |
-| `/ama/` | AMA Q&A + leaderboard |
-| `/api/meritsubs/` | Entitlements stub (wire vendor/meritsubs for production OAuth) |
-| `/admin/` | MeritAdminGate operator docs |
+| `/ama/` | AMA Q&A + leaderboard (geo-IP, privacy modes, daily caps) |
+| `/api/meritsubs/` | meritsubs embed (`vendor/meritsubs` + Python handler) |
+| `/api/admin/pricing` | Operator flexible Plus pricing (Supabase `operator_pricing`) |
+| `/admin/` | MeritAdminGate + pricing UI |
 | `/diag/` | Deploy manifest |
 
 ## White-label
@@ -27,4 +28,4 @@ Plus: **$10.79/mo** — `cfg/plus_sku.json` + `cfg/meritstore_tenant.json` offer
 
 ## Data
 
-Optional Supabase (`sql/001_merit_demo.sql`). Without Supabase, journal uses local-only fallback in browser.
+Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, meritsubs migration on same project. See `OPERATOR_PROVISION.md`.

@@ -1,0 +1,8 @@
+{
+  "schema": "meritsubs.consumer.v1",
+  "consumer_id": "merit-demo",
+  "mount_prefix": "/api/meritsubs",
+  "public_base_url": "https://YOUR_DEPLOY.vercel.app/api/meritsubs",
+  "embed_status": "embedded",
+  "notes": "Set embed_status to embedded after scripts/embed-meritsubs.ps1; run meritsubs Supabase migration on consumer project."
+}

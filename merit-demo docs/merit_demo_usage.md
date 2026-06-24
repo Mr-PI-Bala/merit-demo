@@ -1,5 +1,8 @@
 # merit-demo — usage
 
+Full operator checklist: **[OPERATOR_PROVISION.md](OPERATOR_PROVISION.md)**.  
+Vault env compose + deploy phases: **merit-private-vault** → `docs/IAR/MERIT_DEMO_PROVISION_PLAN.md`.
+
 ## Build
 
 ```powershell
@@ -36,6 +39,14 @@ Run `sql/001_merit_demo.sql` in consumer Supabase project.
 .\merit-live.ps1 portal publish --path . --all
 ```
 
+## meritsubs embed
+
+```powershell
+.\scripts\embed-meritsubs.ps1
+```
+
+Production handler: `api/meritsubs/index.py` + `vendor/meritsubs/` (replaces Node stub).
+
 ## meritstore
 
 Provision tenant from `cfg/meritstore_tenant.json` after vault integration cert.
@@ -48,4 +59,5 @@ Register: `https://meritstore.vercel.app/merit-demo/register`
 - `GET /api/meritsubs` — health
 - `GET /api/meritsubs/api/v1/entitlements` — guest tier
 - `/journal/` — save entry (local or Supabase)
-- `/ama/` — ask + vote (Supabase)
+- `/ama/` — ask + vote with privacy modes (geo-IP on Vercel)
+- `/admin/` — flexible Plus pricing UI

@@ -4,10 +4,11 @@
   "outputDirectory": "dist",
   "framework": null,
   "rewrites": [
+    { "source": "/api/admin/pricing", "destination": "/api/admin/pricing" },
     { "source": "/api/meritsubs/(.*)", "destination": "/api/meritsubs" },
     { "source": "/api/ama", "destination": "/api/ama" },
     { "source": "/api/journal", "destination": "/api/journal" },
-    { "source": "/legal/terms", "destination": "/api/meritsubs" },
+    { "source": "/legal/terms", "destination": "/legal/terms.html" },
     { "source": "/play", "destination": "/play/index.html" },
     { "source": "/play/", "destination": "/play/index.html" },
     { "source": "/journal", "destination": "/journal/index.html" },
@@ -21,5 +22,9 @@
     { "source": "/diag", "destination": "/diag/index.html" },
     { "source": "/diag/", "destination": "/diag/index.html" },
     { "source": "/legal.html", "destination": "/legal.html" }
-  ]
+  ],
+  "env": {
+    "PYTHONPATH": "vendor/meritsubs",
+    "MERITSUBS_MOUNT_PREFIX": "/api/meritsubs"
+  }
 }

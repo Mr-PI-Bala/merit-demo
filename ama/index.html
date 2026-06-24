@@ -11,6 +11,15 @@
   <main>
     <h1>Ask Me Anything</h1>
     <p id="tier-hint"></p>
+    <p><a id="upgrade-link" href="#">Upgrade to Plus</a></p>
+    <fieldset>
+      <legend>Leaderboard identity</legend>
+      <label><input type="radio" name="privacy" value="anon-region" checked> Anonymous + region</label>
+      <label><input type="radio" name="privacy" value="handle"> Handle only</label>
+      <label><input type="radio" name="privacy" value="handle-region"> Handle + region</label>
+      <p><input id="handle" type="text" placeholder="Handle (optional)" /></p>
+      <label><input type="checkbox" id="fine-area" /> Show city when geo-IP available (opt-in)</label>
+    </fieldset>
     <textarea id="question" placeholder="Your question…"></textarea>
     <p><button id="ask">Ask</button></p>
     <h2>Leaderboard</h2>
@@ -22,8 +31,23 @@
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const f = cfg.freemium || {};
+    const reg = cfg.meritstoreRegisterUrl || 'https://meritstore.vercel.app/merit-demo/register';
+    document.getElementById('upgrade-link').href = reg;
     document.getElementById('tier-hint').textContent =
       `Free: ${f.ama_questions_per_day ?? 2} questions, ${f.ama_votes_per_day ?? 2} votes/day; top ${f.ama_leaderboard_visible ?? 25} shown.`;
+
+    function privacyPayload() {
+      const mode = document.querySelector('input[name="privacy"]:checked')?.value || 'anon-region';
+      const handle = document.getElementById('handle').value.trim();
+      const showFine = document.getElementById('fine-area').checked;
+      if (mode === 'handle') {
+        return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: false };
+      }
+      if (mode === 'handle-region') {
+        return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: showFine };
+      }
+      return { anonymous_leaderboard: true, show_fine_area: showFine, handle: null };
+    }
 
     async function loadBoard() {
       const res = await fetch('/api/ama');
@@ -32,13 +56,24 @@
       board.innerHTML = '';
       (data.questions || []).forEach((q) => {
         const li = document.createElement('li');
-        const who = q.anonymous_leaderboard ? `Anon (${q.region_geo || q.region_profile || '—'})` : (q.handle || 'Anon');
+        let who = 'Anon';
+        if (q.anonymous_leaderboard) {
+          who = `Anon (${q.region_geo || q.region_profile || '—'})`;
+        } else {
+          who = q.handle || 'Guest';
+          if (q.region_geo || q.region_profile) who += ` (${q.region_geo || q.region_profile})`;
+        }
         li.innerHTML = `<strong>${who}</strong> — ${q.body} <button data-id="${q.id}">Vote</button> (${q.votes || 0})`;
         board.appendChild(li);
       });
       board.querySelectorAll('button[data-id]').forEach((btn) => {
         btn.onclick = async () => {
-          await fetch('/api/ama', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }) });
+          const r = await fetch('/api/ama', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }),
+          });
+          if (r.status === 402) { alert('Daily vote limit. Upgrade to Plus.'); return; }
           loadBoard();
         };
       });
@@ -47,9 +82,14 @@
     document.getElementById('ask').onclick = async () => {
       const text = document.getElementById('question').value.trim();
       if (!text) return;
-      const res = await fetch('/api/ama', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+      const payload = { text, ...privacyPayload() };
+      const res = await fetch('/api/ama', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
       if (res.status === 402) { alert('Daily AMA limit. Upgrade to Plus.'); return; }
-      if (res.status === 503) { alert('Configure Supabase for cloud AMA or use merit-demo deployed with env.'); return; }
+      if (res.status === 503) { alert('Configure Supabase for cloud AMA.'); return; }
       if (!res.ok) { alert('Ask failed'); return; }
       document.getElementById('question').value = '';
       loadBoard();
