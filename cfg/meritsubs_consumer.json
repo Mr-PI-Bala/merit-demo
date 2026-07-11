@@ -3,6 +3,6 @@
   "consumer_id": "merit-demo",
   "mount_prefix": "/api/meritsubs",
   "public_base_url": "https://YOUR_DEPLOY.vercel.app/api/meritsubs",
-  "embed_status": "embedded",
-  "notes": "Set embed_status to embedded after scripts/embed-meritsubs.ps1; run meritsubs Supabase migration on consumer project."
+  "embed_status": "hosted_provider_relay",
+  "notes": "Public merit-demo does not embed meritsubs provider source. Usage, credits, and checkout authority remain hosted."
 }

@@ -2,7 +2,7 @@
   "schema": "meritutils.consumer.v1",
   "consumer_id": "merit-demo",
   "provider_id": "meritutils",
-  "promocode_default": "FREEASINTRO",
+  "promocode_default": "MERITAGENT",
   "affiliate_code": "MERITDEMO",
   "packages": [
     { "name": "merit_workbench", "version": "0.4.0", "pin": "meritutils/merit_workbench@0.4.0" },
@@ -13,7 +13,7 @@
     { "name": "merit_usage_meter", "version": "0.1.1", "pin": "meritutils/merit_usage_meter@0.1.1" }
   ],
   "usage_policy": {
-    "default_promocode_when_missing": "FREEASINTRO",
+    "default_promocode_when_missing": "MERITAGENT",
     "billable_mode": "intro_free",
     "m4fi_scope": "excluded"
   }

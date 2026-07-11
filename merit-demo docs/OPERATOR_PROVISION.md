@@ -8,7 +8,7 @@
 |------|---------|-----------------|
 | Legal (`portal/legal.html`, `/legal/terms`) | Done | Review copy |
 | AMA geo-IP + caps + admin pricing UI | Done | Run SQL 002 |
-| meritsubs embed scaffold | Done (`vendor/meritsubs`) | Vercel env + deploy |
+| meritsubs / usage authority | Hosted provider relay | Vercel env + deploy |
 | Supabase consumer project | SQL ready | Create project, run migrations |
 | Vercel deploy | `vercel.json` + build | `merit init`, edit `.merit_launch.md`, apply, link/deploy |
 | meritstore tenant | `cfg/meritstore_tenant.json` seed | Vault provision after cert |
@@ -23,7 +23,7 @@
 2. SQL Editor — run in order:
    - `sql/001_merit_demo.sql`
    - `sql/002_ama_daily_activity.sql`
-   - meritsubs: `AgentDraven/meritsubs/supabase/migrations/001_subscribers.sql` (same project)
+   - Hosted MERIT provider manages subscriber entitlements and usage authority.
 3. Copy `.env.local.example` → `.env.local` with URL + keys.
 4. Vercel project env: same `SUPABASE_*`, `MERIT_CONSUMER_ID=merit-demo`.
 5. **Seamless auth:** meritsubs OAuth on `/api/meritsubs/api/v1/oauth/authorize` after embed deploy; journal/AMA read `Authorization: Bearer` for Plus tier.
@@ -36,7 +36,6 @@
 # Create/edit local .merit_launch.md → mandatory values at top
 cd merit-demo
 npm run verify
-.\scripts\embed-meritsubs.ps1   # if vendor/ not present
 # from merit-agent-skills
 .\merit.ps1 init --path C:\path\to\merit-demo
 notepad C:\path\to\merit-demo\.merit_launch.md
@@ -45,7 +44,7 @@ npx vercel link --scope YOUR_VERCEL_SCOPE
 .\merit.ps1 deploy --path C:\path\to\merit-demo
 ```
 
-Set Vercel env from `.env.local.example` (meritsubs JWT/API keys generated fresh).
+Set Vercel env from `.env.local.example`. Usage credits, promo validation, and Square checkout stay hosted behind MERIT provider services.
 
 Smokes: `GET /diag/manifest.json`, `GET /api/meritsubs/api/v1/health`, `/journal/`, `/ama/`.
 
@@ -79,16 +78,16 @@ Surfaces are edited in local `.merit_launch.md` and synced to `cfg/portals.json`
 
 ---
 
-## 5. meritsubs production (replaces stub)
+## 5. meritsubs / usage production boundary
 
-Already embedded via `scripts/embed-meritsubs.ps1`. Confirm:
+Public `merit-demo` must not embed provider billing source. Confirm:
 
 ```powershell
-Test-Path vendor\meritsubs\api\app.py
-Test-Path api\meritsubs\index.py
+Test-Path api\meritsubs\index.mjs
+Test-Path vendor\meritsubs   # should be False in public repo
 ```
 
-Wire `MERITSUBS_PUBLIC_BASE_URL` on meritstore for `merit-demo` consumer (MSU-MST-02).
+Wire `MERITSUBS_PROVIDER_BASE_URL`, `MERITSTORE_BASE_URL`, and `MERIT_DEFAULT_PROMOCODE=MERITAGENT`. The hosted provider controls the default intro credit budget ($25 unless changed in provider config).
 
 ---
 

@@ -11,7 +11,7 @@
 | `/play/` | merit_workbench PAR `@0.4.x` |
 | `/journal/` | journal PAR + API |
 | `/ama/` | AMA Q&A + leaderboard (geo-IP, privacy modes, daily caps) |
-| `/api/meritsubs/` | meritsubs embed (`vendor/meritsubs` + Python handler) |
+| `/api/meritsubs/` | hosted MERIT usage/entitlement relay; no provider billing source in public repo |
 | `/api/admin/pricing` | Operator flexible Plus pricing (Supabase `operator_pricing`) |
 | `/admin/` | MeritAdminGate + pricing UI |
 | `/diag/` | Deploy manifest |

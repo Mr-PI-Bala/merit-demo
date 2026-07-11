@@ -7,7 +7,7 @@ Vault env compose + deploy phases: **merit-private-vault** → `docs/IAR/MERIT_D
 
 ## meritutils usage alignment
 
-merit-demo declares its showcase consumer lane in `cfg/meritutils_consumer.json`. Missing promo codes resolve to `FREEASINTRO`, and usage attribution reports affiliate code `MERITDEMO`. The repo demonstrates workbench, legacy journal, `merit_journal`, `merit_ama`, `merit_leaderboard`, and `merit_usage_meter` together without touching the M4FI workstream.
+merit-demo declares its showcase consumer lane in `cfg/meritutils_consumer.json`. Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affiliate code `MERITDEMO`. The hosted provider controls the intro credit budget (default $25) and Square checkout; this public repo does not expose or own billing logic.
 
 ## Build
 
@@ -48,13 +48,9 @@ Run `sql/001_merit_demo.sql` in consumer Supabase project.
 .\merit.ps1 portal --path .
 ```
 
-## meritsubs embed
+## meritsubs / usage boundary
 
-```powershell
-.\scripts\embed-meritsubs.ps1
-```
-
-Production handler: `api/meritsubs/index.py` + `vendor/meritsubs/` (replaces Node stub).
+Production handler: `api/meritsubs/index.mjs` relays to hosted MERIT services. Provider billing, usage metering, and Square logic are not embedded in this public repo.
 
 ## meritstore
 

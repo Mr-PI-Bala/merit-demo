@@ -24,7 +24,6 @@
     { "source": "/legal.html", "destination": "/legal.html" }
   ],
   "env": {
-    "PYTHONPATH": "vendor/meritsubs",
     "MERITSUBS_MOUNT_PREFIX": "/api/meritsubs"
   }
 }

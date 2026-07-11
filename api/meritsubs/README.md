@@ -1,20 +1,12 @@
 # meritsubs on merit-demo
 
-## Stub mode (default until embed)
+## Hosted provider boundary
 
-`api/meritsubs/index.mjs` — guest/subscriber health + entitlements for local dev without Python.
+`api/meritsubs/index.mjs` is a thin hosted-boundary relay. It does **not** embed meritsubs provider source, Square charging logic, or usage-metering authority.
 
-## Production embed (SomaTune pattern)
+Public `merit-demo` calls hosted MERIT services for usage credits, promo validation, entitlements, and Square checkout. The default intro promo is `MERITAGENT`; the hosted provider controls the default credit amount ($25 unless changed by provider config).
 
-```powershell
-# From meritsubs repo
-.\scripts\embed-merit-demo.ps1
-
-# Or from merit-demo
-.\scripts\embed-meritsubs.ps1
-```
-
-Replaces `index.mjs` with `index.py` + `vendor/meritsubs/`. Set Vercel env per `.env.local.example`.
+If hosted entitlements are unavailable, the demo falls back to guest-only entitlements. It must never mint paid entitlements locally.
 
 Smokes:
 
@@ -23,4 +15,4 @@ $base = "https://YOUR_DEPLOY.vercel.app/api/meritsubs"
 Invoke-WebRequest -Uri "$base/api/v1/health" -UseBasicParsing
 ```
 
-See `meritsubs docs/consumers/SOMATUNE_EMBED.md` and vault `templates/legal/`.
+See hosted provider/operator docs in `meritsubs docs/` and `meritstore docs/`.

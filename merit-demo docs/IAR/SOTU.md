@@ -17,17 +17,17 @@ Consumer manifest: `cfg/meritutils_consumer.json`.
 | `merit_leaderboard` | `meritutils/merit_leaderboard@0.1.0` | AMA/journal ranking showcase |
 | `merit_usage_meter` | `meritutils/merit_usage_meter@0.1.1` | Usage/audit metering |
 
-Default promo is `FREEASINTRO`; affiliate code is `MERITDEMO`. M4FI is intentionally excluded from this closeout.
+Default promo is `MERITAGENT`; affiliate code is `MERITDEMO`. M4FI is intentionally excluded from this closeout.
 
 ## E2E TDD plan
 
 | Persona | Path | Assertion |
 |---|---|---|
 | Community member | `/play/` | workbench loads from PAR CDN and routes into demo surfaces |
-| AMA participant | AMA showcase | asks/votes remain usage-meterable with `FREEASINTRO` |
+| AMA participant | AMA showcase | asks/votes remain usage-meterable with `MERITAGENT` |
 | Journal user | journal showcase | `journal@0.2.2` remains legacy-compatible while `merit_journal@0.3.0` is the forward path |
-| Operator | usage manifest | missing promo resolves to `FREEASINTRO`; affiliate remains `MERITDEMO` |
+| Operator | usage manifest | missing promo resolves to `MERITAGENT`; affiliate remains `MERITDEMO` |
 
 ## Closeout note
 
-Provider validation completed upstream: meritsubs default promo tests pass and meritstore FREEASINTRO zero-dollar checkout Playwright passes.
+Provider validation completed upstream: meritsubs default promo tests pass and meritstore MERITAGENT hosted intro-credit checkout Playwright passes.
