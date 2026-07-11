@@ -1,7 +1,13 @@
 # merit-demo — usage
 
+**New creators:** start with **[HowToLaunch-Over-Dinner-Tutorial.md](../HowToLaunch-Over-Dinner-Tutorial.md)** (3 steps, lazy accounts).
+
 Full operator checklist: **[OPERATOR_PROVISION.md](OPERATOR_PROVISION.md)**.  
 Vault env compose + deploy phases: **merit-private-vault** → `docs/IAR/MERIT_DEMO_PROVISION_PLAN.md`.
+
+## meritutils usage alignment
+
+merit-demo declares its showcase consumer lane in `cfg/meritutils_consumer.json`. Missing promo codes resolve to `FREEASINTRO`, and usage attribution reports affiliate code `MERITDEMO`. The repo demonstrates workbench, legacy journal, `merit_journal`, `merit_ama`, `merit_leaderboard`, and `merit_usage_meter` together without touching the M4FI workstream.
 
 ## Build
 

@@ -1,0 +1,20 @@
+{
+  "schema": "meritutils.consumer.v1",
+  "consumer_id": "merit-demo",
+  "provider_id": "meritutils",
+  "promocode_default": "FREEASINTRO",
+  "affiliate_code": "MERITDEMO",
+  "packages": [
+    { "name": "merit_workbench", "version": "0.4.0", "pin": "meritutils/merit_workbench@0.4.0" },
+    { "name": "journal", "version": "0.2.2", "pin": "meritutils/journal@0.2.2", "status": "deprecated-compatible" },
+    { "name": "merit_journal", "version": "0.3.0", "pin": "meritutils/merit_journal@0.3.0" },
+    { "name": "merit_ama", "version": "0.1.0", "pin": "meritutils/merit_ama@0.1.0" },
+    { "name": "merit_leaderboard", "version": "0.1.0", "pin": "meritutils/merit_leaderboard@0.1.0" },
+    { "name": "merit_usage_meter", "version": "0.1.1", "pin": "meritutils/merit_usage_meter@0.1.1" }
+  ],
+  "usage_policy": {
+    "default_promocode_when_missing": "FREEASINTRO",
+    "billable_mode": "intro_free",
+    "m4fi_scope": "excluded"
+  }
+}
