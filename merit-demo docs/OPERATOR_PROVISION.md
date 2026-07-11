@@ -10,9 +10,9 @@
 | AMA geo-IP + caps + admin pricing UI | Done | Run SQL 002 |
 | meritsubs embed scaffold | Done (`vendor/meritsubs`) | Vercel env + deploy |
 | Supabase consumer project | SQL ready | Create project, run migrations |
-| Vercel deploy | `vercel.json` + build | Edit `MERIT_DEPLOY.md`, sync, then link/deploy |
+| Vercel deploy | `vercel.json` + build | `merit init`, edit `.merit_launch.md`, apply, link/deploy |
 | meritstore tenant | `cfg/meritstore_tenant.json` seed | Vault provision after cert |
-| here.now portals | `MERIT_DEPLOY.md` slugs → `cfg/portals.json` | `merit-deploy portal --all` BYOK |
+| here.now portals | `.merit_launch.md` slugs → `cfg/portals.json` | `merit portal` BYOK |
 | Production OAuth | Python handler | meritsubs env on Vercel |
 
 ---
@@ -33,14 +33,16 @@
 ## 2. Vercel deploy
 
 ```powershell
-# Edit MERIT_DEPLOY.md → your vercel_scope and portal slugs
+# Create/edit local .merit_launch.md → mandatory values at top
 cd merit-demo
 npm run verify
 .\scripts\embed-meritsubs.ps1   # if vendor/ not present
 # from merit-agent-skills
-.\merit-deploy.ps1 sync --path C:\path\to\merit-demo
+.\merit.ps1 init --path C:\path\to\merit-demo
+notepad C:\path\to\merit-demo\.merit_launch.md
+.\merit.ps1 apply --path C:\path\to\merit-demo
 npx vercel link --scope YOUR_VERCEL_SCOPE
-.\merit-deploy.ps1 vercel --path C:\path\to\merit-demo
+.\merit.ps1 deploy --path C:\path\to\merit-demo
 ```
 
 Set Vercel env from `.env.local.example` (meritsubs JWT/API keys generated fresh).
@@ -70,10 +72,10 @@ Admin flexible pricing: `/admin/` → saves to `operator_pricing` table; sync of
 
 ```powershell
 $env:HERENOW_API_KEY = '...'   # or ~/.herenow/credentials
-.\merit-deploy.ps1 portal --path . --all
+.\merit.ps1 portal --path .
 ```
 
-Surfaces are edited in `MERIT_DEPLOY.md` and synced to `cfg/portals.json` (main, journal, ama, subs).
+Surfaces are edited in local `.merit_launch.md` and synced to `cfg/portals.json` (main, journal, ama, subs).
 
 ---
 

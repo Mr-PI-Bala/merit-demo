@@ -7,43 +7,41 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 ## Quickstart
 
 ```powershell
-git clone --branch skills-v0.3.5 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.6 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
-.\merit-live.ps1 par scaffold --path ..\merit-demo --variant workbench-journal
-.\merit-live.ps1 branding scaffold --path ..\merit-demo
-.\merit-live.ps1 subs scaffold --path ..\merit-demo
-.\merit-live.ps1 verify --path ..\merit-demo
+.\merit.ps1 init --path ..\merit-demo
+# edit ..\merit-demo\.merit_launch.md
+.\merit.ps1 apply --path ..\merit-demo
+.\merit.ps1 verify --path ..\merit-demo
 ```
 
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.3.5 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.6 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
-./merit-live.sh par scaffold --path ../merit-demo --variant workbench-journal
-./merit-live.sh branding scaffold --path ../merit-demo
-./merit-live.sh subs scaffold --path ../merit-demo
-./merit-live.sh verify --path ../merit-demo
+./merit.sh init --path ../merit-demo
+# edit ../merit-demo/.merit_launch.md
+./merit.sh apply --path ../merit-demo
+./merit.sh verify --path ../merit-demo
 ```
 
-Edit `cfg/branding.json` and `MERIT_DEPLOY.md` (your Vercel scope and here.now slugs). Sync generated deploy config, then deploy:
+Edit only `.merit_launch.md` for launch/deploy values. It is local, gitignored, and includes comments/examples. Then deploy:
 
 ```powershell
-.\merit-deploy.ps1 sync --path ..\merit-demo
-.\merit-deploy.ps1 vercel --path ..\merit-demo
-.\merit-deploy.ps1 portal --path ..\merit-demo --all
+.\merit.ps1 deploy --path ..\merit-demo
+.\merit.ps1 portal --path ..\merit-demo
 ```
 
 Linux/macOS:
 
 ```bash
-./merit-deploy.sh sync --path ../merit-demo
-./merit-deploy.sh vercel --path ../merit-demo
-./merit-deploy.sh portal --path ../merit-demo --all
+./merit.sh deploy --path ../merit-demo
+./merit.sh portal --path ../merit-demo
 ```
 
 ## Surfaces
@@ -60,14 +58,14 @@ Linux/macOS:
 
 ```powershell
 npm install && npm run verify && npm run build
-..\merit-agent-skills\merit-deploy.ps1 vercel --path .
+..\merit-agent-skills\merit.ps1 deploy --path .
 ```
 
 Linux/macOS:
 
 ```bash
 npm install && npm run verify && npm run build
-../merit-agent-skills/merit-deploy.sh vercel --path .
+../merit-agent-skills/merit.sh deploy --path .
 ```
 
 Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_demo.sql`.

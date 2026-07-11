@@ -6,6 +6,6 @@
 | [merit_demo_design.md](merit_demo_design.md) | Architecture |
 | [merit_demo_usage.md](merit_demo_usage.md) | Operate and validate |
 | [OPERATOR_PROVISION.md](OPERATOR_PROVISION.md) | Supabase, Vercel, meritstore, here.now checklist |
-| [../MERIT_DEPLOY.md](../MERIT_DEPLOY.md) | One human-edited deploy profile for Vercel and here.now |
+| `.merit_launch.md` | Local gitignored launch file created by `merit init` |
 
 IAR for AMA, branding, and freemium: see vault `PRD_MERIT_AGENT_SKILLS_PLATFORM.md` §21 (no doc sprawl).

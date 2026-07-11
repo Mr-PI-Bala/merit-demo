@@ -1,4 +1,5 @@
 .env.local
+/.merit_launch.md
 .vercel
 node_modules/
 dist/
