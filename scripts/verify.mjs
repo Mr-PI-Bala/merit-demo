@@ -21,10 +21,15 @@ const required = [
   'cfg/meritsubs_consumer.json',
 ];
 const missing = required.filter((r) => !fs.existsSync(path.join(root, r)));
-const meritsubsHandler =
-  fs.existsSync(path.join(root, 'api/meritsubs/index.py')) ||
-  fs.existsSync(path.join(root, 'api/meritsubs/index.mjs'));
-if (!meritsubsHandler) missing.push('api/meritsubs handler');
+const forbiddenMeteredHandlers = [
+  'api/meritsubs/index.py',
+  'api/meritsubs/index.mjs',
+  'api/ama/index.mjs',
+  'api/journal/index.mjs',
+].filter((r) => fs.existsSync(path.join(root, r)));
+if (forbiddenMeteredHandlers.length) {
+  missing.push(`remove public metered handlers: ${forbiddenMeteredHandlers.join(', ')}`);
+}
 if (missing.length) {
   console.error('verify FAILED:', missing.join(', '));
   process.exit(1);

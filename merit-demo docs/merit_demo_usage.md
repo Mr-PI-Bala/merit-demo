@@ -50,7 +50,7 @@ Run `sql/001_merit_demo.sql` in consumer Supabase project.
 
 ## meritsubs / usage boundary
 
-Production handler: `api/meritsubs/index.mjs` relays to hosted MERIT services. Provider billing, usage metering, and Square logic are not embedded in this public repo.
+Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
 
 ## meritstore
 
@@ -62,8 +62,8 @@ Register: `https://meritstore.vercel.app/merit-demo/register`
 
 - `npm run verify` — scaffold files
 - `npm run e2e` — PAR CDN HEAD (set `MERIT_DEMO_BASE_URL` for live host)
-- `GET /api/meritsubs` — health
-- `GET /api/meritsubs/api/v1/entitlements` — guest tier
+- external `GET {MERITSUBS_PUBLIC_BASE_URL}/api/v1/health` — provider health
+- external `{MERIT_METERED_API_BASE_URL}/api/ama` and `/api/journal` — metered utility APIs
 - `/journal/` — save entry (local or Supabase)
 - `/ama/` — ask + vote with privacy modes (geo-IP on Vercel)
 - `/admin/` — flexible Plus pricing UI

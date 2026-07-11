@@ -57,7 +57,8 @@ fs.writeFileSync(
       freemium: limits.guest_and_free || {},
       plusSku: plus.default || {},
       meritstoreRegisterUrl: sync.meritstore_register_url || '',
-      meritsubsBase: sync.meritsubs_base || '/api/meritsubs',
+      meteredApiBase: env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 'https://soulos.vercel.app',
+      meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://somatune.vercel.app/api/meritsubs',
     },
     null,
     2
@@ -87,7 +88,7 @@ const diag = {
   consumer: sync.consumer_id || 'merit-demo',
   version,
   builtAt: new Date().toISOString(),
-  surfaces: ['/', '/play/', '/journal/', '/ama/', '/api/meritsubs/', '/admin/', '/diag/'],
+  surfaces: ['/', '/play/', '/journal/', '/ama/', '/admin/', '/diag/'],
   supabaseConfigured: !!(url && anon),
   parPins: pins?.packages ? Object.keys(pins.packages) : [],
 };

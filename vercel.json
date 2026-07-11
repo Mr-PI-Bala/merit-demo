@@ -5,9 +5,6 @@
   "framework": null,
   "rewrites": [
     { "source": "/api/admin/pricing", "destination": "/api/admin/pricing" },
-    { "source": "/api/meritsubs/(.*)", "destination": "/api/meritsubs" },
-    { "source": "/api/ama", "destination": "/api/ama" },
-    { "source": "/api/journal", "destination": "/api/journal" },
     { "source": "/legal/terms", "destination": "/legal/terms.html" },
     { "source": "/play", "destination": "/play/index.html" },
     { "source": "/play/", "destination": "/play/index.html" },
@@ -23,7 +20,5 @@
     { "source": "/diag/", "destination": "/diag/index.html" },
     { "source": "/legal.html", "destination": "/legal.html" }
   ],
-  "env": {
-    "MERITSUBS_MOUNT_PREFIX": "/api/meritsubs"
-  }
+  "env": {}
 }

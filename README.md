@@ -49,9 +49,9 @@ Linux/macOS:
 | Route | PAR / service | here.now portal |
 |-------|---------------|-----------------|
 | `/play/` | merit_workbench@0.4.x | main hub |
-| `/journal/` | journal@0.2.x + `/api/journal` | portal/journal/ |
-| `/ama/` | AMA API + journal patterns | portal/ama/ |
-| `/api/meritsubs` | entitlements stub → wire production meritsubs | — |
+| `/journal/` | journal@0.2.x UI; metered API from production MERIT mount | portal/journal/ |
+| `/ama/` | AMA UI; metered API from production MERIT mount | portal/ama/ |
+| Metered utilities | No local stub/API source; uses production MERIT Vercel mounts | — |
 | Register | meritstore | portal/subs/ |
 
 ## Build & deploy

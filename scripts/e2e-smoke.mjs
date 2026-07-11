@@ -47,7 +47,7 @@ if (jn?.css?.url) await head(jn.css.url, 'journal.css');
 const host = process.env.MERIT_DEMO_BASE_URL || '';
 if (host) {
   const base = host.replace(/\/$/, '');
-  for (const route of ['/diag/manifest.json', '/api/meritsubs', '/api/journal', '/api/ama', '/legal.html']) {
+  for (const route of ['/diag/manifest.json', '/legal.html']) {
     try {
       const res = await fetch(`${base}${route}`, { signal: AbortSignal.timeout(20000) });
       if (!res.ok) failures.push(`live ${route}: ${res.status}`);

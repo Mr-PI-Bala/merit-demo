@@ -32,6 +32,8 @@
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const f = cfg.freemium || {};
     const reg = cfg.meritstoreRegisterUrl || 'https://meritstore.vercel.app/merit-demo/register';
+    const apiBase = (cfg.meteredApiBase || 'https://soulos.vercel.app').replace(/\/$/, '');
+    const apiUrl = (path) => `${apiBase}${path}`;
     document.getElementById('upgrade-link').href = reg;
     document.getElementById('tier-hint').textContent =
       `Free: ${f.ama_questions_per_day ?? 2} questions, ${f.ama_votes_per_day ?? 2} votes/day; top ${f.ama_leaderboard_visible ?? 25} shown.`;
@@ -50,7 +52,7 @@
     }
 
     async function loadBoard() {
-      const res = await fetch('/api/ama');
+      const res = await fetch(apiUrl('/api/ama'));
       const data = await res.json();
       const board = document.getElementById('board');
       board.innerHTML = '';
@@ -68,7 +70,7 @@
       });
       board.querySelectorAll('button[data-id]').forEach((btn) => {
         btn.onclick = async () => {
-          const r = await fetch('/api/ama', {
+          const r = await fetch(apiUrl('/api/ama'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }),
@@ -83,7 +85,7 @@
       const text = document.getElementById('question').value.trim();
       if (!text) return;
       const payload = { text, ...privacyPayload() };
-      const res = await fetch('/api/ama', {
+      const res = await fetch(apiUrl('/api/ama'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

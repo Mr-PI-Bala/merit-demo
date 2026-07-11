@@ -1,7 +1,8 @@
 ﻿{
   "schema": "merit.merit_sync.v1",
   "consumer_id": "merit-demo",
-  "meritsubs_base": "/api/meritsubs",
+  "metered_api_base": "https://soulos.vercel.app",
+  "meritsubs_base": "https://somatune.vercel.app/api/meritsubs",
   "meritstore_register_url": "https://meritstore.vercel.app/merit-demo/register",
   "freemium_limits": "cfg/freemium_limits.json",
   "plus_sku": "cfg/plus_sku.json"

@@ -8,7 +8,7 @@
 |------|---------|-----------------|
 | Legal (`portal/legal.html`, `/legal/terms`) | Done | Review copy |
 | AMA geo-IP + caps + admin pricing UI | Done | Run SQL 002 |
-| meritsubs / usage authority | Hosted provider relay | Vercel env + deploy |
+| meritsubs / usage authority | Production provider mount reference | Vercel env + deploy |
 | Supabase consumer project | SQL ready | Create project, run migrations |
 | Vercel deploy | `vercel.json` + build | `merit init`, edit `.merit_launch.md`, apply, link/deploy |
 | meritstore tenant | `cfg/meritstore_tenant.json` seed | Vault provision after cert |
@@ -26,7 +26,7 @@
    - Hosted MERIT provider manages subscriber entitlements and usage authority.
 3. Copy `.env.local.example` → `.env.local` with URL + keys.
 4. Vercel project env: same `SUPABASE_*`, `MERIT_CONSUMER_ID=merit-demo`.
-5. **Seamless auth:** meritsubs OAuth on `/api/meritsubs/api/v1/oauth/authorize` after embed deploy; journal/AMA read `Authorization: Bearer` for Plus tier.
+5. **Seamless auth:** meritsubs OAuth, journal, AMA, leaderboard, and other metered utility calls go to production MERIT Vercel mounts. The public demo repo must not ship local metering or entitlement handlers.
 
 ---
 
@@ -46,7 +46,7 @@ npx vercel link --scope YOUR_VERCEL_SCOPE
 
 Set Vercel env from `.env.local.example`. Usage credits, promo validation, and Square checkout stay hosted behind MERIT provider services.
 
-Smokes: `GET /diag/manifest.json`, `GET /api/meritsubs/api/v1/health`, `/journal/`, `/ama/`.
+Smokes: `GET /diag/manifest.json`, `/journal/`, `/ama/`, plus external provider health at `MERITSUBS_PUBLIC_BASE_URL/api/v1/health`.
 
 ---
 
@@ -78,16 +78,18 @@ Surfaces are edited in local `.merit_launch.md` and synced to `cfg/portals.json`
 
 ---
 
-## 5. meritsubs / usage production boundary
+## 5. metered utility production boundary
 
-Public `merit-demo` must not embed provider billing source. Confirm:
+Public `merit-demo` must not embed or relay provider billing, entitlement, AMA, journal, leaderboard, DIRT, or other metered utility source. Confirm:
 
 ```powershell
-Test-Path api\meritsubs\index.mjs
-Test-Path vendor\meritsubs   # should be False in public repo
+Test-Path api\meritsubs\index.mjs # should be False
+Test-Path api\ama\index.mjs       # should be False
+Test-Path api\journal\index.mjs   # should be False
+Test-Path vendor\meritsubs        # should be False
 ```
 
-Wire `MERITSUBS_PROVIDER_BASE_URL`, `MERITSTORE_BASE_URL`, and `MERIT_DEFAULT_PROMOCODE=MERITAGENT`. The hosted provider controls the default intro credit budget ($25 unless changed in provider config).
+Wire `MERIT_METERED_API_BASE_URL`, `MERITSUBS_PUBLIC_BASE_URL`, `MERITSTORE_BASE_URL`, and `MERIT_DEFAULT_PROMOCODE=MERITAGENT`. The hosted provider controls the default intro credit budget ($25 unless changed in provider config).
 
 ---
 

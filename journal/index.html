@@ -22,12 +22,14 @@
   <script src="/assets/merit-shell.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
+    const apiBase = (cfg.meteredApiBase || 'https://soulos.vercel.app').replace(/\/$/, '');
+    const apiUrl = (path) => `${apiBase}${path}`;
     const hint = document.getElementById('tier-hint');
     const cap = cfg.freemium?.journal_entries_per_day ?? 2;
     hint.textContent = `Free tier: ${cap} entries per day. Plus uncaps via meritstore.`;
 
     async function load() {
-      const res = await fetch('/api/journal');
+      const res = await fetch(apiUrl('/api/journal'));
       const data = await res.json();
       const list = document.getElementById('list');
       list.innerHTML = '';
@@ -49,7 +51,7 @@
     document.getElementById('save').onclick = async () => {
       const text = document.getElementById('entry').value.trim();
       if (!text) return;
-      const res = await fetch('/api/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
+      const res = await fetch(apiUrl('/api/journal'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
       if (res.status === 402) {
         alert('Daily limit reached. Upgrade to Plus.');
         return;
