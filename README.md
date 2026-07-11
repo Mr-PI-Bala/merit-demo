@@ -7,7 +7,7 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 ## Quickstart
 
 ```powershell
-git clone https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.4 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -17,11 +17,31 @@ cd merit-agent-skills
 .\merit-live.ps1 verify --path ..\merit-demo
 ```
 
+Linux/macOS:
+
+```bash
+git clone --branch skills-v0.3.4 https://github.com/AgentDraven/merit-agent-skills.git
+git clone https://github.com/Mr-PI-Bala/merit-demo.git
+cd merit-agent-skills
+./install.sh -Target Cursor
+./merit-live.sh par scaffold --path ../merit-demo --variant workbench-journal
+./merit-live.sh branding scaffold --path ../merit-demo
+./merit-live.sh subs scaffold --path ../merit-demo
+./merit-live.sh verify --path ../merit-demo
+```
+
 Edit `cfg/branding.json`, `cfg/flask_deploy.json` (your Vercel scope), and `cfg/portals.json` slugs. Deploy:
 
 ```powershell
 .\merit-live.ps1 deploy vercel --path ..\merit-demo
 .\merit-live.ps1 portal publish --path ..\merit-demo --all
+```
+
+Linux/macOS:
+
+```bash
+./merit-live.sh deploy vercel --path ../merit-demo
+./merit-live.sh portal publish --path ../merit-demo --all
 ```
 
 ## Surfaces
@@ -39,6 +59,13 @@ Edit `cfg/branding.json`, `cfg/flask_deploy.json` (your Vercel scope), and `cfg/
 ```powershell
 npm install && npm run verify && npm run build
 .\merit-live.ps1 deploy vercel --path .   # from merit-agent-skills; your Vercel scope
+```
+
+Linux/macOS:
+
+```bash
+npm install && npm run verify && npm run build
+../merit-agent-skills/merit-live.sh deploy vercel --path .
 ```
 
 Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_demo.sql`.
