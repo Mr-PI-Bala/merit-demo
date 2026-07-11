@@ -21,10 +21,11 @@ npm run build
 
 ```powershell
 # from merit-agent-skills
-.\merit-live.ps1 deploy vercel --path C:\path\to\merit-demo
+.\merit-deploy.ps1 sync --path C:\path\to\merit-demo
+.\merit-deploy.ps1 vercel --path C:\path\to\merit-demo
 ```
 
-Set `cfg/flask_deploy.json` → `vercel_scope` to **your** team.
+Set `MERIT_DEPLOY.md` → `vercel_scope` to **your** team. `merit-deploy sync` writes `cfg/flask_deploy.json` and `cfg/portals.json`.
 
 ## Env (optional Supabase)
 
@@ -42,7 +43,7 @@ Run `sql/001_merit_demo.sql` in consumer Supabase project.
 ## Portal (here.now BYOK)
 
 ```powershell
-.\merit-live.ps1 portal publish --path . --all
+.\merit-deploy.ps1 portal --path . --all
 ```
 
 ## meritsubs embed

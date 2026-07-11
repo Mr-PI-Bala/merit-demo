@@ -7,7 +7,7 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 ## Quickstart
 
 ```powershell
-git clone --branch skills-v0.3.4 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.5 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -20,7 +20,7 @@ cd merit-agent-skills
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.3.4 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.5 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -30,18 +30,20 @@ cd merit-agent-skills
 ./merit-live.sh verify --path ../merit-demo
 ```
 
-Edit `cfg/branding.json`, `cfg/flask_deploy.json` (your Vercel scope), and `cfg/portals.json` slugs. Deploy:
+Edit `cfg/branding.json` and `MERIT_DEPLOY.md` (your Vercel scope and here.now slugs). Sync generated deploy config, then deploy:
 
 ```powershell
-.\merit-live.ps1 deploy vercel --path ..\merit-demo
-.\merit-live.ps1 portal publish --path ..\merit-demo --all
+.\merit-deploy.ps1 sync --path ..\merit-demo
+.\merit-deploy.ps1 vercel --path ..\merit-demo
+.\merit-deploy.ps1 portal --path ..\merit-demo --all
 ```
 
 Linux/macOS:
 
 ```bash
-./merit-live.sh deploy vercel --path ../merit-demo
-./merit-live.sh portal publish --path ../merit-demo --all
+./merit-deploy.sh sync --path ../merit-demo
+./merit-deploy.sh vercel --path ../merit-demo
+./merit-deploy.sh portal --path ../merit-demo --all
 ```
 
 ## Surfaces
@@ -58,14 +60,14 @@ Linux/macOS:
 
 ```powershell
 npm install && npm run verify && npm run build
-.\merit-live.ps1 deploy vercel --path .   # from merit-agent-skills; your Vercel scope
+..\merit-agent-skills\merit-deploy.ps1 vercel --path .
 ```
 
 Linux/macOS:
 
 ```bash
 npm install && npm run verify && npm run build
-../merit-agent-skills/merit-live.sh deploy vercel --path .
+../merit-agent-skills/merit-deploy.sh vercel --path .
 ```
 
 Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_demo.sql`.

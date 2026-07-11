@@ -1,6 +1,6 @@
 {
-  "project_id": "merit-demo",
-  "vercel_scope": "REPLACE_WITH_YOUR_VERCEL_TEAM",
-  "production_branch": "main",
-  "notes": "Angle-4 operators use their own Vercel scope. merit-live deploy vercel --path ."
+    "project_id":  "merit-demo",
+    "vercel_scope":  "REPLACE_WITH_YOUR_VERCEL_TEAM",
+    "production_branch":  "main",
+    "notes":  "Run npx vercel link --scope REPLACE_WITH_YOUR_VERCEL_TEAM once. Vercel creates .vercel/project.json."
 }
