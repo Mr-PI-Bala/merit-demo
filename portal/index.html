@@ -1,26 +1,50 @@
-<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MERIT Demo</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }
-    header { border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
-    footer { margin-top: 3rem; font-size: 0.85rem; color: #555; border-top: 1px solid #ddd; padding-top: 1rem; }
-    a { color: #1d4ed8; }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MERIT Demo Portal</title>
+  <meta name="description" content="MERIT Demo Portal for the public hello-world consumer.">
+  <link rel="stylesheet" href="css/portal.css">
 </head>
 <body>
-  <header><h1>MERIT Demo</h1><p>White-label operator branding goes here.</p></header>
-  <main>
-    <ul>
-      <li><a href="https://merit-demo.vercel.app/play/">Workbench</a></li>
-      <li><a href="https://merit-demo.vercel.app/journal/">Journal</a></li>
-      <li><a href="https://merit-demo.vercel.app/ama/">AMA</a></li>
-      <li><a href="https://merit-prod.vercel.app/store/merit-demo/register">Subscribe (Plus)</a></li>
-    </ul>
+  <main class="shell">
+    <nav class="topline">
+      <a href="index.html">Portal</a>
+      <span>MERIT Powered</span>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">MERIT Demo</p>
+      <h1 data-portal="brand.name">MERIT Demo Portal</h1>
+      <p class="lede" data-portal="brand.tagline">A clean hello-world consumer for MERIT Agent Skills and MERIT Prod.</p>
+      <p data-portal="brand.description">Use this Portal to see how a public consumer points to MERIT production services without bundling paid provider source code.</p>
+      <div class="actions" id="portal-ctas"></div>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <p class="eyebrow">Demo routes</p>
+        <h2>Try the consumer paths</h2>
+      </div>
+      <div class="cards" id="provider-cards"></div>
+    </section>
+
+    <section class="panel">
+      <p class="eyebrow">Operator notes</p>
+      <ul id="portal-notes"></ul>
+    </section>
   </main>
-  <footer><small><a href="https://github.com/AgentDraven/merit-agent-skills">MERIT Powered</a></small></footer>
+
+  <footer>
+    <a href="legal.html">Legal</a>
+    <a href="terms.html">Terms</a>
+    <a href="ama/">AMA Portal</a>
+    <a href="journal/">Journal Portal</a>
+    <a href="subs/">Subscription Portal</a>
+    <span data-portal="footer">MERIT Powered</span>
+  </footer>
+
+  <script src="js/portal.js"></script>
 </body>
 </html>
