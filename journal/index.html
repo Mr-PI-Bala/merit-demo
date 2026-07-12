@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Journal</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
-  <link rel="stylesheet" href="https://pkg-meritutils.vercel.app/journal/0.2.2/journal.css" integrity="sha384-5yxx9KbJ9X6gcIyv2XdjIbc5GyCn5N0KRHwmWIIWG9mI3Z7+iwu6IwJGqd+Pxdj2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/journal/0.2.2/journal.css" integrity="sha384-5yxx9KbJ9X6gcIyv2XdjIbc5GyCn5N0KRHwmWIIWG9mI3Z7+iwu6IwJGqd+Pxdj2" crossorigin="anonymous">
 </head>
 <body>
   <header id="merit-header"></header>
@@ -22,7 +22,7 @@
   <script src="/assets/merit-shell.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
-    const apiBase = (cfg.meteredApiBase || 'https://soulos.vercel.app').replace(/\/$/, '');
+    const apiBase = (cfg.meteredApiBase || 'https://merit-prod.vercel.app').replace(/\/$/, '');
     const apiUrl = (path) => `${apiBase}${path}`;
     const hint = document.getElementById('tier-hint');
     const cap = cfg.freemium?.journal_entries_per_day ?? 2;
@@ -70,6 +70,6 @@
     };
     load();
   </script>
-  <script type="module" src="https://pkg-meritutils.vercel.app/journal/0.2.2/journal.mjs" integrity="sha384-uN5FVzY4tGN5Z4CtuSNyfe3pZKmC/3Fu5Ht9ArYIFFpPKHzJmOHTlUo9EbWSabwm" crossorigin="anonymous"></script>
+  <script type="module" src="https://merit-prod.vercel.app/pkg/meritutils/journal/0.2.2/journal.mjs" integrity="sha384-uN5FVzY4tGN5Z4CtuSNyfe3pZKmC/3Fu5Ht9ArYIFFpPKHzJmOHTlUo9EbWSabwm" crossorigin="anonymous"></script>
 </body>
 </html>

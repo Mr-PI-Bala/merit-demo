@@ -33,7 +33,7 @@ requireFile('cfg/par_pins.json');
 requireFile('dist/config.js');
 
 const play = fs.readFileSync(path.join(root, 'play/index.html'), 'utf8');
-if (!play.includes('pkg-meritutils.vercel.app/merit_workbench/0.4.0')) {
+if (!play.includes('merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0')) {
   failures.push('play/index.html missing merit_workbench@0.4.0 PAR URL');
 }
 

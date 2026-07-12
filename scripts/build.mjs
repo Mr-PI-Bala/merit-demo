@@ -57,8 +57,8 @@ fs.writeFileSync(
       freemium: limits.guest_and_free || {},
       plusSku: plus.default || {},
       meritstoreRegisterUrl: sync.meritstore_register_url || '',
-      meteredApiBase: env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 'https://soulos.vercel.app',
-      meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://somatune.vercel.app/api/meritsubs',
+      meteredApiBase: env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 'https://merit-prod.vercel.app',
+      meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://merit-prod.vercel.app/api/meritsubs',
     },
     null,
     2

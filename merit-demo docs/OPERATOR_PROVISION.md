@@ -61,7 +61,7 @@ Seed: `cfg/meritstore_tenant.json` (`status: pending_platform_provision`).
 # Provision merit-demo tenant on meritstore from offerings_seed
 ```
 
-Register URL: `https://meritstore.vercel.app/merit-demo/register`
+Register URL: `https://merit-prod.vercel.app/store/merit-demo/register`
 
 Admin flexible pricing: `/admin/` → saves to `operator_pricing` table; sync offerings to meritstore manually until webhook automation (Phase 3).
 

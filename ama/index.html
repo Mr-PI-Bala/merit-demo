@@ -31,8 +31,8 @@
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const f = cfg.freemium || {};
-    const reg = cfg.meritstoreRegisterUrl || 'https://meritstore.vercel.app/merit-demo/register';
-    const apiBase = (cfg.meteredApiBase || 'https://soulos.vercel.app').replace(/\/$/, '');
+    const reg = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
+    const apiBase = (cfg.meteredApiBase || 'https://merit-prod.vercel.app').replace(/\/$/, '');
     const apiUrl = (path) => `${apiBase}${path}`;
     document.getElementById('upgrade-link').href = reg;
     document.getElementById('tier-hint').textContent =

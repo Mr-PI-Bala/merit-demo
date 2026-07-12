@@ -56,7 +56,7 @@ Production handler policy: public `merit-demo` ships no local meritsubs, AMA, jo
 
 Provision tenant from `cfg/meritstore_tenant.json` after vault integration cert.
 
-Register: `https://meritstore.vercel.app/merit-demo/register`
+Register: `https://merit-prod.vercel.app/store/merit-demo/register`
 
 ## Smokes
 

@@ -30,7 +30,7 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
   <p><strong>Trademarks:</strong> MERIT, merit-agent-skills, merit-live, and MERIT Powered are trademarks of MERIT LLC. This notice does not grant trademark rights beyond describing origin.</p>
 
   <h2>2. Commercial platform (meritstore / meritsubs)</h2>
-  <p>Paid <strong>Plus</strong> features require registration at <a href="https://meritstore.vercel.app/merit-demo/register">meritstore</a> for consumer <code>merit-demo</code> and acceptance of <a href="/legal/terms">Subscription Terms</a>. Subscriber identity and entitlements are managed via meritsubs on this host.</p>
+  <p>Paid <strong>Plus</strong> features require registration at <a href="https://merit-prod.vercel.app/store/merit-demo/register">MERIT production</a> for consumer <code>merit-demo</code> and acceptance of <a href="/legal/terms">Subscription Terms</a>. Subscriber identity and entitlements are managed through the MERIT production gateway.</p>
 
   <h2>3. Freemium limits</h2>
   <p>Guest and free registered users are subject to:</p>
@@ -41,7 +41,7 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
   <p>Active <strong>Plus</strong> subscribers receive uncapped journal and AMA per meritsubs entitlements.</p>
 
   <h2>4. meritutils (PAR CDN)</h2>
-  <p>Browser packages such as <code>merit_workbench</code> and <code>journal</code> load from <code>pkg-meritutils.vercel.app</code>. Free tiers use OSS pins (<code>@0.4.x</code>, <code>@0.2.x</code>); Plus may enable commercial pins when provisioned.</p>
+  <p>Browser packages such as <code>merit_workbench</code> and <code>journal</code> load through <code>merit-prod.vercel.app/pkg/meritutils</code>. Free tiers use OSS pins (<code>@0.4.x</code>, <code>@0.2.x</code>); Plus may enable commercial pins when provisioned.</p>
 
   <h2>5. Privacy &amp; region display</h2>
   <p>AMA leaderboard may show region at state level using geo-IP when enabled, or profile fields you provide. Finer geographic labels require explicit opt-in. Guest local-only mode stores data in your browser only. Cloud journal and AMA require Supabase configuration on the deployed host.</p>
