@@ -11,7 +11,7 @@ Create an empty working directory and clone the public skills repo plus this dem
 ```powershell
 mkdir C:\MeritOverDinner
 cd C:\MeritOverDinner
-git clone --branch skills-v0.3.13 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -23,7 +23,7 @@ Linux/macOS:
 ```bash
 mkdir -p ~/MeritOverDinner
 cd ~/MeritOverDinner
-git clone --branch skills-v0.3.13 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -94,6 +94,24 @@ Linux/macOS:
 ```
 
 The wrapper runs the underlying build, scaffold verification, provider checks, route e2e, optional Playwright screenshots, and git whitespace hygiene. Raw `npm run *` commands are implementation details for maintainers.
+
+## E2E Testing Using Playwright (optional)
+
+The first pass can run without installing Node dependencies, but screenshot proof needs Playwright:
+
+```powershell
+npm install
+.\merit.ps1 e2e
+```
+
+Linux/macOS:
+
+```bash
+npm install
+./merit.sh e2e
+```
+
+`npm install` installs this repo’s declared test tooling, including `@playwright/test`; postinstall attempts to install Chromium for screenshot capture. If dependencies are missing, the wrapper skips screenshots and still reports the non-visual checks. For launch validation, run this optional section so `merit-demo docs/evidence/` is refreshed.
 
 ## Usage validation evidence
 
