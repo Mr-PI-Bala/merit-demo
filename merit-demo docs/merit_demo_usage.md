@@ -1,13 +1,81 @@
-# merit-demo — usage
+﻿# merit-demo — usage
 
-**New creators:** start with **[HowToLaunch-Over-Dinner-Tutorial.md](../HowToLaunch-Over-Dinner-Tutorial.md)** (3 steps, lazy accounts).
+`merit-demo` is the public hello-world consumer for MERIT Agent Skills and MERIT Prod. It shows workbench, journal, AMA, Portal, legal pages, and the production registration path without exposing provider billing or metered utility source code.
 
-Full operator checklist: **[OPERATOR_PROVISION.md](OPERATOR_PROVISION.md)**.  
-Vault env compose + deploy phases: **merit-private-vault** → `docs/IAR/MERIT_DEMO_PROVISION_PLAN.md`.
+## 3 Steps Over Dinner
 
-## meritutils usage alignment
+### 1. Local Setup
 
-merit-demo declares its showcase consumer lane in `cfg/meritutils_consumer.json`. Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affiliate code `MERITDEMO`. The hosted provider controls the intro credit budget (default $25) and Square checkout; this public repo does not expose or own billing logic.
+Create an empty working directory and clone the public skills repo plus this demo:
+
+```powershell
+mkdir C:\MeritOverDinner
+cd C:\MeritOverDinner
+git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone https://github.com/Mr-PI-Bala/merit-demo.git
+cd merit-agent-skills
+.\install.ps1 -Target Cursor
+.\merit.ps1 verify --path ..\merit-demo
+```
+
+Linux/macOS:
+
+```bash
+mkdir -p ~/MeritOverDinner
+cd ~/MeritOverDinner
+git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone https://github.com/Mr-PI-Bala/merit-demo.git
+cd merit-agent-skills
+./install.sh -Target Cursor
+./merit.sh verify --path ../merit-demo
+```
+
+### 2. Initialize The Repository
+
+`.merit_launch.md` is the one private file you edit. It creates the other required local/machine files for this repo, including `.env.local`, `cfg/flask_deploy.json`, and `cfg/portals.json`.
+
+```powershell
+.\merit.ps1 init --path ..\merit-demo
+# edit ..\merit-demo\.merit_launch.md mandatory section
+.\merit.ps1 apply --path ..\merit-demo
+npx vercel link --scope <your-vercel-scope>
+.\merit.ps1 deploy --path ..\merit-demo
+```
+
+Linux/macOS:
+
+```bash
+./merit.sh init --path ../merit-demo
+# edit ../merit-demo/.merit_launch.md mandatory section
+./merit.sh apply --path ../merit-demo
+npx vercel link --scope <your-vercel-scope>
+./merit.sh deploy --path ../merit-demo
+```
+
+`apply` can generate MERIT config, but Vercel still owns `.vercel/project.json`; run `npx vercel link` once before the first cloud deploy.
+
+### 3. Add Marketing Front-End & Save
+
+Edit the demo Portal in `portal/` when you want a public marketing face:
+
+```powershell
+# edit ..\merit-demo\portal\index.html and portal.json
+.\merit.ps1 portal --path ..\merit-demo
+git -C ..\merit-demo status
+git -C ..\merit-demo add .
+git -C ..\merit-demo commit -m "launch: update Portal"
+git -C ..\merit-demo push
+```
+
+Use `merit-closeout` only if you are operating inside the private MERIT vault workflow. Public creators can use normal Git status/add/commit/push.
+
+## Provider and usage boundary
+
+Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affiliate code `MERITDEMO`. The hosted provider controls the intro credit budget (default $25) and Square checkout; this public repo does not expose or own billing logic.
+
+Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
+
+Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 
 ## Build
 
@@ -15,55 +83,14 @@ merit-demo declares its showcase consumer lane in `cfg/meritutils_consumer.json`
 npm install
 npm run verify
 npm run build
+npm run e2e
 ```
 
-## Deploy (operator Vercel scope)
+## Optional Supabase
 
-```powershell
-# from merit-agent-skills
-.\merit.ps1 init --path C:\path\to\merit-demo
-# edit C:\path\to\merit-demo\.merit_launch.md
-.\merit.ps1 apply --path C:\path\to\merit-demo
-.\merit.ps1 deploy --path C:\path\to\merit-demo
-```
+For cloud journal/AMA persistence, create your own Supabase project and run:
 
-Set `.merit_launch.md` → mandatory values at the top. `merit apply` writes `.env.local`, `cfg/flask_deploy.json`, and `cfg/portals.json`.
+- `sql/001_merit_demo.sql`
+- `sql/002_ama_daily_activity.sql`
 
-## Env (optional Supabase)
-
-`.env.local`:
-
-```
-SUPABASE_URL=
-SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-MERIT_CONSUMER_ID=merit-demo
-```
-
-Run `sql/001_merit_demo.sql` in consumer Supabase project.
-
-## Portal (here.now BYOK)
-
-```powershell
-.\merit.ps1 portal --path .
-```
-
-## meritsubs / usage boundary
-
-Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
-
-## meritstore
-
-Provision tenant from `cfg/meritstore_tenant.json` after vault integration cert.
-
-Register: `https://merit-prod.vercel.app/store/merit-demo/register`
-
-## Smokes
-
-- `npm run verify` — scaffold files
-- `npm run e2e` — PAR CDN HEAD (set `MERIT_DEMO_BASE_URL` for live host)
-- external `GET {MERITSUBS_PUBLIC_BASE_URL}/api/v1/health` — provider health
-- external `{MERIT_METERED_API_BASE_URL}/api/ama` and `/api/journal` — metered utility APIs
-- `/journal/` — save entry (local or Supabase)
-- `/ama/` — ask + vote with privacy modes (geo-IP on Vercel)
-- `/admin/` — flexible Plus pricing UI
+Then set the Supabase values in `.merit_launch.md` and run `merit apply`.
