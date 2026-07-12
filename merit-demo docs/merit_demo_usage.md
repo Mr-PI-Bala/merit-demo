@@ -75,6 +75,16 @@ Production handler policy: public `merit-demo` ships no local meritsubs, AMA, jo
 
 Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 
+Promo ownership:
+
+| Setting | Owner | Purpose |
+|---|---|---|
+| `MERIT_DEFAULT_PROMOCODE` | Consumer `.env.local` / `.merit_launch.md` | Normal subscriber-facing default, usually `MERITAGENT` |
+| `SQUARE_PRODUCTION_TEST_PROMO_CODE` | Consumer `.env.local` only | Operator-only charge/refund probe, usually `ONLY1CENT` |
+| `discount_engine.promo_codes[]` | Hosted meritstore tenant config | Provider-side allowlist and discount behavior for codes such as `MERITAGENT`, `ONLY1CENT`, `ONLY5CENT` |
+
+Do not hardcode a test promo in Playwright. The production charge/refund test should read `SQUARE_PRODUCTION_TEST_PROMO_CODE` from the consumer `.env.local`, submit that code to hosted meritstore, charge through Square Web Payments, and refund the resulting payment when `SQUARE_PRODUCTION_TEST_REFUND_AFTER_CHARGE=true`.
+
 ## Build
 
 Use the MERIT wrapper for validation and closeout:
