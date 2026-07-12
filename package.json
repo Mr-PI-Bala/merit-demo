@@ -7,9 +7,13 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "verify": "node scripts/build.mjs && node scripts/verify.mjs",
-    "e2e": "node scripts/build.mjs && node scripts/e2e-smoke.mjs"
+    "e2e": "node scripts/build.mjs && node scripts/e2e-smoke.mjs",
+    "e2e:playwright": "node scripts/build.mjs && node scripts/e2e-playwright.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1"
   }
 }

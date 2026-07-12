@@ -1,0 +1,19 @@
+{
+  "schema": "merit.demo.diag.v1",
+  "consumer_id": "merit-demo",
+  "surfaces": [
+    "/",
+    "/portal/",
+    "/play/",
+    "/journal/",
+    "/ama/",
+    "/admin/",
+    "/diag/"
+  ],
+  "provider_base_url": "https://merit-prod.vercel.app",
+  "register_url": "https://merit-prod.vercel.app/store/merit-demo/register",
+  "validation": {
+    "command": "./merit.ps1 closeout",
+    "screenshots": "merit-demo docs/evidence/"
+  }
+}

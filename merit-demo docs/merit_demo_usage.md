@@ -11,7 +11,7 @@ Create an empty working directory and clone the public skills repo plus this dem
 ```powershell
 mkdir C:\MeritOverDinner
 cd C:\MeritOverDinner
-git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.13 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -23,7 +23,7 @@ Linux/macOS:
 ```bash
 mkdir -p ~/MeritOverDinner
 cd ~/MeritOverDinner
-git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.13 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -77,12 +77,58 @@ Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 
 ## Build
 
+Use the MERIT wrapper for validation and closeout:
+
 ```powershell
-npm install
-npm run verify
-npm run build
-npm run e2e
+.\merit.ps1 verify
+.\merit.ps1 e2e
+.\merit.ps1 closeout
 ```
+
+Linux/macOS:
+
+```bash
+./merit.sh verify
+./merit.sh e2e
+./merit.sh closeout
+```
+
+The wrapper runs the underlying build, scaffold verification, provider checks, route e2e, optional Playwright screenshots, and git whitespace hygiene. Raw `npm run *` commands are implementation details for maintainers.
+
+## Usage validation evidence
+
+The launch scrub validates the demo from five angles:
+
+| Dimension | What is checked |
+|---|---|
+| Local routes | `/`, `/portal/`, `/play/`, `/journal/`, `/ama/`, `/admin/`, `/diag/manifest.json` |
+| Provider boundary | Hosted `merit-prod.vercel.app` health and register route |
+| Metered source boundary | No local meritsubs/AMA/journal metered handlers in the public repo |
+| Desktop UX | Playwright screenshots for home, portal, play, journal, AMA, and admin |
+| Mobile UX | Playwright screenshots for portal, play, journal, and AMA |
+
+Screenshots are generated under `merit-demo docs/evidence/` when Playwright is installed:
+
+- `evidence/portal-desktop.png`
+- `evidence/play-desktop.png`
+- `evidence/journal-desktop.png`
+- `evidence/ama-desktop.png`
+- `evidence/admin-desktop.png`
+- `evidence/portal-mobile.png`
+- `evidence/play-mobile.png`
+- `evidence/journal-mobile.png`
+- `evidence/ama-mobile.png`
+
+Latest local validation evidence:
+
+| Pathway | Desktop | Mobile |
+|---|---|---|
+| Home | ![home desktop](evidence/home-desktop.png) | — |
+| Portal | ![portal desktop](evidence/portal-desktop.png) | ![portal mobile](evidence/portal-mobile.png) |
+| Play | ![play desktop](evidence/play-desktop.png) | ![play mobile](evidence/play-mobile.png) |
+| Journal | ![journal desktop](evidence/journal-desktop.png) | ![journal mobile](evidence/journal-mobile.png) |
+| AMA | ![ama desktop](evidence/ama-desktop.png) | ![ama mobile](evidence/ama-mobile.png) |
+| Admin | ![admin desktop](evidence/admin-desktop.png) | — |
 
 ## Optional Supabase
 

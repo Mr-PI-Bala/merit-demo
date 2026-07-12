@@ -29,3 +29,16 @@ Plus: **$10.79/mo** — `cfg/plus_sku.json` + `cfg/meritstore_tenant.json` offer
 ## Data
 
 Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, meritsubs migration on same project. See `OPERATOR_PROVISION.md`.
+
+## Validation lifecycle
+
+`merit-demo` documents and supports `merit.ps1` / `merit.sh` as the public command surface.
+
+| Command | Purpose |
+|---|---|
+| `./merit.ps1 verify` | Build and verify scaffold, forbidden local metered handlers, and git whitespace |
+| `./merit.ps1 e2e` | Run PAR/provider smoke plus Playwright route validation and screenshots |
+| `./merit.ps1 deploy` | Verify, link Vercel when missing, deploy production |
+| `./merit.ps1 closeout` | Verify, e2e, whitespace, git status/head evidence |
+
+Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are implementation details under the wrapper.
