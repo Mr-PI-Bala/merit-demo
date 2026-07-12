@@ -11,7 +11,7 @@ Create an empty working directory and clone the public skills repo plus this dem
 ```powershell
 mkdir C:\MeritOverDinner
 cd C:\MeritOverDinner
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -23,7 +23,7 @@ Linux/macOS:
 ```bash
 mkdir -p ~/MeritOverDinner
 cd ~/MeritOverDinner
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -38,7 +38,6 @@ cd merit-agent-skills
 .\merit.ps1 init --path ..\merit-demo
 # edit ..\merit-demo\.merit_launch.md mandatory section
 .\merit.ps1 apply --path ..\merit-demo
-npx vercel link --scope <your-vercel-scope>
 .\merit.ps1 deploy --path ..\merit-demo
 ```
 
@@ -48,11 +47,10 @@ Linux/macOS:
 ./merit.sh init --path ../merit-demo
 # edit ../merit-demo/.merit_launch.md mandatory section
 ./merit.sh apply --path ../merit-demo
-npx vercel link --scope <your-vercel-scope>
 ./merit.sh deploy --path ../merit-demo
 ```
 
-`apply` can generate MERIT config, but Vercel still owns `.vercel/project.json`; run `npx vercel link` once before the first cloud deploy.
+`apply` can generate MERIT config, but Vercel still owns `.vercel/project.json`; `merit deploy` links Vercel automatically when that file is missing and records local deployment state tags in `.env.local`.
 
 ### 3. Add Marketing Front-End & Save
 

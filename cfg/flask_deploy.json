@@ -2,5 +2,5 @@
     "project_id":  "merit-demo",
     "vercel_scope":  "REPLACE_WITH_YOUR_VERCEL_TEAM",
     "production_branch":  "main",
-    "notes":  "Run npx vercel link --scope REPLACE_WITH_YOUR_VERCEL_TEAM once. Vercel creates .vercel/project.json."
+    "notes":  "merit deploy links Vercel automatically when .vercel/project.json is missing."
 }

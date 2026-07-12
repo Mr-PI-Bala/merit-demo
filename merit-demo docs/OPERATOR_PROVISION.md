@@ -40,7 +40,6 @@ npm run verify
 .\merit.ps1 init --path C:\path\to\merit-demo
 notepad C:\path\to\merit-demo\.merit_launch.md
 .\merit.ps1 apply --path C:\path\to\merit-demo
-npx vercel link --scope YOUR_VERCEL_SCOPE
 .\merit.ps1 deploy --path C:\path\to\merit-demo
 ```
 

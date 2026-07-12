@@ -1,4 +1,4 @@
-# merit-demo
+﻿# merit-demo
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
@@ -7,7 +7,7 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 ## Quickstart
 
 ```powershell
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -20,7 +20,7 @@ cd merit-agent-skills
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.12 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
