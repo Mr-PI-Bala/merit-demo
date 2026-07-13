@@ -1,12 +1,15 @@
 #!/usr/bin/env node
-/** merit-demo E2E smoke — PAR CDN, build artifacts, optional live host. */
+/** MERIT consumer E2E smoke — PAR CDN, build artifacts, optional live host. */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
-const pins = JSON.parse(fs.readFileSync(path.join(root, 'cfg/par_pins.json'), 'utf8'));
+const readJson = (file) => JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''));
+const pins = readJson(path.join(root, 'cfg/par_pins.json'));
+const sync = readJson(path.join(root, 'cfg/merit-sync.json'));
+const consumerId = sync.consumer_id;
 const failures = [];
 
 async function head(url, label) {
@@ -25,7 +28,7 @@ function requireFile(rel) {
   else console.log(`OK file ${rel}`);
 }
 
-console.log('=== merit-demo E2E ===\n');
+console.log(`=== ${consumerId} E2E ===\n`);
 
 requireFile('play/index.html');
 requireFile('journal/index.html');
@@ -36,6 +39,9 @@ const play = fs.readFileSync(path.join(root, 'play/index.html'), 'utf8');
 if (!play.includes('merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0')) {
   failures.push('play/index.html missing merit_workbench@0.4.0 PAR URL');
 }
+if (!play.includes('Hello, meritutils') || !play.includes('data-provider-ready')) {
+  failures.push('play/index.html missing the hosted meritutils Hello World proof');
+}
 
 const wb = pins.packages?.merit_workbench?.artifacts;
 const jn = pins.packages?.journal?.artifacts;
@@ -44,7 +50,7 @@ if (wb?.css?.url) await head(wb.css.url, 'merit_workbench.css');
 if (jn?.mjs?.url) await head(jn.mjs.url, 'journal.mjs');
 if (jn?.css?.url) await head(jn.css.url, 'journal.css');
 
-const host = process.env.MERIT_DEMO_BASE_URL || '';
+const host = process.env.MERIT_CONSUMER_BASE_URL || process.env.MERIT_DEMO_BASE_URL || '';
 if (host) {
   const base = host.replace(/\/$/, '');
   for (const route of ['/diag/manifest.json', '/legal.html']) {

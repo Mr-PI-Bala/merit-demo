@@ -42,3 +42,13 @@ Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, m
 | `./merit.ps1 closeout` | Verify, e2e, whitespace, git status/head evidence |
 
 Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are implementation details under the wrapper.
+
+## Provider-consumer decision
+
+| Edge | Decision | Evidence |
+|---|---|---|
+| `meritutils → merit-demo` | **ACCEPT** | `merit_workbench@0.4.0` and `journal@0.2.2` load from the canonical production gateway; Playwright validates the visible Hello World proof and hosted registry. |
+| `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
+| `meritstore → merit-demo` | **ACCEPT** | Tenant route `https://merit-prod.vercel.app/store/merit-demo/register` is provisioned and returns 200. |
+
+This acceptance covers the public reference-consumer contract. It does not promote the hosted providers beyond their independently declared release stages.

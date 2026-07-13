@@ -9,10 +9,22 @@
 </head>
 <body>
   <header id="merit-header"></header>
+  <section class="merit-hello" aria-labelledby="meritutils-hello-title">
+    <h1 id="meritutils-hello-title">Hello, meritutils</h1>
+    <p id="meritutils-hello-status" data-provider-ready="pending">Loading the hosted merit_workbench package…</p>
+  </section>
   <main id="merit-workbench-mount"><p>Loading workbench…</p></main>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
   <script src="https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.js" integrity="sha384-50h+5mm7tpQsOkVG/cxlvuu3Cl7+xw4C4H5EwGoKgqKScbeBRnxI29CxEtMcPOkf" crossorigin="anonymous"></script>
+  <script>
+    const helloStatus = document.getElementById('meritutils-hello-status');
+    const providerReady = Boolean(globalThis.merit_workbench?.MeritWorkbenchLayout);
+    helloStatus.dataset.providerReady = providerReady ? 'true' : 'false';
+    helloStatus.textContent = providerReady
+      ? 'Hosted merit_workbench@0.4.0 loaded from merit-prod.vercel.app.'
+      : 'Hosted merit_workbench did not load.';
+  </script>
 </body>
 </html>

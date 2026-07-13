@@ -4,6 +4,8 @@
 
 ## Status matrix
 
+**Integration decision:** **ACCEPT** for the hosted meritutils, meritsubs, and meritstore consumer edges as validated on 2026-07-13. Subscriber-created Supabase/Vercel resources remain optional operator steps for a white-labeled deployment.
+
 | Step | In-repo | Operator action |
 |------|---------|-----------------|
 | Legal (`portal/legal.html`, `/legal/terms`) | Done | Review copy |
@@ -11,7 +13,7 @@
 | meritsubs / usage authority | Production provider mount reference | Vercel env + deploy |
 | Supabase consumer project | SQL ready | Create project, run migrations |
 | Vercel deploy | `vercel.json` + build | `merit init`, edit `.merit_launch.md`, apply, link/deploy |
-| meritstore tenant | `cfg/meritstore_tenant.json` seed | Vault provision after cert |
+| meritstore tenant | `cfg/meritstore_tenant.json` seed | **Provisioned and live** |
 | here.now portals | `.merit_launch.md` slugs → `cfg/portals.json` | `merit portal` BYOK |
 | Production OAuth | Python handler | meritsubs env on Vercel |
 

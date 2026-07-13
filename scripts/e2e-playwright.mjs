@@ -5,7 +5,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const evidenceDir = path.join(root, 'merit-demo docs', 'evidence');
+const sync = JSON.parse(fs.readFileSync(path.join(root, 'cfg/merit-sync.json'), 'utf8').replace(/^\uFEFF/, ''));
+const consumerId = sync.consumer_id;
+const evidenceDir = path.join(root, `${consumerId} docs`, 'evidence');
 const failures = [];
 const routes = [
   { path: '/', label: 'home' },
@@ -83,6 +85,13 @@ async function browserCheck(base) {
     await page.screenshot({ path: path.join(evidenceDir, `${route.label}-desktop.png`), fullPage: true });
     console.log(`OK screenshot ${route.label}-desktop.png`);
   }
+  await page.goto(`${base}/play/`, { waitUntil: 'networkidle' });
+  const hello = page.locator('#meritutils-hello-status');
+  if ((await hello.getAttribute('data-provider-ready')) !== 'true') {
+    failures.push('Hello World: hosted merit_workbench package did not initialize');
+  } else {
+    console.log('OK Hello World hosted meritutils package');
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/portal/', '/play/', '/journal/', '/ama/']) {
     const label = route.replaceAll('/', '') || 'home';
@@ -96,7 +105,9 @@ async function browserCheck(base) {
 async function providerCheck() {
   const checks = [
     ['https://merit-prod.vercel.app/api/health', 'merit-prod health', true],
-    ['https://merit-prod.vercel.app/store/merit-demo/register', 'hosted register path', false],
+    ['https://merit-prod.vercel.app/pkg/meritutils/registry.json', 'meritutils registry', true],
+    ['https://merit-prod.vercel.app/api/meritsubs/api/v1/health', 'meritsubs health', true],
+    [sync.meritstore_register_url, `${consumerId} hosted register path`, true],
   ];
   for (const [url, label, required] of checks) {
     try {
@@ -111,7 +122,7 @@ async function providerCheck() {
   }
 }
 
-console.log('=== merit-demo Playwright e2e ===');
+console.log(`=== ${consumerId} Playwright e2e ===`);
 const server = await startServer();
 const address = server.address();
 const base = `http://127.0.0.1:${address.port}`;
@@ -128,4 +139,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('E2E OK: merit-demo routes, provider links, screenshots');
+console.log(`E2E OK: ${consumerId} routes, provider links, Hello World, screenshots`);

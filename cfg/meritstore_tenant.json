@@ -38,6 +38,6 @@
     "processing_fee_percent": 4,
     "processing_fee_fixed_usd": 0.5
   },
-  "status": "pending_platform_provision",
-  "notes": "Operator provisions tenant on meritstore after integration cert. Flexible price points via operator-admin."
+  "status": "ACCEPT",
+  "notes": "Provisioned on meritstore and verified through https://merit-prod.vercel.app/store/merit-demo/register on 2026-07-13."
 }

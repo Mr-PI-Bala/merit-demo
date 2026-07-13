@@ -1,6 +1,6 @@
 {
     "project_id":  "merit-demo",
-    "vercel_scope":  "REPLACE_WITH_YOUR_VERCEL_TEAM",
+    "vercel_scope":  "agentdraven",
     "production_branch":  "main",
     "notes":  "merit deploy links Vercel automatically when .vercel/project.json is missing."
 }

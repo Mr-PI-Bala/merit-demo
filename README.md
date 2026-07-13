@@ -7,7 +7,7 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 ## Quickstart
 
 ```powershell
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -20,7 +20,7 @@ cd merit-agent-skills
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.3.11 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -53,6 +53,8 @@ Linux/macOS:
 | `/ama/` | AMA UI; metered API from production MERIT mount | portal/ama/ |
 | Metered utilities | No local stub/API source; uses production MERIT Vercel mounts | — |
 | Register | meritstore | portal/subs/ |
+
+`/play/` is the canonical **Hello, meritutils** proof: it loads the production-hosted `merit_workbench@0.4.0` package and reports readiness in the page before the interactive workbench.
 
 ## Build & deploy
 
