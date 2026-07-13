@@ -51,4 +51,6 @@ Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are im
 | `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
 | `meritstore → merit-demo` | **ACCEPT** | Tenant route `https://merit-prod.vercel.app/store/merit-demo/register` is provisioned and returns 200. |
 
+**Decision: ACCEPT** all three provider-consumer edges above for this public reference-consumer baseline.
+
 This acceptance covers the public reference-consumer contract. It does not promote the hosted providers beyond their independently declared release stages.
