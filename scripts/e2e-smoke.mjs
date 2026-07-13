@@ -63,7 +63,7 @@ if (host) {
     }
   }
 } else {
-  console.log('(skip live host — set MERIT_DEMO_BASE_URL for deployed smoke)');
+  console.log('(skip live host — set MERIT_CONSUMER_BASE_URL for deployed smoke)');
 }
 
 if (failures.length) {
