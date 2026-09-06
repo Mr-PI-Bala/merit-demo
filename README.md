@@ -2,6 +2,8 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
+Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+
 **Start here** after cloning [merit-agent-skills](https://github.com/AgentDraven/merit-agent-skills) (Hub pin / `oss-bench.json`, currently **skills-v0.5.66**).
 
 ## Quickstart
