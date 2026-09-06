@@ -4,7 +4,10 @@ All notable changes to **merit-demo** (public MERIT freemium showcase consumer).
 
 Format: Keep a Changelog–style sections under each version. Versions align with `VERSION` / `package.json`.
 
-## [0.3.7] — 2026-09-06
+## [0.3.8] — 2026-09-06
+
+### Changed
+- Reworked the README diagram into a colorful sequential three-row learning flow.
 
 ### Changed
 - Reworked README onboarding into a persona-based flow with progressive disclosure.

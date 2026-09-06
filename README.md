@@ -7,13 +7,24 @@ Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 ## Start here — choose your path
 
 ```mermaid
-flowchart LR
-    A[What do you want?] --> B[See the demo]
-    A --> C[Build on the template]
-    A --> D[Deploy your version]
-    B --> B1[quickstart]
-    C --> C1[edit app + cfg]
-    D --> D1[deploy / portal]
+flowchart TB
+    classDef one fill:#dbeafe,color:#172554,stroke:#2563eb,stroke-width:2px
+    classDef two fill:#dcfce7,color:#14532d,stroke:#16a34a,stroke-width:2px
+    classDef three fill:#fef3c7,color:#78350f,stroke:#d97706,stroke-width:2px
+    subgraph R1[① See the demo]
+      direction LR
+      A1[📥 Clone]:::one --> A2[▶️ quickstart]:::one --> A3[👀 Open /play/]:::one
+    end
+    subgraph R2[② Build on the template]
+      direction LR
+      B1[🎨 Edit branding]:::two --> B2[🧩 Edit app + cfg]:::two --> B3[🧪 Verify]:::two
+    end
+    subgraph R3[③ Deploy your version]
+      direction LR
+      C1[✅ Closeout]:::three --> C2[☁️ Deploy]:::three --> C3[📣 Publish portal]:::three
+    end
+    A3 --> B1
+    B3 --> C1
 ```
 
 ### See the demo
