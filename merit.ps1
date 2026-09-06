@@ -5,6 +5,7 @@ param()
 $ErrorActionPreference = 'Stop'
 $Root = $PSScriptRoot
 $Command = if ($args.Count -gt 0) { "$($args[0])".ToLowerInvariant() } else { 'help' }
+$Rest = if ($args.Count -gt 1) { @($args[1..($args.Count - 1)]) } else { @() }
 
 function Write-MeritHelp {
     Write-Host @"
@@ -16,10 +17,28 @@ Commands:
   serve       Build, then serve the repo over HTTP and print /play/ URL
   deploy      Verify, link Vercel when needed, and deploy production
   closeout    Verify + e2e + git whitespace/status/head evidence
+  admin       Forward MERIT admin tasks (for example: admin github access status)
   help        Print this help
 
 Prefer this wrapper over raw npm/npx/vercel. (npm is still what the wrapper calls under the hood.)
 "@
+}
+
+function Invoke-MeritSkillsForward {
+    param([string[]]$ForwardArgs)
+    $skills = Join-Path (Split-Path -Parent $Root) 'merit-agent-skills\merit.ps1'
+    if (-not (Test-Path -LiteralPath $skills)) {
+        $bench = if ($env:MYMERITAPP) { Join-Path $env:MYMERITAPP 'oss-bench.json' } else { '' }
+        if ($bench -and (Test-Path $bench)) {
+            $cfg = Get-Content -LiteralPath $bench -Raw | ConvertFrom-Json
+            if ($cfg.skillsFolder) { $skills = Join-Path ([string]$cfg.skillsFolder) 'merit.ps1' }
+        }
+    }
+    if (-not (Test-Path -LiteralPath $skills)) { throw "MERIT skills CLI not found. Expected sibling: $skills" }
+    $runner = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
+    if (-not $runner) { $runner = (Get-Command powershell -ErrorAction Stop).Source }
+    & $runner -NoProfile -ExecutionPolicy Bypass -File $skills @ForwardArgs
+    exit $LASTEXITCODE
 }
 
 function Invoke-Serve {
@@ -115,5 +134,6 @@ switch -Regex ($Command) {
     '^(serve|play)$' { Invoke-Serve; exit 0 }
     '^deploy$' { Invoke-Deploy; exit 0 }
     '^closeout$' { Invoke-Closeout; exit 0 }
+    '^admin$' { $forward = @('admin') + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
     default { Write-MeritHelp; exit 1 }
 }
