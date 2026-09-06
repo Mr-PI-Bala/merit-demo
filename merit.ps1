@@ -13,13 +13,30 @@ merit-demo CLI
 Commands:
   verify      Build and verify the local consumer scaffold
   e2e         Run local/provider e2e plus Playwright screenshots when available
+  serve       Build, then serve the repo over HTTP and print /play/ URL
   deploy      Verify, link Vercel when needed, and deploy production
   closeout    Verify + e2e + git whitespace/status/head evidence
   help        Print this help
 
-Public users should run this wrapper instead of raw npm/vercel/git commands.
+Prefer this wrapper over raw npm/npx/vercel. (npm is still what the wrapper calls under the hood.)
 "@
 }
+
+function Invoke-Serve {
+    Push-Location $Root
+    try {
+        Invoke-Step 'build' { npm run build }
+        Write-Host ''
+        Write-Host 'Serving repo root over HTTP. Open /play/ for Hosted Ready proof.'
+        Write-Host 'Stop with Ctrl+C when done.'
+        Write-Host ''
+        # serve is a one-liner static server; --yes avoids npx prompt. Port printed by serve.
+        npx --yes serve . -l 3000
+    } finally {
+        Pop-Location
+    }
+}
+
 
 function Invoke-Step {
     param([string]$Label, [scriptblock]$Block)
@@ -95,6 +112,7 @@ switch -Regex ($Command) {
     '^(help|\?)$' { Write-MeritHelp; exit 0 }
     '^verify$' { Invoke-Verify; exit 0 }
     '^e2e$' { Invoke-E2E; exit 0 }
+    '^(serve|play)$' { Invoke-Serve; exit 0 }
     '^deploy$' { Invoke-Deploy; exit 0 }
     '^closeout$' { Invoke-Closeout; exit 0 }
     default { Write-MeritHelp; exit 1 }

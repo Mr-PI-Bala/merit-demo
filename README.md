@@ -2,12 +2,12 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
-**Start here** after cloning [merit-agent-skills](https://github.com/AgentDraven/merit-agent-skills).
+**Start here** after cloning [merit-agent-skills](https://github.com/AgentDraven/merit-agent-skills) (Hub pin / `oss-bench.json`, currently **skills-v0.5.66**).
 
 ## Quickstart
 
 ```powershell
-git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -20,7 +20,7 @@ cd merit-agent-skills
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
+git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -54,7 +54,7 @@ Linux/macOS:
 | Metered utilities | No local stub/API source; uses production MERIT Vercel mounts | — |
 | Register | meritstore | portal/subs/ |
 
-`/play/` is the canonical **Hello, meritutils** proof: it loads the production-hosted `merit_workbench@0.4.0` package and reports readiness in the page before the interactive workbench.
+`/play/` is the canonical **Hello, meritutils** proof: DualRail `createAppShell` loads production-hosted `merit_workbench@0.4.0`, mounts the interactive shell, and reports **Hosted Ready** (or a labeled offline stub on failure). Prefer `.\merit.ps1 serve` (HTTP) — `file://` is smoke-only.
 
 ## Build & deploy
 

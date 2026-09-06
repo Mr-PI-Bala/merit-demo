@@ -45,27 +45,38 @@ const branding = readJson('cfg/branding.json') || {};
 const sync = readJson('cfg/merit-sync.json') || {};
 const limits = readJson('cfg/freemium_limits.json') || {};
 const plus = readJson('cfg/plus_sku.json') || {};
+const pins = readJson('cfg/par_pins.json') || {};
+const portals = readJson('cfg/portals.json') || {};
+const meteredBase = (env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 'https://merit-prod.vercel.app').replace(/\/$/, '');
 
-fs.writeFileSync(
-  path.join(dist, 'config.js'),
-  `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
-    {
-      consumer_id: sync.consumer_id || 'merit-demo',
-      supabaseUrl: url,
-      supabaseAnonKey: anon,
-      branding,
-      freemium: limits.guest_and_free || {},
-      plusSku: plus.default || {},
-      meritstoreRegisterUrl: sync.meritstore_register_url || '',
-      meteredApiBase: env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 'https://merit-prod.vercel.app',
-      meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://merit-prod.vercel.app/api/meritsubs',
-    },
-    null,
-    2
-  )};\n`
-);
+const configBody = `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
+  {
+    consumer_id: sync.consumer_id || 'merit-demo',
+    supabaseUrl: url,
+    supabaseAnonKey: anon,
+    branding,
+    freemium: limits.guest_and_free || {},
+    plusSku: plus.default || {},
+    meritstoreRegisterUrl: sync.meritstore_register_url || '',
+    meteredApiBase: meteredBase,
+    meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://merit-prod.vercel.app/api/meritsubs',
+    portalUrl: portals.here_now_url || portals.portal_url || '/portal/',
+    parPins: pins,
+    expectedWorkbenchVersion: pins?.packages?.merit_workbench?.version || '0.4.0',
+    healthUrl: `${meteredBase}/api/health`,
+  },
+  null,
+  2
+)};\n`;
+
+// Root copy enables local HTTP from repo root (`npx serve .`); dist is for Vercel.
+fs.writeFileSync(path.join(root, 'config.js'), configBody);
+fs.writeFileSync(path.join(dist, 'config.js'), configBody);
 
 copyFile(path.join(root, 'assets', 'merit-shell.js'), path.join(dist, 'assets', 'merit-shell.js'));
+if (fs.existsSync(path.join(root, 'assets', 'merit-surface.css'))) {
+  copyFile(path.join(root, 'assets', 'merit-surface.css'), path.join(dist, 'assets', 'merit-surface.css'));
+}
 
 const portalIndex = path.join(root, 'portal', 'index.html');
 copyFile(portalIndex, path.join(dist, 'index.html'));
@@ -83,7 +94,6 @@ if (fs.existsSync(path.join(root, 'portal', 'terms.html'))) {
   copyFile(path.join(root, 'portal', 'terms.html'), path.join(dist, 'legal', 'terms.html'));
 }
 
-const pins = readJson('cfg/par_pins.json');
 const diag = {
   consumer: sync.consumer_id || 'merit-demo',
   version,

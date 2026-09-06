@@ -2,16 +2,44 @@
 
 `merit-demo` is the public hello-world consumer for MERIT Agent Skills and MERIT Prod. It shows workbench, journal, AMA, Portal, legal pages, and the production registration path without exposing provider billing or metered utility source code.
 
+**Controlling plan:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
+
+## Path resolve (agents and operators)
+
+Do not hardcode `C:\MyMeritApp`. Resolve:
+
+1. `%MYMERITAPP%` / `$env:MYMERITAPP` (Hub menu **1**)
+2. `%MYMERITAPP%\oss-bench.json` → `demoFolder` / `skillsFolder`
+3. Sibling CLI: `..\merit-agent-skills\merit.ps1 where` (or Hub **W**)
+
+Skills install to the **IDE skills host** (`~/.cursor/skills`), not a full tree under this repo’s `.cursor`.
+
+## Local HTTP (required for real play)
+
+`file://` is smoke-only. Absolute `/config.js` and `/assets/…` need a served origin. Prefer the demo CLI (wraps build + static server):
+
+```powershell
+cd $env:MYMERITAPP\merit-demo   # or C:\DApps\merit-demo
+.\merit.ps1 serve
+# open http://localhost:3000/play/
+```
+
+Linux/macOS: `./merit.sh serve` when present, or `.\merit.ps1 serve` under pwsh.
+
+Expect **Hosted Ready** (not endless “Loading workbench…”): Hello line shows `data-runtime-state="hosted-ready"`, DualRail shell mounts, and the workbench grid appears. On CDN/shell failure you get a **labeled offline stub** with retry + portal link — not a second local workbench CDN.
+
+Validate without browsing: `.\merit.ps1 verify` then `.\merit.ps1 e2e` (or one-shot `.\merit.ps1 closeout`).
+
 ## 3 Steps Over Dinner
 
 ### 1. Local Setup
 
-Create an empty working directory and clone the public skills repo plus this demo:
+Prefer Hub **1 → 2 → 3** under your chosen `MYMERITAPP`. Manual twin:
 
 ```powershell
-mkdir C:\MeritOverDinner
-cd C:\MeritOverDinner
-git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
+# MYMERITAPP already set (example: C:\DApps)
+cd $env:MYMERITAPP
+git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 .\install.ps1 -Target Cursor
@@ -21,9 +49,8 @@ cd merit-agent-skills
 Linux/macOS:
 
 ```bash
-mkdir -p ~/MeritOverDinner
-cd ~/MeritOverDinner
-git clone --branch skills-v0.3.14 https://github.com/AgentDraven/merit-agent-skills.git
+cd "$MYMERITAPP"
+git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
 cd merit-agent-skills
 ./install.sh -Target Cursor
@@ -73,7 +100,7 @@ Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affil
 
 Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
 
-Hello World proof: open `/play/`. The page must show **Hello, meritutils** and confirm that `merit_workbench@0.4.0` loaded from `merit-prod.vercel.app`. `merit.ps1 e2e` validates this in Playwright along with the hosted registry, meritsubs health, and meritstore registration route.
+Hello World / Hosted Ready proof: serve the repo over HTTP and open `/play/`. The page must show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from `merit_workbench@0.4.0` on `merit-prod.vercel.app`. `merit.ps1 e2e` validates this (smoke + Playwright) along with the hosted registry, meritsubs health, and meritstore registration route.
 
 Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 

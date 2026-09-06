@@ -1,30 +1,182 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-webpage-shell="createAppShell">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MERIT Play</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
+  <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/merit_ux/0.1.3/themes/gloss-aurora.css" integrity="sha384-t2lrh9VYGPmekcUt8/mNthwxEkgOBstLDnLn6g/dhFgWen+h3pDYGx+FLE4u4NiS" crossorigin="anonymous">
   <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.css" integrity="sha384-u21263n25R9YNIR6NchCkydfaHjBQvyobfiuzh71m2cXXH7jjPQiP/HP4l0Xbu6j" crossorigin="anonymous">
+  <style>
+    .merit-hello { padding: 1rem 1.25rem 0; max-width: 56rem; margin: 0 auto; }
+    .merit-runtime-status[data-runtime-state="checking"] { color: #555; }
+    .merit-runtime-status[data-runtime-state="hosted-ready"] { color: #166534; }
+    .merit-runtime-status[data-runtime-state="demo-fallback"],
+    .merit-runtime-status[data-runtime-state="runtime-unavailable"] { color: #9a3412; }
+    .merit-offline-stub {
+      border: 1px dashed #b45309;
+      background: #fffbeb;
+      padding: 1rem;
+      border-radius: 6px;
+      max-width: 40rem;
+    }
+    .merit-offline-stub h2 { margin-top: 0; font-size: 1.1rem; }
+    .merit-offline-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; }
+    .merit-offline-actions a { color: var(--merit-primary, #1d4ed8); }
+    #merit-app-host { min-height: 50vh; }
+    #merit-workbench-mount.merit-workbench-root,
+    #app-logic.merit-workbench-root { max-width: none; }
+  </style>
 </head>
 <body>
   <header id="merit-header"></header>
   <section class="merit-hello" aria-labelledby="meritutils-hello-title">
     <h1 id="meritutils-hello-title">Hello, meritutils</h1>
-    <p id="meritutils-hello-status" data-provider-ready="pending">Loading the hosted merit_workbench package…</p>
+    <p id="meritutils-hello-status" class="merit-runtime-status" data-provider-ready="pending" data-runtime-state="checking">
+      Checking hosted merit_workbench@0.4.0 on merit-prod.vercel.app…
+    </p>
+    <p>
+      <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo/register">Register free</a>
+      · <a href="/portal/">Marketing portal</a>
+    </p>
   </section>
-  <main id="merit-workbench-mount"><p>Loading workbench…</p></main>
+  <div id="merit-app-host"></div>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
+  <script src="https://merit-prod.vercel.app/pkg/meritutils/merit_ux/0.1.3/merit_ux.global.js" integrity="sha384-CW3LaX7eQjJyLMPVz/8Qs1T+g1n0Rr6iiDHeBnd3x0Hlpz+NjCDR2FL3nlWfQfxF" crossorigin="anonymous"></script>
   <script src="https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.js" integrity="sha384-50h+5mm7tpQsOkVG/cxlvuu3Cl7+xw4C4H5EwGoKgqKScbeBRnxI29CxEtMcPOkf" crossorigin="anonymous"></script>
   <script>
-    const helloStatus = document.getElementById('meritutils-hello-status');
-    const providerReady = Boolean(globalThis.merit_workbench?.MeritWorkbenchLayout);
-    helloStatus.dataset.providerReady = providerReady ? 'true' : 'false';
-    helloStatus.textContent = providerReady
-      ? 'Hosted merit_workbench@0.4.0 loaded from merit-prod.vercel.app.'
-      : 'Hosted merit_workbench did not load.';
+    (function meritPlayBootstrap() {
+      const EXPECTED = {
+        packageId: 'merit_workbench',
+        version: '0.4.0',
+        host: 'merit-prod.vercel.app',
+        portalPath: '/portal/',
+      };
+      const cfg = window.MERIT_DEMO_CONFIG || {};
+      const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
+      const portalUrl = cfg.portalUrl || EXPECTED.portalPath;
+      const expectedVersion = cfg.expectedWorkbenchVersion || EXPECTED.version;
+      const helloStatus = document.getElementById('meritutils-hello-status');
+      const registerLink = document.getElementById('merit-register-free');
+      if (registerLink) registerLink.href = registerUrl;
+
+      const DEMO_ROWS = [
+        { id: 'demo-1', hnd: 'Hello', date: '2026-09-05', handle: 'meritutils', levels: 'Free', media: 'CDN', preview: 'Pinned workbench from merit-prod' },
+        { id: 'demo-2', hnd: 'CompatSet', date: '2026-09-05', handle: 'par_pins', levels: expectedVersion, media: 'SRI', preview: 'Exact pin match required for Hosted Ready' },
+        { id: 'demo-3', hnd: 'Register', date: '2026-09-05', handle: 'meritstore', levels: 'Plus', media: 'Store', preview: 'Register free path on merit-prod' },
+      ];
+
+      function setState(state, message, providerReady) {
+        helloStatus.dataset.runtimeState = state;
+        helloStatus.dataset.providerReady = providerReady ? 'true' : 'false';
+        helloStatus.textContent = message;
+      }
+
+      function renderOfflineStub(host, reason, fatal) {
+        const title = fatal ? 'Runtime Unavailable' : 'Offline demo (labeled fallback)';
+        host.innerHTML = `
+          <div class="merit-offline-stub" data-offline-demo="true" role="status">
+            <h2>${title}</h2>
+            <p>This local consumer could not initialize the hosted <code>${EXPECTED.packageId}@${expectedVersion}</code> from <code>${EXPECTED.host}</code>.</p>
+            <p><strong>Reason:</strong> ${reason}</p>
+            <p>This is a labeled offline stub — not a second copy of the hosted workbench.</p>
+            <div class="merit-offline-actions">
+              <button type="button" id="merit-runtime-retry">Retry hosted runtime</button>
+              <a href="${portalUrl}">Open marketing portal</a>
+              <a href="${registerUrl}">Register free</a>
+            </div>
+          </div>`;
+        const retry = host.querySelector('#merit-runtime-retry');
+        if (retry) retry.addEventListener('click', () => window.location.reload());
+      }
+
+      function mountWorkbench(mainEl) {
+        const wb = globalThis.merit_workbench;
+        if (!wb?.MeritWorkbenchLayout) {
+          throw new Error('merit_workbench.MeritWorkbenchLayout missing after script load');
+        }
+        const layout = new wb.MeritWorkbenchLayout({
+          theme: 'merit-light',
+          gridTitle: 'merit-demo showcase',
+          rows: DEMO_ROWS,
+          columns: [
+            { id: 'hnd', label: 'Entry' },
+            { id: 'handle', label: 'Handle' },
+            { id: 'levels', label: 'Tier' },
+            { id: 'preview', label: 'Preview' },
+          ],
+        });
+        mainEl.id = 'merit-workbench-mount';
+        layout.mount(mainEl);
+        mainEl.dataset.workbenchMounted = 'true';
+        return layout;
+      }
+
+      function resolveCreateAppShell() {
+        const ux = globalThis.MeritUx || globalThis.merit_ux || globalThis.meritUX || globalThis.MeritUX;
+        if (typeof ux?.createAppShell === 'function') return ux.createAppShell.bind(ux);
+        if (typeof globalThis.createAppShell === 'function') return globalThis.createAppShell;
+        return null;
+      }
+
+      try {
+        if (expectedVersion !== EXPECTED.version) {
+          throw new Error(`Configured pin ${expectedVersion} does not match page pin ${EXPECTED.version}`);
+        }
+
+        const createAppShell = resolveCreateAppShell();
+        const appHost = document.getElementById('merit-app-host');
+        if (typeof createAppShell !== 'function') {
+          throw new Error('merit_ux.createAppShell not available from merit-prod CDN');
+        }
+
+        const shell = createAppShell({
+          host: appHost,
+          theme: 'gloss-aurora',
+          brand: {
+            name: (cfg.branding && cfg.branding.product_name) || 'MERIT Demo',
+            tagline: 'Hello, meritutils — CompatSet consumer',
+          },
+          freemium: {
+            registerHref: registerUrl,
+            registerLabel: 'Register free',
+          },
+          peers: { workbench: true, journal: true },
+          slots: { main: '#app-logic' },
+        });
+
+        const main = shell.main;
+        main.innerHTML = '';
+        mountWorkbench(main);
+
+        setState(
+          'hosted-ready',
+          `Hosted Ready: ${EXPECTED.packageId}@${expectedVersion} loaded and mounted from ${EXPECTED.host}.`,
+          true
+        );
+        if (shell.status && typeof shell.status.setState === 'function') {
+          shell.status.setState('ok');
+        }
+      } catch (err) {
+        const reason = (err && err.message) ? err.message : String(err);
+        const appHost = document.getElementById('merit-app-host') || document.body;
+        const packagePresent = Boolean(globalThis.merit_workbench?.MeritWorkbenchLayout);
+        try {
+          renderOfflineStub(appHost, reason, !packagePresent);
+          setState(
+            packagePresent ? 'demo-fallback' : 'runtime-unavailable',
+            packagePresent
+              ? `Demo Fallback: package present but shell/mount failed (${reason}).`
+              : `Runtime Unavailable: ${reason}`,
+            false
+          );
+        } catch (_fallbackErr) {
+          setState('runtime-unavailable', `Runtime Unavailable: ${reason}`, false);
+        }
+      }
+    })();
   </script>
 </body>
 </html>

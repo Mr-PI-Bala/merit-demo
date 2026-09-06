@@ -42,6 +42,18 @@ if (!play.includes('merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0')
 if (!play.includes('Hello, meritutils') || !play.includes('data-provider-ready')) {
   failures.push('play/index.html missing the hosted meritutils Hello World proof');
 }
+if (!play.includes('createAppShell') || !play.includes('data-webpage-shell="createAppShell"')) {
+  failures.push('play/index.html missing DualRail createAppShell / data-webpage-shell marker');
+}
+if (!play.includes('Register free')) {
+  failures.push('play/index.html missing Register free link');
+}
+if (!play.includes('data-runtime-state') || !play.includes('hosted-ready')) {
+  failures.push('play/index.html missing runtime state machine (hosted-ready)');
+}
+if (!play.includes('MeritWorkbenchLayout') || !play.includes('workbenchMounted')) {
+  failures.push('play/index.html missing workbench mount path');
+}
 
 const wb = pins.packages?.merit_workbench?.artifacts;
 const jn = pins.packages?.journal?.artifacts;

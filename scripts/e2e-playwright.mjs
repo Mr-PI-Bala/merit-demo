@@ -92,6 +92,23 @@ async function browserCheck(base) {
   } else {
     console.log('OK Hello World hosted meritutils package');
   }
+  const runtimeState = await hello.getAttribute('data-runtime-state');
+  if (runtimeState !== 'hosted-ready') {
+    failures.push(`Hosted Ready: expected data-runtime-state=hosted-ready, got ${runtimeState}`);
+  } else {
+    console.log('OK Hosted Ready runtime state');
+  }
+  const mounted = page.locator('[data-workbench-mounted="true"], .merit-workbench-root');
+  if ((await mounted.count()) < 1) {
+    failures.push('Workbench mount: no mounted workbench root found');
+  } else {
+    console.log('OK workbench mounted');
+  }
+  if ((await page.locator('text=Register free').count()) < 1) {
+    failures.push('Play: Register free link missing');
+  } else {
+    console.log('OK Register free present');
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/portal/', '/play/', '/journal/', '/ama/']) {
     const label = route.replaceAll('/', '') || 'home';

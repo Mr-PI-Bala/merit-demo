@@ -1,20 +1,36 @@
 # merit-demo — design
 
-**consumer_id:** `merit-demo`  
+**consumer_id:** `merit-demo`
 **Host:** `{operator}.vercel.app` (Angle-4 operators use their own Vercel scope)
+**Plan SSOT:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
+
+## Planes
+
+| Plane | Role |
+|-------|------|
+| A — Cursor / Hub | Seed follow-through; open `oss-bench.demoFolder`; verify IDE skills host |
+| B — merit-agent-skills | CLI, law, recipes; not the browser runtime |
+| C — this repo | Static freemium shell; pins CDN packages; labeled offline stub on failure |
+| D — merit-prod + here.now | Hosted PAR/CDN + metered mounts; marketing via `portal/` only |
 
 ## Surfaces (L1 §E.1)
 
 | Slug | Role |
 |------|------|
 | `/`, `/portal/` | Marketing (here.now publishes `portal/` only) |
-| `/play/` | merit_workbench PAR `@0.4.x` |
+| `/play/` | DualRail `createAppShell` + `merit_workbench` PAR `@0.4.0`; runtime states Checking → Hosted Ready / Demo Fallback / Runtime Unavailable |
 | `/journal/` | journal PAR UI; metered API is production provider mount |
 | `/ama/` | AMA UI; metered Q&A/leaderboard API is production provider mount |
 | Metered utility APIs | external production MERIT Vercel mounts; no local meritsubs/AMA/journal source in public repo |
 | `/api/admin/pricing` | Operator flexible Plus pricing (Supabase `operator_pricing`) |
 | `/admin/` | MeritAdminGate + pricing UI |
 | `/diag/` | Deploy manifest |
+
+## Play runtime policy
+
+- **Hosted Ready** only after pin match, CDN load, `createAppShell`, and workbench **mount** (not Hello-only).
+- **Demo Fallback** is a labeled offline stub (reason, retry, portal link)—not a local PAR clone.
+- Config surface: `cfg/par_pins.json` + generated `config.js` (`MERIT_DEMO_CONFIG`: metered bases, register URL, portal URL, expected workbench version).
 
 ## White-label
 
@@ -32,7 +48,7 @@ Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, m
 
 ## Validation lifecycle
 
-`merit-demo` documents and supports `merit.ps1` / `merit.sh` as the public command surface.
+`merit-demo` documents and supports `merit.ps1` / `merit.sh` as the public command surface (sibling **merit-agent-skills** for `init`/`apply`/`portal`/`law`).
 
 | Command | Purpose |
 |---|---|
@@ -47,7 +63,7 @@ Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are im
 
 | Edge | Decision | Evidence |
 |---|---|---|
-| `meritutils → merit-demo` | **ACCEPT** | `merit_workbench@0.4.0` and `journal@0.2.2` load from the canonical production gateway; Playwright validates the visible Hello World proof and hosted registry. |
+| `meritutils → merit-demo` | **ACCEPT** | `merit_workbench@0.4.0` (+ `merit_ux@0.1.3` shell) load from the production gateway; Playwright asserts Hosted Ready + mount |
 | `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
 | `meritstore → merit-demo` | **ACCEPT** | Tenant route `https://merit-prod.vercel.app/store/merit-demo/register` is provisioned and returns 200. |
 

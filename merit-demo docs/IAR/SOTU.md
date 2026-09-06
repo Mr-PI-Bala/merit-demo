@@ -1,8 +1,8 @@
-# merit-demo SOTU - 2026-07-11
+# merit-demo SOTU - 2026-09-05
 
 ## Executive status
 
-merit-demo is aligned as the static showcase consumer for the upgraded meritutils provider lane. It remains a demo/reference consumer, not a billing, entitlement, usage-metering, AMA, journal, leaderboard, or DIRT provider authority.
+merit-demo remains the static showcase consumer for the meritutils provider lane. **Pass 1 (2026-09-05):** `/play/` DualRail `createAppShell` + `merit_workbench@0.4.0` mount reports **Hosted Ready** (or labeled offline stub). It is still not a billing/entitlement/provider authority.
 
 ## 2026-07-11 production metered-mount boundary
 
