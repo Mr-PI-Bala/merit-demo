@@ -4,7 +4,37 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 
 Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
-Run these from the repository; the remote repo and authenticated user are inferred, and add/remove ask for confirmation:
+## Start here — choose your path
+
+```mermaid
+flowchart LR
+    A[What do you want?] --> B[See the demo]
+    A --> C[Build on the template]
+    A --> D[Deploy your version]
+    B --> B1[quickstart]
+    C --> C1[edit app + cfg]
+    D --> D1[deploy / portal]
+```
+
+### See the demo
+
+```powershell
+git clone https://github.com/Mr-PI-Bala/merit-demo.git
+cd merit-demo
+.\merit.ps1 quickstart
+```
+
+### Build on the template
+
+Start with `play/`, `portal/`, and `cfg/par_pins.json`. The hosted CompatSet is already pinned; you do not need to manually clone or version `merit-agent-skills`.
+
+### Deploy your version
+
+Use ` .\merit.ps1 deploy` and ` .\merit.ps1 portal` only when you are ready to publish your own instance.
+
+<details><summary>Additional options and administration</summary>
+
+Repository administration commands infer the remote and authenticated user; add/remove ask for confirmation:
 
 ```powershell
 .\merit.ps1 admin github access add
@@ -18,41 +48,9 @@ Switch the GitHub account used for repository administration without calling `gh
 .\merit.ps1 admin github auth switch
 ```
 
-**Start here:** clone this repository and run one command. The consumer reads its official hosted CompatSet pins from `cfg/par_pins.json`; you do not need to clone or manually pin `merit-agent-skills` for the demo.
+</details>
 
-## Quickstart — one command
-
-```powershell
-git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-demo
-.\merit.ps1 quickstart
-```
-
-That command installs dependencies when needed, verifies the pinned CompatSet, builds the consumer, and starts a local HTTP server. Open the printed `/play/` URL. The page reports Hosted Ready only when the pinned hosted workbench initializes and mounts; otherwise it shows the labeled fallback.
-
-Linux/macOS:
-
-```bash
-git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-demo
-./merit.sh quickstart
-```
-
-For development, install `merit-agent-skills` separately through Merit-Hub or its installer. It supplies IDE skills and release tooling; it is not required to run this static consumer showcase.
-
-Only operators deploying their own instance need launch configuration. Edit `.merit_launch.md` and then deploy:
-
-```powershell
-.\merit.ps1 deploy --path ..\merit-demo
-.\merit.ps1 portal --path ..\merit-demo
-```
-
-Linux/macOS:
-
-```bash
-./merit.sh deploy --path ../merit-demo
-./merit.sh portal --path ../merit-demo
-```
+For Linux/macOS, use `./merit.sh quickstart`. Deployment details are in [merit_demo_usage.md](merit-demo%20docs/merit_demo_usage.md).
 
 ## Surfaces
 
