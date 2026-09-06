@@ -4,7 +4,10 @@ All notable changes to **merit-demo** (public MERIT freemium showcase consumer).
 
 Format: Keep a Changelog–style sections under each version. Versions align with `VERSION` / `package.json`.
 
-## [0.3.5] — 2026-09-06
+## [0.3.6] — 2026-09-06
+
+### Fixed
+- Added a historical release index for tags `v0.3.0`–`v0.3.2` that predate detailed changelog sections.
 
 ### Changed
 - Added one-command `merit.ps1 quickstart` / `merit.sh quickstart` for dependency setup, CompatSet verification, and local HTTP launch.
@@ -37,3 +40,7 @@ Format: Keep a Changelog–style sections under each version. Versions align wit
 ## [0.3.3] — prior
 
 Baseline public showcase before Pass 1 DualRail Hosted Ready work (Hello World CDN presence without interactive mount).
+
+## Historical release index
+
+The original demo tags `v0.3.0`, `v0.3.1`, and `v0.3.2` predate the current detailed changelog sections. Their tag history remains immutable and is the source of exact historical diffs; future releases must have a dedicated version section.
