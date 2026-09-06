@@ -6,7 +6,7 @@
   <title>MERIT Play</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
   <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/merit_ux/0.1.3/themes/gloss-aurora.css" integrity="sha384-t2lrh9VYGPmekcUt8/mNthwxEkgOBstLDnLn6g/dhFgWen+h3pDYGx+FLE4u4NiS" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.css" integrity="sha384-u21263n25R9YNIR6NchCkydfaHjBQvyobfiuzh71m2cXXH7jjPQiP/HP4l0Xbu6j" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pkg-meritutils.vercel.app/merit_workbench/0.4.14/merit-workbench.css" integrity="sha384-u21263n25R9YNIR6NchCkydfaHjBQvyobfiuzh71m2cXXH7jjPQiP/HP4l0Xbu6j" crossorigin="anonymous">
   <style>
     .merit-hello { padding: 1rem 1.25rem 0; max-width: 56rem; margin: 0 auto; }
     .merit-runtime-status[data-runtime-state="checking"] { color: #555; }
@@ -33,7 +33,7 @@
   <section class="merit-hello" aria-labelledby="meritutils-hello-title">
     <h1 id="meritutils-hello-title">Hello, meritutils</h1>
     <p id="meritutils-hello-status" class="merit-runtime-status" data-provider-ready="pending" data-runtime-state="checking">
-      Checking hosted merit_workbench@0.4.0 on merit-prod.vercel.app…
+      Checking hosted merit_workbench@0.4.14 on pkg-meritutils.vercel.app…
     </p>
     <p>
       <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo/register">Register free</a>
@@ -45,13 +45,13 @@
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
   <script src="https://merit-prod.vercel.app/pkg/meritutils/merit_ux/0.1.3/merit_ux.global.js" integrity="sha384-CW3LaX7eQjJyLMPVz/8Qs1T+g1n0Rr6iiDHeBnd3x0Hlpz+NjCDR2FL3nlWfQfxF" crossorigin="anonymous"></script>
-  <script src="https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.js" integrity="sha384-50h+5mm7tpQsOkVG/cxlvuu3Cl7+xw4C4H5EwGoKgqKScbeBRnxI29CxEtMcPOkf" crossorigin="anonymous"></script>
+  <script src="https://pkg-meritutils.vercel.app/merit_workbench/0.4.14/merit-workbench.js" integrity="sha384-aNcJZoKSEJlS1Lg7qrwJ/BtMhubnl742kwXLuBxBX7ft4TdPzydlG9BCZ1HxHAON" crossorigin="anonymous"></script>
   <script>
     (function meritPlayBootstrap() {
       const EXPECTED = {
         packageId: 'merit_workbench',
-        version: '0.4.0',
-        host: 'merit-prod.vercel.app',
+        version: '0.4.14',
+        host: 'pkg-meritutils.vercel.app',
         portalPath: '/portal/',
       };
       const cfg = window.MERIT_DEMO_CONFIG || {};

@@ -36,8 +36,9 @@ requireFile('cfg/par_pins.json');
 requireFile('dist/config.js');
 
 const play = fs.readFileSync(path.join(root, 'play/index.html'), 'utf8');
-if (!play.includes('merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0')) {
-  failures.push('play/index.html missing merit_workbench@0.4.0 PAR URL');
+const expectedWorkbenchUrl = pins.packages?.merit_workbench?.artifacts?.js?.url;
+if (!expectedWorkbenchUrl || !play.includes(expectedWorkbenchUrl)) {
+  failures.push(`play/index.html missing pinned workbench URL ${expectedWorkbenchUrl || '(none)'}`);
 }
 if (!play.includes('Hello, meritutils') || !play.includes('data-provider-ready')) {
   failures.push('play/index.html missing the hosted meritutils Hello World proof');

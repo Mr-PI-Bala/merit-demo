@@ -100,7 +100,7 @@ Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affil
 
 Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
 
-Hello World / Hosted Ready proof: serve the repo over HTTP and open `/play/`. The page must show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from `merit_workbench@0.4.0` on `merit-prod.vercel.app`. `merit.ps1 e2e` validates this (smoke + Playwright) along with the hosted registry, meritsubs health, and meritstore registration route.
+Hello World / Hosted Ready proof: serve the repo over HTTP and open `/play/`. The page must show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from the pinned `merit_workbench@0.4.14` CompatSet artifact. `merit.ps1 e2e` validates this (smoke + Playwright) along with the hosted registry, meritsubs health, and meritstore registration route.
 
 Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 

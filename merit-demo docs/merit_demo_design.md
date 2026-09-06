@@ -18,7 +18,7 @@
 | Slug | Role |
 |------|------|
 | `/`, `/portal/` | Marketing (here.now publishes `portal/` only) |
-| `/play/` | DualRail `createAppShell` + `merit_workbench` PAR `@0.4.0`; runtime states Checking → Hosted Ready / Demo Fallback / Runtime Unavailable |
+| `/play/` | DualRail `createAppShell` + pinned `merit_workbench` PAR `@0.4.14`; runtime states Checking → Hosted Ready / Demo Fallback / Runtime Unavailable |
 | `/journal/` | journal PAR UI; metered API is production provider mount |
 | `/ama/` | AMA UI; metered Q&A/leaderboard API is production provider mount |
 | Metered utility APIs | external production MERIT Vercel mounts; no local meritsubs/AMA/journal source in public repo |
@@ -63,7 +63,7 @@ Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are im
 
 | Edge | Decision | Evidence |
 |---|---|---|
-| `meritutils → merit-demo` | **ACCEPT** | `merit_workbench@0.4.0` (+ `merit_ux@0.1.3` shell) load from the production gateway; Playwright asserts Hosted Ready + mount |
+| `meritutils → merit-demo` | **ACCEPT** | pinned `merit_workbench@0.4.14` (+ `merit_ux@0.1.3` shell) load from the production package host; Playwright asserts Hosted Ready + mount |
 | `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
 | `meritstore → merit-demo` | **ACCEPT** | Tenant route `https://merit-prod.vercel.app/store/merit-demo/register` is provisioned and returns 200. |
 

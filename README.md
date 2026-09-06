@@ -56,7 +56,7 @@ Linux/macOS:
 | Metered utilities | No local stub/API source; uses production MERIT Vercel mounts | — |
 | Register | meritstore | portal/subs/ |
 
-`/play/` is the canonical **Hello, meritutils** proof: DualRail `createAppShell` loads production-hosted `merit_workbench@0.4.0`, mounts the interactive shell, and reports **Hosted Ready** (or a labeled offline stub on failure). Prefer `.\merit.ps1 serve` (HTTP) — `file://` is smoke-only.
+`/play/` is the canonical **Hello, meritutils** proof: DualRail `createAppShell` loads the pinned production-hosted `merit_workbench@0.4.14`, mounts the interactive shell, and reports **Hosted Ready** (or a labeled offline stub on failure). Prefer `.\merit.ps1 serve` (HTTP) — `file://` is smoke-only.
 
 ## Build & deploy
 

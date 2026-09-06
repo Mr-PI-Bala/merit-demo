@@ -2,7 +2,7 @@
 
 ## Executive status
 
-merit-demo remains the static showcase consumer for the meritutils provider lane. **Pass 1 (2026-09-05):** `/play/` DualRail `createAppShell` + `merit_workbench@0.4.0` mount reports **Hosted Ready** (or labeled offline stub). It is still not a billing/entitlement/provider authority.
+merit-demo remains the static showcase consumer for the meritutils provider lane. **Pass 1 (2026-09-05):** `/play/` DualRail `createAppShell` + pinned `merit_workbench@0.4.14` mount reports **Hosted Ready** (or labeled offline stub). It is still not a billing/entitlement/provider authority.
 
 ## 2026-07-11 production metered-mount boundary
 
@@ -14,7 +14,7 @@ Consumer manifest: `cfg/meritutils_consumer.json`.
 
 | Package | Pin | Use |
 |---|---:|---|
-| `merit_workbench` | `meritutils/merit_workbench@0.4.0` | Shared play/workbench shell |
+| `merit_workbench` | `meritutils/merit_workbench@0.4.14` | Shared play/workbench shell |
 | `journal` | `meritutils/journal@0.2.2` | Deprecated-compatible legacy journal demo |
 | `merit_journal` | `meritutils/merit_journal@0.3.0` | New journal lane |
 | `merit_ama` | `meritutils/merit_ama@0.1.0` | AMA question/vote showcase |

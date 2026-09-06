@@ -3,15 +3,15 @@
   "line": "oss",
   "packages": {
     "merit_workbench": {
-      "version": "0.4.0",
-      "cdn_base": "https://merit-prod.vercel.app/pkg/meritutils",
+      "version": "0.4.14",
+      "cdn_base": "https://pkg-meritutils.vercel.app",
       "artifacts": {
         "js": {
-          "url": "https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.js",
-          "sri": "sha384-50h+5mm7tpQsOkVG/cxlvuu3Cl7+xw4C4H5EwGoKgqKScbeBRnxI29CxEtMcPOkf"
+          "url": "https://pkg-meritutils.vercel.app/merit_workbench/0.4.14/merit-workbench.js",
+          "sri": "sha384-aNcJZoKSEJlS1Lg7qrwJ/BtMhubnl742kwXLuBxBX7ft4TdPzydlG9BCZ1HxHAON"
         },
         "css": {
-          "url": "https://merit-prod.vercel.app/pkg/meritutils/merit_workbench/0.4.0/merit-workbench.css",
+          "url": "https://pkg-meritutils.vercel.app/merit_workbench/0.4.14/merit-workbench.css",
           "sri": "sha384-u21263n25R9YNIR6NchCkydfaHjBQvyobfiuzh71m2cXXH7jjPQiP/HP4l0Xbu6j"
         }
       }

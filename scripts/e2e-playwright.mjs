@@ -5,6 +5,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const serveRoot = process.env.MERIT_E2E_ROOT
+  ? path.resolve(root, process.env.MERIT_E2E_ROOT)
+  : path.join(root, 'dist');
 const sync = JSON.parse(fs.readFileSync(path.join(root, 'cfg/merit-sync.json'), 'utf8').replace(/^\uFEFF/, ''));
 const consumerId = sync.consumer_id;
 const evidenceDir = path.join(root, `${consumerId} docs`, 'evidence');
@@ -34,8 +37,8 @@ function resolveRoute(urlPath) {
   else if (clean.endsWith('/')) candidates.push(`${clean}index.html`);
   else candidates.push(clean, `${clean}/index.html`);
   for (const rel of candidates) {
-    const full = path.join(root, rel);
-    if (full.startsWith(root) && fs.existsSync(full) && fs.statSync(full).isFile()) return full;
+    const full = path.join(serveRoot, rel);
+    if (full.startsWith(serveRoot) && fs.existsSync(full) && fs.statSync(full).isFile()) return full;
   }
   return null;
 }
@@ -78,7 +81,9 @@ async function browserCheck(base) {
   }
 
   fs.mkdirSync(evidenceDir, { recursive: true });
-  const browser = await chromium.launch();
+  const browser = await chromium.launch({
+    executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH || undefined,
+  });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
   for (const route of routes.filter((r) => !r.path.endsWith('.json'))) {
     await page.goto(`${base}${route.path}`, { waitUntil: 'networkidle' });

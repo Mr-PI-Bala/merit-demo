@@ -62,7 +62,7 @@ const configBody = `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
     meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://merit-prod.vercel.app/api/meritsubs',
     portalUrl: portals.here_now_url || portals.portal_url || '/portal/',
     parPins: pins,
-    expectedWorkbenchVersion: pins?.packages?.merit_workbench?.version || '0.4.0',
+    expectedWorkbenchVersion: pins?.packages?.merit_workbench?.version || '0.4.14',
     healthUrl: `${meteredBase}/api/health`,
   },
   null,

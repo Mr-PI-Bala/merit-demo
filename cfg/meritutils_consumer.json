@@ -5,7 +5,7 @@
   "promocode_default": "MERITAGENT",
   "affiliate_code": "MERITDEMO",
   "packages": [
-    { "name": "merit_workbench", "version": "0.4.0", "pin": "meritutils/merit_workbench@0.4.0" },
+    { "name": "merit_workbench", "version": "0.4.14", "pin": "meritutils/merit_workbench@0.4.14" },
     { "name": "journal", "version": "0.2.2", "pin": "meritutils/journal@0.2.2", "status": "deprecated-compatible" },
     { "name": "merit_journal", "version": "0.3.0", "pin": "meritutils/merit_journal@0.3.0" },
     { "name": "merit_ama", "version": "0.1.0", "pin": "meritutils/merit_ama@0.1.0" },

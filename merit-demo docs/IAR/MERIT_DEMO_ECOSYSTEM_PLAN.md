@@ -31,7 +31,7 @@ Make `merit-demo` the reference MERIT consumer:
 |-------------|------------------|-----------------|-------|
 | Hub cloned `merit-demo` under live `MYMERITAPP` (`C:\DApps`) | Local consumer seeded | Cursor workspace always matches `demoFolder` | Confirmed seed; IDE root may still be stale |
 | Local `play/index.html` opened | Static page launched | Hosted workbench **mounted** | Confirmed launch; mount gap open |
-| Page references `merit_workbench@0.4.0` on merit-prod | Configured pin + CDN attempt | Pin equals deployed artifact until inventory | Pin observed; lock after inspect |
+| Page references pinned `merit_workbench@0.4.14` on the canonical package host | Configured pin + CDN attempt | Health metadata and deployment identity are separately bound to the artifact | Pin reconciled to registry-supported release; runtime contract still open |
 | “Loading workbench…” | Bootstrap never reached Hosted Ready UI | Root cause was **no mount call**, not proven CDN outage | Cause classified: missing mount (C), not Vercel down |
 | Agent shell/sandbox failures | Agent environment limitation | Does **not** prove Vercel/here.now/skills down | Environment only |
 | here.now portal URL | — | Published/reachable URL for this seed | Unverified |
@@ -142,13 +142,13 @@ No deprecation before read-only catalog audit + caller map + migration note.
 
 ## Runtime contract (proposed; lock after inventory)
 
-Public, `Cache-Control: no-store`. Field names/additive merge finalized after live `/api/health` inspect. `0.4.0` is the **observed reference pin** on this consumer until inventory confirms the deployed artifact.
+Public, `Cache-Control: no-store`. Field names/additive merge remain subject to live `/api/health` inspection. `0.4.14` is the **registry-supported consumer pin**; asset provenance and health metadata still require binding evidence.
 
 ```json
 {
   "status": "ok",
   "service": "merit-prod",
-  "workbenchVersion": "0.4.0",
+  "workbenchVersion": "0.4.14",
   "deploymentId": "immutable-deployment-id",
   "buildSha": "source-revision",
   "deployedAt": "ISO-8601 timestamp"
@@ -180,10 +180,13 @@ Consumer Hosted Ready requires observed workbench artifact version **===** `cfg/
 | `merit-demo docs/OPERATOR_PROVISION.md` | Ops checklist (4th product doc) |
 | **`merit-demo docs/IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md`** | **This controlling SSOT** |
 | `merit-demo docs/IAR/SOTU.md` + `evidence/` | Status + screenshots/receipts (includes cloud-report tables) |
+| `merit-demo docs/IAR/MERIT_DEMO_TDD_CHECKLIST.md` | Executable Zone A/B/C/D test checklist and closeout gate |
 
 ---
 
 ## Test and release gates
+
+The executable test authority is [MERIT_DEMO_TDD_CHECKLIST.md](MERIT_DEMO_TDD_CHECKLIST.md). The matrix below is the scenario summary; the checklist contains the row-level command, expected result, evidence, and status.
 
 | Scenario | Expected | FRs |
 |----------|----------|-----|
@@ -212,11 +215,76 @@ Consumer Hosted Ready requires observed workbench artifact version **===** `cfg/
 
 ## Status
 
+### NextRel FR — host-compatible closeout enforcement
+
+2026-09-06 evidence: skills-repo ownership status is clean (`AgentCreator\\Draven`, Modify ACL, write probe PASS, git safe-directory PASS). The prior closeout receipt used deterministic temp storage because the target evidence directory was unavailable or unwritable in that execution context; this is an evidence-path issue, not a root ownership failure.
+
+The detailed cross-harness implementation, host matrix, hook gotchas, receipts, and verification gate are maintained in the skills-plane IAR: [MERIT_CLOSEOUT_ENFORCEMENT.iar.md](../../../merit-agent-skills/docs/IAR/MERIT_CLOSEOUT_ENFORCEMENT.iar.md). The executable validation worksheet is [MERIT_CLOSEOUT_ENFORCEMENT_CHECKLIST.md](../../../merit-agent-skills/docs/IAR/MERIT_CLOSEOUT_ENFORCEMENT_CHECKLIST.md). MERIT skills are development/validation guidance; hooks are optional adapters; this consumer must never claim universal post-chat enforcement. Consumer closeout remains governed by the installed contract and `merit.ps1 closeout`; cloud/runtime behavior is independent of AI-harness lifecycle enforcement.
+
+`FR-NEXTREL-005-B` requires installation to make the enforcement boundary explicit. Cursor receives the MERIT `stop` hook, which injects the closeout law and 3-3 reminder before an agent turn ends. Hosts without a supported post-turn hook receive `.merit-hook-warning.json` and the same persistent skill guidance; they are **not** claimed to be forcibly enforced. All hosts remain release-gated by a valid `closeout-validation.json` before `ship`. Exceptions are explicit: WIP, local-only, and no-commit.
+
+| Host / harness | Hook enforcement | Installer result | Remaining control |
+| --- | --- | --- | --- |
+| Cursor | **Supported** (`stop`) | Installs/merges `~/.cursor/hooks.json` and `~/.cursor/hooks/merit-closeout-stop.ps1` | User may disable hooks; release receipt still gates `ship` |
+| ClaudeCode | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Codex | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| VSCode / Agents | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Hermes, OpenClaw, GrokBot, Devin | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Project target | Project skills only; no host event assumed | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+
+This does **not** prove that every AI IDE or harness enforces 3-3 after every chat. It provides one deterministic adapter where supported, transparent warnings everywhere else, and a machine-enforced release boundary.
+
+### NextRel FR — host-compatible closeout enforcement
+
+`FR-NEXTREL-005-B` requires installation to make the enforcement boundary explicit. Cursor receives the MERIT `stop` hook, which injects the closeout law and 3-3 reminder before an agent turn ends. Hosts without a supported post-turn hook receive `.merit-hook-warning.json` and the same persistent skill guidance; they are **not** claimed to be forcibly enforced. All hosts remain release-gated by a valid `closeout-validation.json` before `ship`. Exceptions are explicit: WIP, local-only, and no-commit.
+
+| Host / harness | Hook enforcement | Installer result | Remaining control |
+| --- | --- | --- | --- |
+| Cursor | **Supported** (`stop`) | Installs/merges `~/.cursor/hooks.json` and `~/.cursor/hooks/merit-closeout-stop.ps1` | User may disable hooks; release receipt still gates `ship` |
+| ClaudeCode | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Codex | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| VSCode / Agents | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Hermes, OpenClaw, GrokBot, Devin | Not verified/supported by this installer | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+| Project target | Project skills only; no host event assumed | Warning receipt + skills guidance | Agent compliance + closeout/ship gate |
+
+This does **not** prove that every AI IDE or harness enforces 3-3 after every chat. It provides one deterministic adapter where supported, transparent warnings everywhere else, and a machine-enforced release boundary.
+
 | FR | Status | Evidence |
 |----|--------|----------|
 | FR-005-C, FR-006-C, FR-012-C, FR-001-C, FR-003-C, FR-004-C (page pin), FR-011-C | **DONE (Pass 1)** | Playwright: Hosted Ready + mount + Register free; smoke e2e OK; `play/index.html` DualRail states |
 | FR-010-C | **PARTIAL** | This IAR + refreshed usage/design/AGENTS/README |
 | All other FRs | **PLANNED** | Awaiting Pass 2–4 |
+
+## NextRel FR register
+
+### FR-NEXTREL-006 — IAR consolidation and vault handoff
+
+Keep IAR documentation to a small, role-based set. New requirements belong in the controlling IAR, executable checks in the existing checklist, and historical proof in evidence packets. A new IAR file or subfolder requires written rationale and a README. When `merit-private-vault` and `MERIT.instructions` are activated, port the policy, contract, checklist, and consolidation rules as one vault package without creating a parallel consumer authority.
+
+| Zone | Owner | Acceptance |
+|---|---|---|
+| B | `merit-agent-skills` | IAR README exists; active files have declared roles; duplicate authorities are removed or explicitly marked historical |
+| C | `merit-demo` | Consumer IAR links skills policy/checklist and does not duplicate host policy |
+| D | `merit-private-vault` / `MERIT.instructions` | Vault upgrade preserves one controlling authority and adds protected evidence only where necessary |
+
+| NextRel FR | Zone | Requirement | Port target | Acceptance evidence |
+|---|---|---|---|---|
+| FR-NEXTREL-001 | B | Public `merit.ps1 e2e --path <repo>` and `merit.ps1 e2e:playwright --path <repo>` must dispatch the consumer's declared npm test scripts with exit-code propagation and clear diagnostics. | Port the implementation from OSS `merit-agent-skills/merit.ps1` into the master `merit.ps1` in `merit-private-vault` when that repo is activated. | Static wrapper passes; browser wrapper dispatches but is currently blocked by Windows EPERM writing existing evidence screenshots; missing package/script and non-zero child exit handling is implemented; private-vault parity test remains pending. |
+| FR-NEXTREL-002 | B | Merit-Hub must be usable on a fresh device without assuming `pwsh`: Windows PowerShell 5.1 must parse the standalone Hub, offer confirmed laptop-local pwsh installation, and relaunch; `Merit-Hub.sh` must detect missing pwsh on Linux/macOS, request confirmation, install a pinned portable build, and relaunch the same Hub. | Port the launcher/bootstrap behavior into the master Hub implementation in `merit-private-vault` when that repo is activated. | Windows 5.1 parse smoke, confirmed portable install/relaunch, POSIX missing-pwsh confirmation path, declined-install diagnostic, and new-device clone/seed receipt. |
+| FR-NEXTREL-003 | B | MERIT closeout law must be machine-readable and install-enforced: installation emits a law receipt, validation emits a closeout receipt, release refuses stale/missing validation, and every completed scope requires the 3-3 response. | Port `cfg/merit_closeout_contract.json`, install receipt, closeout receipt, safe-directory handling, and release gate into the future `merit-private-vault` master CLI. | `scripts/test-merit-law.ps1` passes; `merit.ps1 law closeout` prints the binding sequence; `merit.ps1 closeout` writes receipt; `ship` requires a recent receipt; no automatic commit/push occurs during install or validation. |
+| FR-NEXTREL-004 | B | Add `merit.ps1 admin repair-ownership --path <repo>` as a scoped Windows recovery task for exact Git worktrees whose ACL/owner blocks evidence or Git operations. | Port the admin recovery command into the future `merit-private-vault` master CLI and keep Hub/skills guidance aligned. | Exact-path guard, confirmation/UAC, `takeown`, current-user Modify grant, write probe, and refusal of filesystem roots/non-Git paths. |
+
+## Evidence and result storage
+
+| Result | Stored location / review method |
+|---|---|
+| Zone checklist and statuses | `merit-demo docs/IAR/MERIT_DEMO_TDD_CHECKLIST.md` |
+| Controlling requirements and NextRel FRs | This IAR |
+| Browser screenshots | `merit-demo docs/evidence/` |
+| CLI test output | Capture with `Tee-Object` into `merit-demo docs/IAR/evidence/`; CLI commands do not persist text output automatically |
+| Cloud response evidence | `merit-demo docs/IAR/evidence/` with URL, timestamp, status, headers, and response body |
+
+The browser screenshot set currently contains prior desktop/mobile route evidence. The latest `merit.ps1 e2e:playwright` attempt dispatched correctly but remained open because Windows returned `EPERM` while overwriting an existing screenshot; this must not be recorded as a fresh browser pass.
 
 Pass 1 verify: `.\merit.ps1 verify` / `.\merit.ps1 e2e` / `.\merit.ps1 closeout`. Browse with `.\merit.ps1 serve` → http://localhost:3000/play/ → `data-runtime-state="hosted-ready"`.
 
@@ -241,7 +309,7 @@ What we **took in**, **adapted**, or **did not take**, and why.
 - IAR as controlling evidence; prose must not claim unverified cloud readiness.
 - **Approval boundary**: writing the IAR ≠ approving deletes/deploys.
 - Evidence hygiene: agent/shell failures ≠ proof that Vercel/skills/portal are down.
-- Pin nuance: treat `0.4.0` as **observed reference** until inventory locks the pin to the deployed artifact.
+- Pin reconciliation: registry inventory identified `0.4.9`, `0.4.10`, and `0.4.14`; consumer pin, canonical URL, and SRI now align to supported `0.4.14`.
 - Test/release gate matrix linking scenarios → FRs.
 - Clarification: skills = build/validate plane; merit-prod = browser runtime plane.
 
@@ -274,7 +342,8 @@ What we **took in**, **adapted**, or **did not take**, and why.
 
 ### Still open (not conflicts — work remaining)
 
-- Live inspect of merit-prod health schema, CORS, and whether `0.4.0` vs registry `0.4.14` should be the locked baseline pin.
+- Live inspect/bind of merit-prod health schema, CORS, and immutable artifact provenance.
+- Official Playwright closeout on the generated `dist` artifact using the configurable Edge executable; bundled Chromium remains `spawn EPERM` on this Windows host.
 - Published here.now URL for this seed (unverified).
 - Whether a future **law-approved** optional vendored read-only PAR is ever allowed for richer offline demo (explicitly out of Pass 1).
 - Pass 2–4 ownership when writing to skills Hub / merit-prod (may be hand-off).
