@@ -4,11 +4,11 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 
 Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
-Repository access can be managed by an owner/admin through the MERIT CLI:
+Run these from the repository; the remote repo and authenticated user are inferred, and add/remove ask for confirmation:
 
 ```powershell
-.\merit.ps1 admin github access add --repo Mr-PI-Bala/merit-demo --user AgentDraven --permission push --yes
-.\merit.ps1 admin github access status --repo Mr-PI-Bala/merit-demo --user AgentDraven
+.\merit.ps1 admin github access add
+.\merit.ps1 admin github access status
 ```
 
 **Start here** after cloning [merit-agent-skills](https://github.com/AgentDraven/merit-agent-skills) (Hub pin / `oss-bench.json`, currently **skills-v0.5.66**).
