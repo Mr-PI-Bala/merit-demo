@@ -11,6 +11,13 @@ Run these from the repository; the remote repo and authenticated user are inferr
 .\merit.ps1 admin github access status
 ```
 
+Switch the GitHub account used for repository administration without calling `gh` directly:
+
+```powershell
+.\merit.ps1 admin github auth status
+.\merit.ps1 admin github auth switch
+```
+
 **Start here:** clone this repository and run one command. The consumer reads its official hosted CompatSet pins from `cfg/par_pins.json`; you do not need to clone or manually pin `merit-agent-skills` for the demo.
 
 ## Quickstart — one command

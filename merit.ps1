@@ -44,6 +44,27 @@ function Invoke-MeritSkillsForward {
     exit $LASTEXITCODE
 }
 
+function Resolve-MeritAuthority {
+    $bench = if ($env:MYMERITAPP) { Join-Path $env:MYMERITAPP 'oss-bench.json' } else { '' }
+    $vaultCandidates = @()
+    if ($bench -and (Test-Path -LiteralPath $bench)) {
+        try {
+            $cfg = Get-Content -LiteralPath $bench -Raw | ConvertFrom-Json
+            if ($cfg.vaultFolder) { $vaultCandidates += Join-Path ([string]$cfg.vaultFolder) 'scripts\merit.ps1' }
+        } catch { }
+    }
+    if ($env:MYMERITAPP) { $vaultCandidates += Join-Path $env:MYMERITAPP 'merit-private-vault\scripts\merit.ps1' }
+    $vaultCandidates += Join-Path (Split-Path -Parent $Root) 'merit-private-vault\scripts\merit.ps1'
+    $vault = $vaultCandidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+    if ($vault) { return [pscustomobject]@{ plane = 'vault'; cli = $vault } }
+    $skills = Join-Path (Split-Path -Parent $Root) 'merit-agent-skills\merit.ps1'
+    if (-not (Test-Path -LiteralPath $skills) -and $bench -and (Test-Path $bench)) {
+        try { $cfg = Get-Content -LiteralPath $bench -Raw | ConvertFrom-Json; if ($cfg.skillsFolder) { $skills = Join-Path ([string]$cfg.skillsFolder) 'merit.ps1' } } catch { }
+    }
+    if (-not (Test-Path -LiteralPath $skills)) { throw 'MERIT authority not found: expected vault operator CLI or merit-agent-skills CLI' }
+    return [pscustomobject]@{ plane = 'oss'; cli = $skills }
+}
+
 function Invoke-Serve {
     Push-Location $Root
     try {
@@ -148,8 +169,16 @@ function Invoke-Closeout {
         Pop-Location
     }
     if (-not $ValidateOnly) {
-        $forward = @('release','--path',$Root)
-        Invoke-MeritSkillsForward -ForwardArgs $forward
+        $authority = Resolve-MeritAuthority
+        Write-Host ("Release authority: {0} ({1})" -f $authority.plane, $authority.cli) -ForegroundColor Cyan
+        if ($authority.plane -eq 'vault') {
+            $runner = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
+            if (-not $runner) { $runner = (Get-Command powershell -ErrorAction Stop).Source }
+            & $runner -NoProfile -ExecutionPolicy Bypass -File $authority.cli 'mXin' '-Message' 'merit-demo release closeout'
+            if ($LASTEXITCODE -ne 0) { throw "vault release closeout failed (exit $LASTEXITCODE)" }
+        } else {
+            Invoke-MeritSkillsForward -ForwardArgs @('release','--path',$Root)
+        }
     }
 }
 
