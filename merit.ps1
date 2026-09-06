@@ -18,6 +18,8 @@ Commands:
   deploy      Verify, link Vercel when needed, and deploy production
   closeout    Verify + e2e + git whitespace/status/head evidence
   admin       Forward MERIT admin tasks (for example: admin github access status)
+  where       Show MERIT surface, repository, account, and environment context
+  surface     Alias for where
   help        Print this help
 
 Prefer this wrapper over raw npm/npx/vercel. (npm is still what the wrapper calls under the hood.)
@@ -135,5 +137,6 @@ switch -Regex ($Command) {
     '^deploy$' { Invoke-Deploy; exit 0 }
     '^closeout$' { Invoke-Closeout; exit 0 }
     '^admin$' { $forward = @('admin') + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
+    '^(where|surface)$' { $forward = @($Command) + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
     default { Write-MeritHelp; exit 1 }
 }
