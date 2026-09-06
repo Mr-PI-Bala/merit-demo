@@ -117,6 +117,7 @@ function Invoke-Deploy {
 }
 
 function Invoke-Closeout {
+    param([switch]$ValidateOnly)
     Invoke-Verify
     Invoke-E2E
     Push-Location $Root
@@ -127,6 +128,10 @@ function Invoke-Closeout {
     } finally {
         Pop-Location
     }
+    if (-not $ValidateOnly) {
+        $forward = @('release','--path',$Root)
+        Invoke-MeritSkillsForward -ForwardArgs $forward
+    }
 }
 
 switch -Regex ($Command) {
@@ -135,7 +140,7 @@ switch -Regex ($Command) {
     '^e2e$' { Invoke-E2E; exit 0 }
     '^(serve|play)$' { Invoke-Serve; exit 0 }
     '^deploy$' { Invoke-Deploy; exit 0 }
-    '^closeout$' { Invoke-Closeout; exit 0 }
+    '^closeout$' { Invoke-Closeout -ValidateOnly:($Rest -contains '--validate-only'); exit 0 }
     '^admin$' { $forward = @('admin') + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
     '^(where|surface)$' { $forward = @($Command) + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
     default { Write-MeritHelp; exit 1 }
