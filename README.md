@@ -11,35 +11,29 @@ Run these from the repository; the remote repo and authenticated user are inferr
 .\merit.ps1 admin github access status
 ```
 
-**Start here** after cloning [merit-agent-skills](https://github.com/AgentDraven/merit-agent-skills) (Hub pin / `oss-bench.json`, currently **skills-v0.5.66**).
+**Start here:** clone this repository and run one command. The consumer reads its official hosted CompatSet pins from `cfg/par_pins.json`; you do not need to clone or manually pin `merit-agent-skills` for the demo.
 
-## Quickstart
+## Quickstart — one command
 
 ```powershell
-git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-agent-skills
-.\install.ps1 -Target Cursor
-.\merit.ps1 init --path ..\merit-demo
-# edit ..\merit-demo\.merit_launch.md
-.\merit.ps1 apply --path ..\merit-demo
-.\merit.ps1 verify --path ..\merit-demo
+cd merit-demo
+.\merit.ps1 quickstart
 ```
+
+That command installs dependencies when needed, verifies the pinned CompatSet, builds the consumer, and starts a local HTTP server. Open the printed `/play/` URL. The page reports Hosted Ready only when the pinned hosted workbench initializes and mounts; otherwise it shows the labeled fallback.
 
 Linux/macOS:
 
 ```bash
-git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
 git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-agent-skills
-./install.sh -Target Cursor
-./merit.sh init --path ../merit-demo
-# edit ../merit-demo/.merit_launch.md
-./merit.sh apply --path ../merit-demo
-./merit.sh verify --path ../merit-demo
+cd merit-demo
+./merit.sh quickstart
 ```
 
-Edit only `.merit_launch.md` for launch/deploy values. It is local, gitignored, and includes comments/examples. Then deploy:
+For development, install `merit-agent-skills` separately through Merit-Hub or its installer. It supplies IDE skills and release tooling; it is not required to run this static consumer showcase.
+
+Only operators deploying their own instance need launch configuration. Edit `.merit_launch.md` and then deploy:
 
 ```powershell
 .\merit.ps1 deploy --path ..\merit-demo

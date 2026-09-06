@@ -4,6 +4,12 @@ All notable changes to **merit-demo** (public MERIT freemium showcase consumer).
 
 Format: Keep a Changelog–style sections under each version. Versions align with `VERSION` / `package.json`.
 
+## Unreleased
+
+### Changed
+- Added one-command `merit.ps1 quickstart` / `merit.sh quickstart` for dependency setup, CompatSet verification, and local HTTP launch.
+- Simplified README Quickstart; hosted package versions remain controlled by `cfg/par_pins.json`.
+
 ## [0.3.4] — 2026-09-05
 
 ### Added

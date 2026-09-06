@@ -15,6 +15,7 @@ Commands:
   verify      Build and verify the local consumer scaffold
   e2e         Run local/provider e2e plus Playwright screenshots when available
   serve       Build, then serve the repo over HTTP and print /play/ URL
+  quickstart  Install dependencies, verify, and serve the pinned CompatSet demo
   deploy      Verify, link Vercel when needed, and deploy production
   closeout    Verify + e2e + git whitespace/status/head evidence
   admin       Forward MERIT admin tasks (for example: admin github access status)
@@ -52,6 +53,24 @@ function Invoke-Serve {
         Write-Host 'Stop with Ctrl+C when done.'
         Write-Host ''
         # serve is a one-liner static server; --yes avoids npx prompt. Port printed by serve.
+        npx --yes serve . -l 3000
+    } finally {
+        Pop-Location
+    }
+}
+
+function Invoke-Quickstart {
+    Push-Location $Root
+    try {
+        if (-not (Get-Command npm -ErrorAction SilentlyContinue)) { throw 'Node.js/npm is required. Install Node.js LTS, then rerun .\merit.ps1 quickstart.' }
+        if (-not (Test-Path -LiteralPath (Join-Path $Root 'node_modules'))) {
+            Invoke-Step 'install dependencies' { npm ci }
+        }
+        Invoke-Step 'verify pinned CompatSet' { npm run verify }
+        Write-Host ''
+        Write-Host 'MERIT Demo ready. Opening the local HTTP showcase at /play/.' -ForegroundColor Green
+        Write-Host 'The hosted workbench version is read from cfg/par_pins.json; do not edit package URLs manually.'
+        Write-Host ''
         npx --yes serve . -l 3000
     } finally {
         Pop-Location
@@ -139,6 +158,7 @@ switch -Regex ($Command) {
     '^verify$' { Invoke-Verify; exit 0 }
     '^e2e$' { Invoke-E2E; exit 0 }
     '^(serve|play)$' { Invoke-Serve; exit 0 }
+    '^quickstart$' { Invoke-Quickstart; exit 0 }
     '^deploy$' { Invoke-Deploy; exit 0 }
     '^closeout$' { Invoke-Closeout -ValidateOnly:($Rest -contains '--validate-only'); exit 0 }
     '^admin$' { $forward = @('admin') + $Rest; Invoke-MeritSkillsForward -ForwardArgs $forward }
