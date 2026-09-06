@@ -267,6 +267,10 @@ Keep IAR documentation to a small, role-based set. New requirements belong in th
 | C | `merit-demo` | Consumer IAR links skills policy/checklist and does not duplicate host policy |
 | D | `merit-private-vault` / `MERIT.instructions` | Vault upgrade preserves one controlling authority and adds protected evidence only where necessary |
 
+### FR-NEXTREL-007 — Release closeout must reach the cloud
+
+Validation-only closeout is not release completion. The canonical release path is `merit.ps1 closeout --path <repo> --release` (or `merit.ps1 release --path <repo>`): validate, commit, and push the current branch. Skills repositories additionally run `merit.ps1 ship` to create/push the `skills-v*` tag. Hooks and installers must use validation-only mode unless the user explicitly requests release. A release is incomplete if the push fails; local commits alone do not satisfy closeout.
+
 | NextRel FR | Zone | Requirement | Port target | Acceptance evidence |
 |---|---|---|---|---|
 | FR-NEXTREL-001 | B | Public `merit.ps1 e2e --path <repo>` and `merit.ps1 e2e:playwright --path <repo>` must dispatch the consumer's declared npm test scripts with exit-code propagation and clear diagnostics. | Port the implementation from OSS `merit-agent-skills/merit.ps1` into the master `merit.ps1` in `merit-private-vault` when that repo is activated. | Static wrapper passes; browser wrapper dispatches but is currently blocked by Windows EPERM writing existing evidence screenshots; missing package/script and non-zero child exit handling is implemented; private-vault parity test remains pending. |
