@@ -4,11 +4,15 @@ All notable changes to **merit-demo** (public MERIT freemium showcase consumer).
 
 Format: Keep a Changelog–style sections under each version. Versions align with `VERSION` / `package.json`.
 
-## Unreleased
+## [0.3.5] — 2026-09-06
 
 ### Changed
 - Added one-command `merit.ps1 quickstart` / `merit.sh quickstart` for dependency setup, CompatSet verification, and local HTTP launch.
 - Simplified README Quickstart; hosted package versions remain controlled by `cfg/par_pins.json`.
+
+### Fixed
+- Consumer release authority now prefers the vault operator CLI when a vault is present, otherwise the OSS skills CLI.
+- GitHub access/authentication commands are documented behind `merit.ps1`.
 
 ## [0.3.4] — 2026-09-05
 
