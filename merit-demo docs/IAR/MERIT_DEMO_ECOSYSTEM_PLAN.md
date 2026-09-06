@@ -218,7 +218,7 @@ Consumer Hosted Ready requires observed workbench artifact version **===** `cfg/
 | FR-010-C | **PARTIAL** | This IAR + refreshed usage/design/AGENTS/README |
 | All other FRs | **PLANNED** | Awaiting Pass 2–4 |
 
-Pass 1 verify: `npm run build && npm run e2e` and `npm run e2e:playwright`. Serve with `npx serve .` → `/play/` → `data-runtime-state="hosted-ready"`.
+Pass 1 verify: `.\merit.ps1 verify` / `.\merit.ps1 e2e` / `.\merit.ps1 closeout`. Browse with `.\merit.ps1 serve` → http://localhost:3000/play/ → `data-runtime-state="hosted-ready"`.
 
 
 ---
