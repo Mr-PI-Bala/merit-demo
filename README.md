@@ -1,4 +1,4 @@
-﻿# merit-demo
+# merit-demo
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
@@ -6,34 +6,25 @@ Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Start here — choose your path
 
-```mermaid
-flowchart TB
-    classDef one fill:#dbeafe,color:#172554,stroke:#2563eb,stroke-width:2px
-    classDef two fill:#dcfce7,color:#14532d,stroke:#16a34a,stroke-width:2px
-    classDef three fill:#fef3c7,color:#78350f,stroke:#d97706,stroke-width:2px
-    subgraph R1[① See the demo]
-      direction LR
-      A1[📥 Clone]:::one --> A2[▶️ quickstart]:::one --> A3[👀 Open /play/]:::one
-    end
-    subgraph R2[② Build on the template]
-      direction LR
-      B1[🎨 Edit branding]:::two --> B2[🧩 Edit app + cfg]:::two --> B3[🧪 Verify]:::two
-    end
-    subgraph R3[③ Deploy your version]
-      direction LR
-      C1[✅ Closeout]:::three --> C2[☁️ Deploy]:::three --> C3[📣 Publish portal]:::three
-    end
-    A3 --> B1
-    B3 --> C1
-```
+The three rows are three fun ways to use MERIT. Read left to right: **Start → Make it → Finish**.
+
+| Your goal | 1. Start | 2. Make it | 3. Finish |
+|---|---|---|---|
+| 👀 **Try the demo** | [Download the Hub](https://github.com/AgentDraven/merit-agent-skills/blob/main/Merit-Hub/Merit-Hub.ps1), run `.\Merit-Hub.ps1`, choose **3** | [Run the quickstart](#see-the-demo) | [Open `/play/`](#see-the-demo) |
+| 🛠️ **Build an app** | [Run the Hub](https://github.com/AgentDraven/merit-agent-skills#start-here--pick-your-adventure), choose **3**, then open this repo | [Edit branding, app, and `cfg/`](#build-on-the-template) | [Run `.\merit.ps1 verify`](#build-on-the-template) |
+| ☁️ **Publish my version** | [Verify locally](#build-on-the-template) | [Run `.\merit.ps1 closeout`, then `deploy`](#deploy-your-version) | [Publish `portal/`](#deploy-your-version) |
+
+> Optional: install IDE skills from [`merit-agent-skills`](https://github.com/AgentDraven/merit-agent-skills#i-want-skills-in-my-ide). The app works without them.
 
 ### See the demo
 
+**One-command path after the Hub has seeded the repo:**
+
 ```powershell
-git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-demo
-.\merit.ps1 quickstart
+.\merit.ps1 serve
 ```
+
+Then open the printed `/play/` address. If you are starting from a new laptop, download and run the Hub first, then choose **3 — Try it**; the Hub clones this repo and opens the demo for you.
 
 ### Build on the template
 
@@ -41,7 +32,7 @@ Start with `play/`, `portal/`, and `cfg/par_pins.json`. The hosted CompatSet is 
 
 ### Deploy your version
 
-Use ` .\merit.ps1 deploy` and ` .\merit.ps1 portal` only when you are ready to publish your own instance.
+Use `.\merit.ps1 closeout`, then `.\merit.ps1 deploy`, and finally `.\merit.ps1 portal` only when you are ready to publish your own instance.
 
 <details><summary>Additional options and administration</summary>
 
