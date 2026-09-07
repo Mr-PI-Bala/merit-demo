@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.13] — 2026-09-07
+
+- Promoted the hosted OC tutorial from planned to available documentation.
+
 ## [0.3.12] — 2026-09-07
 
 - Documented hosted OC tutorial ownership and walkthrough behavior.

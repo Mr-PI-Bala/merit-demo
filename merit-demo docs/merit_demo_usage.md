@@ -213,9 +213,9 @@ For cloud journal/AMA persistence, create your own Supabase project and run:
 - `sql/002_ama_daily_activity.sql`
 
 Then set the Supabase values in `.merit_launch.md` and run `merit apply`.
-## Hosted OC tutorial (planned)
+## Hosted OC tutorial
 
-After `OC` succeeds, an optional `OCV`/`OC-Tutorial.ps1` walkthrough will open
+After `OC` succeeds, the optional `OCV`/`OC-Tutorial.ps1` walkthrough opens
 the hosted play, registration, and marketing pages one at a time. It will show
 what each page demonstrates, what is configurable in this consumer, and record
 the observed URLs and statuses. The reusable runner belongs to
