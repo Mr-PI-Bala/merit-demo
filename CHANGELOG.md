@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.12] — 2026-09-07
+
+- Documented hosted OC tutorial ownership and walkthrough behavior.
+
 ## [0.3.11] — 2026-09-06
 
 - Documented Step 3 cloud-first architecture and Hub HTTP server evidence behavior.

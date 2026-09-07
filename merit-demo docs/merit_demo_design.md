@@ -70,3 +70,11 @@ Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are im
 **Decision: ACCEPT** all three provider-consumer edges above for this public reference-consumer baseline.
 
 This acceptance covers the public reference-consumer contract. It does not promote the hosted providers beyond their independently declared release stages.
+## OC tutorial ownership
+
+The OC tutorial uses a split boundary: skills/Hub provide the portable validation
+runner and receipt contract; `merit-demo` provides the optional branded
+`MERIT-OC: OSS in the Cloud` launchpad. This avoids duplicating cloud checks in
+each consumer while keeping the learner-facing experience relevant. The
+launchpad must label local shell content versus hosted MERIT runtime and must
+not imply that here.now is required for OC.
