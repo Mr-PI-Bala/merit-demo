@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.10] — 2026-09-06
+
+### Fixed
+- Aligned `VERSION`, `package.json`, and `package-lock.json` so release and runtime reports use the same version.
+
 All notable changes to **merit-demo** (public MERIT freemium showcase consumer).
 
 Format: Keep a Changelog–style sections under each version. Versions align with `VERSION` / `package.json`.
