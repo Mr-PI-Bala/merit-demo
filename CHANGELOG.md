@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.15] — 2026-09-07
+
+- Added three-step pathway cards with concrete Start, Make progress, and Finish checks for demo, build, publish, and IDE journeys.
+
 ## [0.3.14] — 2026-09-07
 
 - Added beginner guidance for when OSS users should consider Vault/VC.

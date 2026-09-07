@@ -27,6 +27,70 @@ The three rows are three fun ways to use MERIT. Read left to right: **Start → 
 
 Then open the printed `/play/` address. If you are starting from a new laptop, download and run the Hub first, then choose **3 — Try it**; the Hub clones this repo and opens the demo for you.
 
+### The three-step cards (what each path actually does) 🧩
+
+Every beginner path follows the same **Start → Make progress → Finish** rhythm. Each card below has three concrete checks, so you always know what “done” looks like.
+
+#### 👀 Try the demo
+
+1. **Start**
+   - Open PowerShell and run `.\Merit-Hub.ps1`.
+   - Choose **1 Setup**, then **2 Install OSS** if this is a new laptop.
+   - Choose **3 Try it**; the Hub reuses the existing demo folder when it is clean.
+2. **Make progress**
+   - The Hub starts the local HTTP server on its reusable port.
+   - Open the printed `/play/` URL in a browser.
+   - Confirm the page says **Hosted Ready** and shows the MERIT workbench.
+3. **Finish**
+   - Run **3V** for the guided validation checklist.
+   - Try **Register free** to see the hosted registration route.
+   - Use **OC** only when you want the hosted OSS-in-the-Cloud journey.
+
+#### 🛠️ Build an app
+
+1. **Start**
+   - Keep this repository as your clean consumer starting point.
+   - Review `cfg/branding.json` and the `play/` and `portal/` shells.
+   - Make a small, friendly change (name, colors, or welcome copy).
+2. **Make progress**
+   - Run `.\merit.ps1 verify` after each change.
+   - Check that local routes still load through `.\merit.ps1 serve`.
+   - Keep generated receipts and configuration changes explainable.
+3. **Finish**
+   - Run `.\merit.ps1 closeout` to verify the release state.
+   - Review the printed commit, branch, and hosted-pin evidence.
+   - Continue to deployment only after closeout reports success.
+
+#### ☁️ Publish my version
+
+1. **Start**
+   - Finish the local build and verification checks first.
+   - Confirm the intended CompatSet and production MERIT base.
+   - Sign in to the target hosting account only when publishing is intended.
+2. **Make progress**
+   - Run `OC` from the Hub for the hosted OSS path, or use the deploy command for your own host.
+   - Watch the live play, register, and marketing URLs printed by the Hub.
+   - If a publish step fails, rerun the named phase after fixing the reported cause.
+3. **Finish**
+   - Run **OCV** to validate every hosted endpoint in order.
+   - Confirm the receipt records the consumer id and all live URLs.
+   - Share the hosted link only after the final closeout and 3-3 summary.
+
+#### 🧠 Optional IDE skills helper
+
+1. **Start**
+   - Download and run the Hub from `merit-agent-skills`.
+   - Choose **I — Install IDE skills** and select your host.
+   - Leave this step out if you only want the demo.
+2. **Make progress**
+   - The Hub writes skills to the host’s supported location.
+   - Keep the consumer repo independent from host-specific files.
+   - Re-run the installer when the skills pin is intentionally upgraded.
+3. **Finish**
+   - Ask your IDE to follow the MERIT closeout and 3-3 law.
+   - Verify the installed host status when the adapter supports it.
+   - Treat unsupported hosts as guidance-only and use `merit.ps1 closeout`.
+
 ### Build on the template
 
 Start with `play/`, `portal/`, and `cfg/par_pins.json`. The hosted CompatSet is already pinned; you do not need to manually clone or version `merit-agent-skills`.
