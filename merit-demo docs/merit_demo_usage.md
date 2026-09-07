@@ -8,6 +8,20 @@ When you choose **3 — Try it** in `Merit-Hub.ps1`, Hub starts the demo HTTP se
 
 **Controlling plan:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
 
+### Step 3 architecture
+
+Step 3 is a thin consumer demonstration: the HTML, CSS, JavaScript shell, routes,
+and marketing portal run locally; the pinned `merit_workbench`, registration,
+and production services run on `merit-prod.vercel.app`. No local copy or mimic of
+the cloud workbench is bundled. Hub starts the HTTP server in the background,
+reuses port `3000` when available, and records server output in
+`merit-demo docs/IAR/evidence/hub-serve.log`.
+
+Hub reports skills as **pinned** to the tested CompatSet and the demo as
+**refreshed** from `origin/main`. If local edits or divergent history are found,
+Hub stops without overwriting them. Advanced users can use Hub menu **K** to
+review supported skills pins; arbitrary tags are not accepted.
+
 ## Path resolve (agents and operators)
 
 Do not hardcode `C:\MyMeritApp`. Resolve:
