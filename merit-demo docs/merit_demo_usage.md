@@ -213,6 +213,13 @@ For cloud journal/AMA persistence, create your own Supabase project and run:
 - `sql/002_ama_daily_activity.sql`
 
 Then set the Supabase values in `.merit_launch.md` and run `merit apply`.
+## When to move from OSS to Vault
+
+Stay in OSS while learning and building on the public hosted rails. Consider
+Vault/VC when private operator controls, tenant-grade gates, private
+configuration, or production ownership become necessary; Vault is optional and
+does not replace the public OC demo.
+
 ## Hosted OC tutorial
 
 After `OC` succeeds, the optional `OCV`/`OC-Tutorial.ps1` walkthrough opens

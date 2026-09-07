@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.14] — 2026-09-07
+
+- Added beginner guidance for when OSS users should consider Vault/VC.
+
 ## [0.3.13] — 2026-09-07
 
 - Promoted the hosted OC tutorial from planned to available documentation.
