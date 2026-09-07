@@ -34,27 +34,27 @@ Validate without browsing: `.\merit.ps1 verify` then `.\merit.ps1 e2e` (or one-s
 
 ### 1. Local Setup
 
-Prefer Hub **1 → 2 → 3** under your chosen `MYMERITAPP`. Manual twin:
+Prefer Hub **1 → 2 → 3** under your chosen `MYMERITAPP`. The supported beginner path is:
 
 ```powershell
-# MYMERITAPP already set (example: C:\DApps)
-cd $env:MYMERITAPP
-git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
-git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-agent-skills
-.\install.ps1 -Target Cursor
-.\merit.ps1 verify --path ..\merit-demo
+# Download Merit-Hub.ps1 from the skills repository, save it (for example) in C:\Tools,
+# then open PowerShell in that folder:
+cd C:\Tools
+.\Merit-Hub.ps1
+# Choose 1, then 2, then 3. Hub pins the compatible skills release and seeds merit-demo.
+# In the seeded consumer:
+cd $env:MYMERITAPP\merit-demo
+.\merit.ps1 verify
 ```
 
 Linux/macOS:
 
 ```bash
-cd "$MYMERITAPP"
-git clone --branch skills-v0.5.66 https://github.com/AgentDraven/merit-agent-skills.git
-git clone https://github.com/Mr-PI-Bala/merit-demo.git
-cd merit-agent-skills
-./install.sh -Target Cursor
-./merit.sh verify --path ../merit-demo
+cd "$MYMERITTOOLS"
+pwsh -NoProfile -File ./Merit-Hub.ps1
+# Choose 1, then 2, then 3; Hub resolves the compatible release and consumer paths.
+cd "$MYMERITAPP/merit-demo"
+./merit.sh verify
 ```
 
 ### 2. Initialize The Repository

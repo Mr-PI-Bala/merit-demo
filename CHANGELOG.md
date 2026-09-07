@@ -8,14 +8,11 @@ Format: Keep a Changelog–style sections under each version. Versions align wit
 
 ### Changed
 - Reworked the README diagram into a colorful sequential three-row learning flow.
-
-### Changed
 - Reworked README onboarding into a persona-based flow with progressive disclosure.
 
 ### Fixed
 - Added a historical release index for tags `v0.3.0`–`v0.3.2` that predate detailed changelog sections.
 
-### Changed
 - Added one-command `merit.ps1 quickstart` / `merit.sh quickstart` for dependency setup, CompatSet verification, and local HTTP launch.
 - Simplified README Quickstart; hosted package versions remain controlled by `cfg/par_pins.json`.
 
