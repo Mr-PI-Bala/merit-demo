@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.3.11] — 2026-09-06
+
+- Documented Step 3 cloud-first architecture and Hub HTTP server evidence behavior.
+
 ## [0.3.10] — 2026-09-06
 
 ### Fixed
