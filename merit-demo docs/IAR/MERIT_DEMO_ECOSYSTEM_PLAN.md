@@ -215,6 +215,11 @@ The executable test authority is [MERIT_DEMO_TDD_CHECKLIST.md](MERIT_DEMO_TDD_CH
 
 ## Status
 
+### Documentation presentation standard
+
+MERIT documentation follows the shared format standard in
+[`merit-agent-skills` LLD map](https://github.com/AgentDraven/merit-agent-skills/blob/main/docs/IAR/MERIT_AGENT_SKILLS_LLD_MAP.md#documentation-format-standard): colored bands for major sections, normal Markdown subheadings, callout blockquotes, command-first examples, and tables for matrices. This IAR remains the controlling content authority; styling must not create parallel documents.
+
 ### NextRel FR — host-compatible closeout enforcement
 
 2026-09-06 evidence: skills-repo ownership status is clean (`AgentCreator\\Draven`, Modify ACL, write probe PASS, git safe-directory PASS). The prior closeout receipt used deterministic temp storage because the target evidence directory was unavailable or unwritable in that execution context; this is an evidence-path issue, not a root ownership failure.

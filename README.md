@@ -4,7 +4,8 @@ Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA,
 
 Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
-## Start here — choose your path
+<a id="start-here-choose-your-path"></a>
+<table><tr><td bgcolor="#1f6feb"><strong><big><big>🧭 Start here — choose your path</big></big></strong></td></tr></table>
 
 The three rows are three fun ways to use MERIT. Read left to right: **Start → Make it → Finish**.
 
@@ -54,7 +55,7 @@ Switch the GitHub account used for repository administration without calling `gh
 
 For Linux/macOS, use `./merit.sh quickstart`. Deployment details are in [merit_demo_usage.md](merit-demo%20docs/merit_demo_usage.md).
 
-## Surfaces
+<table><tr><td bgcolor="#0d9488"><strong><big><big>🧩 Surfaces</big></big></strong></td></tr></table>
 
 | Route | PAR / service | here.now portal |
 |-------|---------------|-----------------|
@@ -66,7 +67,7 @@ For Linux/macOS, use `./merit.sh quickstart`. Deployment details are in [merit_d
 
 `/play/` is the canonical **Hello, meritutils** proof: DualRail `createAppShell` loads the pinned production-hosted `merit_workbench@0.4.14`, mounts the interactive shell, and reports **Hosted Ready** (or a labeled offline stub on failure). Prefer `.\merit.ps1 serve` (HTTP) — `file://` is smoke-only.
 
-## Build & deploy
+<table><tr><td bgcolor="#0d9488"><strong><big><big>🚀 Build & deploy</big></big></strong></td></tr></table>
 
 ```powershell
 npm install && npm run verify && npm run build
@@ -82,7 +83,7 @@ npm install && npm run verify && npm run build
 
 Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_demo.sql`.
 
-## Freemium → Plus
+<table><tr><td bgcolor="#0d9488"><strong><big><big>💎 Freemium → Plus</big></big></strong></td></tr></table>
 
 | Tier | Limits |
 |------|--------|
@@ -91,7 +92,7 @@ Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_
 
 No seed content — operators/subscribers add their own white-label content.
 
-## Abuse
+<table><tr><td bgcolor="#0d9488"><strong><big><big>🛟 Abuse</big></big></strong></td></tr></table>
 
 Report to meritlabs@protonmail.com (+ operator email in `cfg/branding.json` when set).
 # Developer repository access
