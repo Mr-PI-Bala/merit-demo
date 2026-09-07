@@ -1,5 +1,9 @@
 ﻿# merit-demo — usage
 
+## Step 3 executive checklist (what you should see)
+
+When you choose **3 — Try it** in `Merit-Hub.ps1`, Hub starts the demo HTTP server and opens `http://localhost:3000/play/`. Check Hosted Ready, the mounted workbench, hosted **Register free**, and local `/portal/` Marketing portal. Failure or version mismatch must show a labeled fallback with Retry and portal links. A `file://` view is smoke-only evidence.
+
 `merit-demo` is the public hello-world consumer for MERIT Agent Skills and MERIT Prod. It shows workbench, journal, AMA, Portal, legal pages, and the production registration path without exposing provider billing or metered utility source code.
 
 **Controlling plan:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
