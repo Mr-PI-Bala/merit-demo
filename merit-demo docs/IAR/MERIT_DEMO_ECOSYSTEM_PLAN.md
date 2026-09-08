@@ -1,8 +1,8 @@
-﻿# MERIT Demo Ecosystem Plan (SSOT)
+# MERIT Demo Ecosystem Plan (SSOT)
 
 **Status:** Plan / controlling IAR until implementation  
 **Repo path:** `merit-demo docs/IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md`  
-**Updated:** 2026-09-05 (Codex cloud-recovery IAR v2 review merged)  
+**Updated:** 2026-09-08 (Gaps to Alpha review, TDD and two-repo OC requirements)
 **Sources:** Cursor alignment plan + Codex “MERIT Demo Cloud-Recovery IAR” (planning artifact only)
 
 This file is the living SSOT for what to change where. Do **not** invent a parallel `docs/` tree; product docs stay under `merit-demo docs/` (near-3). Cloud report and recovery evidence live **in IAR**, not as a fifth product doc.
@@ -356,3 +356,114 @@ What we **took in**, **adapted**, or **did not take**, and why.
 - Published here.now URL for this seed (unverified).
 - Whether a future **law-approved** optional vendored read-only PAR is ever allowed for richer offline demo (explicitly out of Pass 1).
 - Pass 2–4 ownership when writing to skills Hub / merit-prod (may be hand-off).
+
+---
+
+<a id="gaps-to-alpha"></a>
+
+## Gaps to Alpha ^gaps-to-alpha
+
+**Review date:** 2026-09-08. **Status:** OPEN requirements; guided builder preview candidate, not subscriber-alpha signoff. **Authority:** this controlling consumer IAR. This section records the three-repo review and the owner's request to define fixes, acceptance tests, personas, and two-repo OC independence. Documentation approval does not claim implementation, provider ACCEPT, deployment, or a passing alpha gate.
+
+### Product boundary: OC needs only the two public repos
+
+OC (OSS in Cloud) must be installable, runnable, diagnosable, and verifiable using **merit-agent-skills + merit-demo only** as local source repositories. A normal user must not clone merit-private-vault, deploy an affiliate runtime, run its operator CLI, or obtain private operator/gateway/provider secrets. IDE skills are optional; a specific IDE is not a runtime prerequisite. Publicly documented prerequisites may be installed by the public Hub with an explicit explanation.
+
+This is a local-repository independence requirement, not an offline promise: hosted merit-prod, meritutils packages, meritsubs, and meritstore remain service dependencies. Standard platform OC must not require local provider source, personal Vercel/Square/Supabase credentials, or a here.now account. BYOK/own-host publication is a separately labeled Advanced pathway, never a silent prerequisite. Platform subscriber/builder identity may be required and must be explained before use.
+
+Ownership remains: **A** = Hub/laptop/optional IDE follow-through; **B** = public skills/CLI; **C** = merit-demo consumer; **D** = hosted providers and marketing hosting. Vault owns private policy and operator controls, not public consumer implementation. Any future vault feature is recorded here as a requester-owned **NextRel FR for later extraction**, with no current vault edits and no dependency from the standard OC path to that future work. Cross-repo handoffs stay in IAR; these are not same-repo maintenance-line NextRelDoc packets.
+
+### Review baseline and evidence limits
+
+| Surface | Observed on 2026-09-08 | Interpretation |
+|---|---|---|
+| merit-agent-skills | VERSION 0.5.193; HEAD eba7094; four commits after skills-v0.5.193 | Public tooling exists; release payload must include the intended fixes before alpha |
+| merit-demo | VERSION 0.3.15; HEAD c47c8bf; eight commits after v0.3.15; package.json 0.3.10 | Thin consumer exists; version surfaces and tested release need reconciliation |
+| merit-private-vault | vault-v0.5.56 at 98f3228 | Private operator plane exists; not a required subscriber checkout |
+| Fresh checks | Hub launcher regression suite and demo scaffold verification passed; gateway health, meritsubs health, workbench 0.4.14 JS returned 200 | Infrastructure/scaffold evidence only; no complete registration/payment/browser acceptance test was run |
+| Register free | /store/merit-demo/register resolved to /portal/developers/sku-commerce/ with final 200 | Guidance for store activation, not completed registration; must not pass subscriber acceptance |
+| Vault unit checks | Selected tests could not run: available Python lacked pytest | Environment limitation, not a demonstrated test failure or a PASS |
+| Earlier IAR evidence | Previous release, commerce, and browser results exist | Historical evidence does not certify the current selected release |
+
+Source pointers: [demo API calls and fallback](../../journal/index.html), [AMA rendering and calls](../../ama/index.html), [browser gate](../../scripts/e2e-playwright.mjs), [version manifest](../../package.json), [consumer service boundary](../../cfg/meritsubs_consumer.json). Public tooling source: merit-agent-skills README release section, Merit-Hub embedded skillsPin, cfg/compatset.skills.json, scripts/test-hub-launcher.ps1. Review statements are observations or risks; no production exploit, charge, or signup was attempted.
+
+### Bugs to fix
+
+All rows begin **OPEN**. P0 blocks free subscriber alpha; P1 blocks alpha for the affected advertised pathway. Severity expresses release priority, not a confirmed exploit assessment.
+
+| Bug ID | Priority / zone / owner | Defect and required correction | Red test -> green acceptance |
+|---|---|---|---|
+| BUG-ALPHA-001 | P0 C / demo | Register free promises registration but reaches commerce guidance. Bind the CTA to a live consumer registration route; show an honest unavailable/setup state if activation fails. Provider activation is FR-ALPHA-002-D. | Follow every redirect from play/portal CTA; fail on guide/help/login-wall/unrelated tenant destination; pass only on the intended consumer registration form and successful completion |
+| BUG-ALPHA-002 | P0 C / demo | Journal/AMA requests lack explicit consumer context, subscriber authentication, and a visible return-to-app identity bridge. Wire the supported public provider identity contract; never ship server secrets. | Assert context on all read/write/vote calls; guest/free/paid sessions resolve correctly; missing/expired/foreign context is rejected or follows a documented guest path; user B cannot read user A's private journal |
+| BUG-ALPHA-003 | P0 C / demo | AMA interpolates API-provided body/identity/id fields into innerHTML. Replace unsafe rendering with text/DOM APIs or an explicitly validated rich-text contract. | Inject hostile markup into all rendered fields in isolated fixtures; no script/event execution or attribute injection; text and voting still work. Do not inject payloads into production |
+| BUG-ALPHA-004 | P0 C / demo tests | Browser dependency absence can skip acceptance, and HTTP 200 after a wrong redirect can pass. Required alpha browser/provider checks must fail closed. | Remove browser dependency, return guide HTML or malformed health JSON with 200, redirect to wrong tenant; each must produce a nonzero gate and explicit reason, never E2E OK |
+| BUG-ALPHA-005 | P1 C / demo | Journal 503 fallback retains only the last cap entries, conflating retention with daily metering; network errors lack reliable recovery. Preserve accepted entries, identify local-only persistence, and keep provider entitlement enforcement authoritative. | Save more than two local entries under outage; reload without silent loss; exercise network error, 503, malformed JSON, storage failure, retry and duplicate prevention; no false cloud-save claim |
+| BUG-ALPHA-006 | P0 B / skills release | Default skills payload omits later fixes and README baseline differs from the selected release. Select/publish a tested pin and align Hub, CompatSet, receipts, and public guidance. | Clean installation resolves the advertised immutable payload containing required fixes; repeated install and supported-host startup tests pass without floating-main evidence being substituted |
+| BUG-ALPHA-007 | P0 C / demo release | VERSION, package metadata, tag/commit, and current release evidence disagree. Reconcile version-bearing surfaces and release the exact tested revision. | Check metadata against declared release; receipt binds commit, tag, skills pin, consumer artifact, provider versions and UTC time; published revision matches the tested revision |
+| BUG-ALPHA-008 | P1 C / docs | Existing TDD command descriptions call closeout validation-only, while current wrappers can release by default. Correct documentation and distinguish validation, release, and deploy. | Execute the documented validation path in an isolated fixture; no commit/push/deploy; separately verify explicit release behavior and nonzero failure propagation |
+
+### Features required for alpha
+
+All rows are **OPEN / not ACCEPTED**. Separate rows preserve ownership; provider work must be requested and accepted through this IAR, not copied into either public repo.
+
+| FR ID | Gate / zone / owner | Required feature | Acceptance evidence |
+|---|---|---|---|
+| FR-ALPHA-001-A | Free P0 / A / Hub | Fresh-device two-repo OC journey with correct resolved paths; optional IDE installation; no vault-dependent detours | Clean normal-user profile with no vault/runtime, no private env, no provider source and only the two public checkouts completes Setup -> Install -> Try -> 3V -> OC -> OCV; repeat/resume remains safe |
+| FR-ALPHA-001-B | Free P0 / B / skills | Public CLI provides every standard OC action and diagnostic, including activation orchestration and actionable service failures | Integration tests deny reads/exec from vault/runtime and detect attempts; public flow succeeds; installed-vault and no-vault cases produce equivalent public outcomes without selecting private authority |
+| FR-ALPHA-001-C | Free P0 / C / demo | Consumer runs and validates with the public tooling alone; correct per-app URLs and identity return route | Two fresh consumer slugs publish/open independently; configuration contains no private secrets or absolute operator paths; subscribers need no checkout or IDE |
+| FR-ALPHA-002-B | Free P0 / B / skills | OC activates or reuses the app's free store via supported public service contract, with idempotent retry and visible status | First activation, repeated activation, collision, timeout and resume tests; receipt identifies consumer and final play/register URLs; no raw provider credential prompt |
+| FR-ALPHA-002-D | Free P0 / D / merit-prod + meritstore | Real registration for demo and newly created consumers, platform identity, free entitlement and return-to-app flow | Browser completes registration/login/logout/relogin for two apps; duplicate handle/email, verification/recovery and interrupted flow behave as documented; wrong-consumer redirect fails |
+| FR-ALPHA-003-D | Free P0 / D / meritsubs + gateway/community providers | Authoritative authenticated tenant/subscriber routing, private-journal isolation, quota decisions and entitlement lookup | API tests with missing/forged/expired identities and two users/two tenants; no cross-tenant/private-user leakage; client-edited tier/cap cannot grant access; identity is verified, not trusted from a submitted ID |
+| FR-ALPHA-004-C | Free P0 / C / demo | Visible guest/free/paid state, working save/reload and AMA ask/vote, actionable limit/upgrade and auth recovery UX | Guest -> register -> return -> save/reload; third daily action reaches configured limit; refresh/relogin preserves tier; rejected votes show failure; no invented saved/paid state |
+| FR-ALPHA-004-D | Free P0 / D / community providers | Server-side daily quota boundaries, persistence, vote integrity, privacy modes and advertised leaderboard behavior | Clock-controlled reset-boundary tests, concurrent request tests, replay/double-vote policy, privacy projections and top-25 rule; persisted journal survives a new session |
+| FR-ALPHA-005-D | Paid P0 / D / meritstore + meritsubs | Paid SKU activation, tokenized checkout, webhook/ledger/entitlement reconciliation, cancellation and refund/revocation | Sandbox/provider-owned payment tests: success, decline, cancel, duplicate/delayed/out-of-order webhook, renewal failure, refund terminal status and entitlement transition; approved production proof separately, with safe identifiers only |
+| FR-ALPHA-005-C | Paid P0 / C / demo | Paid entitlement unlock and subsequent downgrade/revocation reflected in the consumer | Same subscriber upgrades and receives configured uncapped access within documented bound; reload/relogin consistent; cancellation/refund semantics match provider policy; payment failure never unlocks |
+| FR-ALPHA-006-B | Free P0 / B / skills validation | Required OCV produces trustworthy semantic browser evidence, not status-code-only checks | Gate consumes tests for correct tenant/form, auth, mount, real persistence and quotas; missing tools, stale receipts, skipped required scenarios and provider failure block acceptance |
+| FR-ALPHA-006-C | Free P0 / C / demo tests | Executable persona-path acceptance suite mapped to every bug/FR | Red/green fixtures and live dedicated-test-tenant runs; desktop/mobile, keyboard/forms, failure/retry and cross-session checks; no new route-smoke-only claims |
+| FR-ALPHA-007-C | Free P0 / C / docs | Document personas/pathways below in existing usage/design docs, including data/privacy, limits, support and recovery | A new tester follows each applicable path without operator interpretation; documented labels, final URLs, side effects and evidence match actual behavior |
+| FR-ALPHA-007-D | Free P0 / D / providers | Operational support for alpha: health/version diagnostics, redacted correlation IDs, abuse escalation and documented recovery/rollback | Induced service failure produces actionable trace and support route without secrets/PII; operator rehearses recovery; restore/reconciliation evidence supports advertised persistence |
+
+Paid alpha is a separate gate: do not advertise functioning paid onboarding while FR-ALPHA-005-C/D remain open. Free alpha still requires the complete free identity/data/quota journey. A published marketing page or Hosted Ready workbench alone satisfies neither gate.
+
+### Personas and pathways to document and test
+
+Document each path in the existing merit_demo_usage.md, explaining prerequisites, exact actions/labels, local versus hosted URLs, expected result, data visibility, side effects, failure/retry, support, and evidence. Put architecture/ownership rationale in merit_demo_design.md; keep acceptance status in this IAR and the linked TDD checklist.
+
+| Path ID / persona | Required journey | Key acceptance / traceability |
+|---|---|---|
+| PATH-ALPHA-01 / first-time builder | Setup (1) -> Install OSS (2) -> Try (3) -> local 3V -> OC -> hosted OCV | Only two repos, supported prerequisites, correct demoFolder, local/hosted distinction, no mandatory IDE/vault/BYOK; FR-ALPHA-001-A/B/C |
+| PATH-ALPHA-02 / returning builder | Reopen -> select app -> resume/retry OC -> OCV -> share | Idempotent activation, no duplicate tenant, correct app identity, preserved work and actionable failure receipt; FR-ALPHA-002-B |
+| PATH-ALPHA-03 / guest visitor | Shared hosted URL -> workbench -> journal/AMA preview -> Register free | Browser only; honest guest capabilities and limits; real registration destination, no developer guide surprise; BUG-ALPHA-001, FR-ALPHA-004-C |
+| PATH-ALPHA-04 / free subscriber | Register -> identity verification if required -> return to app -> save/reload -> ask/vote -> cap -> logout/relogin/recover access | Persistence, verified identity, configured daily reset, clear upgrade and recovery; BUG-ALPHA-002/005, FR-ALPHA-002-D/003-D/004-C/D |
+| PATH-ALPHA-05 / paid subscriber | Free account -> choose SKU -> checkout -> return -> paid access -> cancel/refund -> resulting access | Payment/entitlement consistency, failures and delayed webhook handling, accurate billing/cancellation copy; FR-ALPHA-005-C/D |
+| PATH-ALPHA-06 / privacy and abuse tester | Two users in two apps -> private journals -> AMA privacy modes -> hostile-content fixtures -> report abuse | Tenant/user isolation, safe rendering, leaderboard privacy, support response path; BUG-ALPHA-003, FR-ALPHA-003-D/004-D/007-D |
+| PATH-ALPHA-07 / release and support operator | Select public pins -> run acceptance -> review receipts -> explicit release -> diagnose failure -> rollback/recover | No false-green skips, tested/published revision binding, redacted diagnostics; BUG-ALPHA-004/006/007/008, FR-ALPHA-006-B/C/007-D |
+| PATH-ALPHA-08 / advanced BYOK builder | Explicitly choose own hosting/marketing publication -> supply own account -> publish -> verify | Separate optional path, credentials requested only after selection, no regression to standard OC independence; never counted as standard OC prerequisite |
+
+### TDD execution and release decision
+
+1. **Red first:** implement a test for each bug/FR before changing behavior. Record the observed failing assertion; an unimplemented test stays OPEN, an unavailable environment is BLOCKED, and a skipped mandatory test is never PASS. Provider tests run in their owner repo; consumer acceptance links their receipts here.
+2. **Unit and contract tests:** safe rendering, fallback retention, release metadata, redirect validation, identity/request composition, activation retries, quota clocks, webhook idempotency and fail-closed receipt checks. Fixtures must test outcomes, not just mirror source strings.
+3. **Hermetic integration:** two users x two consumer tenants; providers simulated for controlled negative cases. Block vault/runtime filesystem and CLI access and remove private env; verify public commands neither require nor probe secrets. Test local-vault presence separately so it cannot silently change OC behavior.
+4. **Browser acceptance:** clean profile, pinned two-repo release, dedicated hosted test tenants. Exercise PATH-ALPHA-01 through 07 as applicable, desktop/mobile and keyboard flows, real form submission, navigation/redirect destination, return session, persisted data and entitlements. Inject outage/CORS/timeout/malformed response in controlled fixtures; prove recovery without data loss. Do not submit hostile data or charge cards on production as part of ordinary regression.
+5. **Public validation entry points:** use public merit.ps1 verify, e2e and e2e:playwright with the resolved consumer path. Validation-only must be explicitly selected and confirmed against the current wrapper; bare closeout can commit/push. Missing mandatory browser/provider test support must block alpha even if today's wrapper exits zero. Release and deployment are separate explicit actions.
+6. **Evidence:** under IAR/evidence retain a run manifest with bug/FR/path IDs, owner, UTC timestamp, public repo commits/tags, expected/observed provider versions, local versus hosted origin, consumer/test-user aliases, final redirect URLs, expected/actual assertions, exit status and redacted logs/screenshots. Never retain session tokens, raw credentials, card data or unnecessary subscriber PII. Current release evidence supersedes historical PASS labels for alpha signoff only; preserve history.
+7. **Accept:** all Free P0 and advertised-path P1 items pass on the selected released artifacts; paid launch additionally requires both Paid P0 rows. Provider dependencies require requester-IAR ACCEPT linked to provider evidence. Unresolved mandatory bugs, skipped tests, stale/conflicting pins or missing persona evidence mean NO-GO. No percentage readiness score substitutes for these gates.
+
+### NextRel FRs: future extraction by merit-private-vault
+
+All entries are **OPEN / REQUESTED / NOT ACCEPTED / NOT EXTRACTED**. Source is this merit-demo IAR; target is merit-private-vault; owner is its operator maintainer when that repo takes the work. These improve governance later and are **not prerequisites for two-repo OC or substitutes for current public/provider fixes**.
+
+| NextRel FR ID | Future vault feature | Acceptance after extraction / non-goal |
+|---|---|---|
+| FR-NEXTREL-ALPHA-VAULT-001 | Import alpha evidence by bug/FR/path ID into certification and portfolio state; distinguish historical, blocked, current free-alpha and paid-alpha results | Fixture with stale release, skipped browser and wrong-tenant redirect cannot certify; valid public receipt links back to requester IAR. No vault-generated PASS without consumer proof |
+| FR-NEXTREL-ALPHA-VAULT-002 | Reconcile operator release registry with public skills CompatSet, demo release and hosted provider identities | Drift detected with actionable owner; optional operator audit consumes public artifacts. No private registry access required on subscriber/builder devices |
+| FR-NEXTREL-ALPHA-VAULT-003 | Operator service activation/reconciliation and support playbooks for exceptional tenant/store/entitlement failures | Idempotent operator recovery with least-privilege secrets kept private, redacted correlation and audit evidence. Does not replace public self-service activation |
+| FR-NEXTREL-ALPHA-VAULT-004 | Provider handoff lifecycle and alpha extraction register | Import preserves IDs and source link; record target IAR, owner, ACCEPT decision, implementation release, test evidence and ABSORBED status back in requester IAR. Never mark absorbed upon copying text alone |
+
+### Review disposition changelog — 2026-09-08
+
+- **Take:** three-repo role separation; registration redirect gap; identity/context gap; unsafe AMA rendering risk; false-green test risk; journal retention bug; release/document drift; guided-preview versus subscriber-alpha distinction.
+- **Adapt:** turn observations into owned bugs and separate public/provider FRs, with negative tests and explicit evidence limits. Separate free versus paid alpha, and local-repo independence versus hosted-service dependencies.
+- **Reject:** mandatory vault checkout/runtime/operator secrets for standard OC; treating HTTP 200, a marketing page or workbench mount as subscriber onboarding; treating this documentation update as implementation or provider acceptance.
+- **Defer for extraction:** private operator/certification improvements only, under FR-NEXTREL-ALPHA-VAULT-001 through 004. Preserve all earlier NextRel IDs and history.

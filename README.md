@@ -2,7 +2,7 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
-Version: see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+Version: **0.3.16** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
 <a id="start-here-choose-your-path"></a>
 <table><tr><td bgcolor="#1f6feb"><strong><big><big>🧭 Start here — choose your path</big></big></strong></td></tr></table>

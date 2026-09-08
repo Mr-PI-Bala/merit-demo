@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.16] — 2026-09-08
+
+### Added
+- Gaps to Alpha in the controlling consumer IAR: owned bugs/FRs, red-first TDD gates, eight persona pathways, and future vault extraction requirements.
+- Explicit standard OC independence from any local private-vault checkout, runtime or operator secrets; hosted provider dependencies remain documented.
+
+### Fixed
+- Repaired MERIT usage-guide hyperlink pairs and IAR anchor formatting.
+- Corrected validation-only closeout guidance and aligned VERSION, package metadata, lockfile and README on 0.3.16.
+
+Alpha requirements remain OPEN. This documentation and release-hygiene patch does not implement subscriber registration, identity, payment or entitlement fixes.
+
 ## [0.3.15] — 2026-09-07
 
 - Added three-step pathway cards with concrete Start, Make progress, and Finish checks for demo, build, publish, and IDE journeys.

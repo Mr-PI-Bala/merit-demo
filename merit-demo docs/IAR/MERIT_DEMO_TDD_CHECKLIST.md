@@ -3,7 +3,7 @@
 **Status:** Active test authority  
 **Owner:** merit-demo consumer / MERIT ecosystem maintainers  
 **Controlling plan:** [MERIT Demo Ecosystem Plan](MERIT_DEMO_ECOSYSTEM_PLAN.md)  
-**Last updated:** 2026-09-06
+**Last updated:** 2026-09-08
 
 This is the executable acceptance checklist for Zones A–D. A requirement is not complete because prose says it is complete: each row needs a reproducible check and evidence. Status values are `PASS`, `FAIL`, `BLOCKED`, `OPEN`, or `N/A`.
 
@@ -29,10 +29,10 @@ $repo = 'C:\DApps\merit-demo'
 
 & "$skills\merit.ps1" where
 & "$skills\merit.ps1" verify --path $repo
-& "$skills\merit.ps1" closeout --path $repo
+& "$skills\merit.ps1" closeout --path $repo --validate-only
 ```
 
-`verify` validates the public MERIT scaffold. `closeout` runs verify plus whitespace validation and is validation-only; it does not run browser E2E or deploy anything. `law closeout` prints the OSS closeout law and is not itself a test runner.
+`verify` validates the public MERIT scaffold. Bare `closeout` can validate, commit and push; it is not a validation-only command. Use an explicitly supported `--validate-only` option for validation, and check the current wrapper behavior before execution. Browser acceptance is a separate required alpha gate; release is not deployment. `law closeout` prints the OSS closeout law and is not itself a test runner.
 
 The public CLI is the required test surface. It runs the lower-level checks for you:
 
@@ -48,7 +48,7 @@ The public CLI is the required test surface. It runs the lower-level checks for 
 |---|---|---|---|
 | Surface discovery | `merit.ps1 where` | — | Zone A prerequisite; confirms OSS bench, IDE, vault, Hub, and consumer surfaces |
 | Scaffold verification | `merit.ps1 verify --path C:\DApps\merit-demo` | Same public command | `merit.ps1` is the required gate |
-| Validation closeout | `merit.ps1 closeout --path C:\DApps\merit-demo` | `git diff --check` plus `verify` | Does not include browser E2E, cloud checks, or deployment |
+| Validation closeout | `merit.ps1 closeout --path C:\DApps\merit-demo --validate-only` | `git diff --check` plus `verify` | Explicit validation only; run required browser/cloud gates separately; no publication |
 | Local static smoke | `merit.ps1 e2e --path <repo>` | Same public command | The wrapper runs the consumer smoke check |
 | Browser E2E | `merit.ps1 e2e:playwright --path <repo>` | Same public command | The wrapper runs the browser check when optional browser tools are available |
 | Vercel deployment | `merit.ps1 deploy --path ...` | Vercel CLI/deploy skill internals | Mutating; run only with deployment approval |
@@ -89,7 +89,7 @@ For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `merit.ps1 e2e -
 | ID | Pri | FR | Check / command | Expected result | Evidence | Status | Remediation |
 |---|---|---|---|---|---|---|---|
 | C-TDD-01 | P0 | FR-013-C | `merit.ps1 verify --path C:\DApps\merit-demo` | Public MERIT scaffold verification passes | CLI output | PASS | — |
-| C-TDD-02 | P0 | FR-011-C | `merit.ps1 closeout --path C:\DApps\merit-demo` plus `merit.ps1 e2e --path C:\DApps\merit-demo` | Public closeout passes and implementation smoke checks pass | CLI output | PASS | — |
+| C-TDD-02 | P0 | FR-011-C | `merit.ps1 closeout --path C:\DApps\merit-demo --validate-only` plus `merit.ps1 e2e --path C:\DApps\merit-demo` | Public closeout passes and implementation smoke checks pass | CLI output | PASS | — |
 | C-TDD-03 | P0 | FR-012-C | `merit.ps1 e2e:playwright --path C:\DApps\merit-demo` with approved browser | Hello provider ready, Hosted Ready state, mounted workbench, and Register link are present | Playwright output/screenshots | OPEN | Resolve Windows EPERM writing existing evidence screenshots; direct Edge browser assertion previously passed |
 | C-TDD-04 | P0 | FR-004-C | Compare `cfg/par_pins.json` to loaded artifact URL and SRI | Configured version, URL, and SRI match the published artifact | Config and browser/network evidence | PASS | Update pin and SRI together |
 | C-TDD-05 | P0 | FR-005-C | Block or delay provider initialization | UI leaves Checking and enters labeled Demo Fallback or Runtime Unavailable; no endless spinner | Failure-fixture screenshot/output | OPEN | Add deterministic failure injection and assertions |
@@ -153,3 +153,8 @@ Closeout is permitted only when:
 - every P0 row is `PASS`;
 - every P1/P2 row is `PASS` or has an approved disposition;
 - the controlling IAR links this checklist and the evidence index.
+
+
+## Alpha acceptance extension
+
+The controlling [Gaps to Alpha](MERIT_DEMO_ECOSYSTEM_PLAN.md#gaps-to-alpha) [[IAR/MERIT_DEMO_ECOSYSTEM_PLAN#^gaps-to-alpha|(obsidian)]] section adds BUG-ALPHA-001 through 008, FR-ALPHA-001-A through FR-ALPHA-007-D (the explicit rows in that section), PATH-ALPHA-01 through 08, and four future vault extraction FRs. Every new row starts OPEN; older PASS rows do not certify the alpha journey. Execute the linked red-first TDD protocol and record evidence against each applicable bug, FR and persona pathway. Standard OC must pass with only the two public repos and no private vault/runtime/secrets. Free and paid subscriber gates are separate; a skipped mandatory browser check or registration redirect to a guide blocks acceptance.

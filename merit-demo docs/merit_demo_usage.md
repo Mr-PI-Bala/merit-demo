@@ -4,14 +4,14 @@ This is the public demo people use to see MERIT in action. You do not need to ru
 
 ## Quick index
 
-- [The standard three-part journey](#the-standard-three-part-journey)
-- [What you should see](#what-you-should-see)
-- [Publish and tour your hosted app](#publish-and-tour-your-hosted-app)
-- [Hosted creator path](#hosted-creator-path)
-- [Advanced reference](#advanced-reference)
+- [The standard three-part journey](#the-standard-three-part-journey) [[#^the-standard-three-part-journey|(obsidian)]]
+- [What you should see](#what-you-should-see) [[#^what-you-should-see|(obsidian)]]
+- [Publish and tour your hosted app](#publish-and-tour-your-hosted-app) [[#^publish-and-tour-your-hosted-app|(obsidian)]]
+- [Hosted creator path](#hosted-creator-path) [[#^hosted-creator-path|(obsidian)]]
+- [Advanced reference](#advanced-reference) [[#^advanced-reference|(obsidian)]]
 
 <a id="the-standard-three-part-journey"></a>
-## The standard three-part journey 🍽️
+## The standard three-part journey 🍽️ ^the-standard-three-part-journey
 
 ### 1. Start — prepare the laptop
 
@@ -32,7 +32,7 @@ This is the public demo people use to see MERIT in action. You do not need to ru
 - Save the receipt or a screenshot if you want a record. You can repeat the journey whenever you like.
 
 <a id="what-you-should-see"></a>
-## What you should see ✅
+## What you should see ✅ ^what-you-should-see
 
 Step 3 is a thin demonstration, not a second copy of the MERIT cloud. The page shell and marketing text run on your laptop; the shared workbench package and MERIT services are loaded from the production package host.
 
@@ -43,7 +43,7 @@ The demo has separate visitor pages for the home page, play, journal, AMA, legal
 The local `/portal/` page is the demo’s marketing shell. After **OC** publishes your consumer, **OCV** prints and checks the hosted marketing URL on `merit-prod.vercel.app`.
 
 <a id="publish-and-tour-your-hosted-app"></a>
-## Publish and tour your hosted app ☁️
+## Publish and tour your hosted app ☁️ ^publish-and-tour-your-hosted-app
 
 After the local journey and **3V** check succeed:
 
@@ -59,7 +59,7 @@ After the local journey and **3V** check succeed:
 OC does not require a Vercel, Supabase, Square, or here.now account. Those are optional services for people who deliberately want to run their own infrastructure.
 
 <a id="hosted-creator-path"></a>
-## Hosted creator path 🌱
+## Hosted creator path 🌱 ^hosted-creator-path
 
 Creators, affiliates, and design partners can stay on the managed MERIT path:
 
@@ -87,7 +87,7 @@ The normal Hub journey is enough. If you want to repeat it from the demo folder,
 The check confirms the built pages, hosted package references, visitor routes, and registration link. Use the Hub’s **3V** menu entry for the same checks with a guided explanation.
 
 <a id="advanced-reference"></a>
-## Advanced reference 🔧
+## Advanced reference 🔧 ^advanced-reference
 
 <details>
 <summary>Open only when you deliberately want engineering, screenshots, or your own cloud services</summary>
