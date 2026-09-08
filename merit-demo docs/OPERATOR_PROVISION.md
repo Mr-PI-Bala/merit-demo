@@ -1,6 +1,12 @@
-# merit-demo — operator provision checklist
+# merit-demo — advanced operator provision checklist
 
-**Consumer:** `merit-demo` · **Reference:** freemium showcase (Angle 1–4)
+> **Who this is for:** MERIT operators and advanced builders who deliberately want their own Vercel, Supabase, payment, or marketing-service setup.
+>
+> **Standard usage:** Start with [merit-demo usage](merit_demo_usage.md). Run the Hub, choose **Try it (3)**, and use **3V** or **OC/OCV**. You do not need this checklist to try, personalize, or share the MERIT-hosted demo.
+>
+> This page is a reference for provisioning services that the hosted OC path normally manages for you. It contains account, environment, migration, and deployment work; skip it unless you have chosen that advanced route.
+
+**Consumer:** `merit-demo` · **Purpose:** optional self-hosted/operator setup
 
 ## Status matrix
 

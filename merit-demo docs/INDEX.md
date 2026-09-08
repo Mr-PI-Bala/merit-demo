@@ -4,8 +4,8 @@
 |-----|---------|
 | [INDEX.md](INDEX.md) | Navigation |
 | [merit_demo_design.md](merit_demo_design.md) | Architecture |
-| [merit_demo_usage.md](merit_demo_usage.md) | Operate and validate |
-| [OPERATOR_PROVISION.md](OPERATOR_PROVISION.md) | Supabase, Vercel, meritstore, here.now checklist |
+| [merit_demo_usage.md](merit_demo_usage.md) | Standard usage and validation |
+| [OPERATOR_PROVISION.md](OPERATOR_PROVISION.md) | Advanced, optional service provisioning |
 | [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md) | Controlling ecosystem plan SSOT (zones A–D) until implementation |
 | `.merit_launch.md` | Local gitignored launch file created by `merit init` |
 
