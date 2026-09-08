@@ -34,7 +34,7 @@ $repo = 'C:\DApps\merit-demo'
 
 `verify` validates the public MERIT scaffold. `closeout` runs verify plus whitespace validation and is validation-only; it does not run browser E2E or deploy anything. `law closeout` prints the OSS closeout law and is not itself a test runner.
 
-The public CLI is the required test surface. It prepares any local test tooling and runs the lower-level checks for you:
+The public CLI is the required test surface. It runs the lower-level checks for you:
 
 ```powershell
 & "$skills\merit.ps1" verify --path $repo
@@ -49,8 +49,8 @@ The public CLI is the required test surface. It prepares any local test tooling 
 | Surface discovery | `merit.ps1 where` | — | Zone A prerequisite; confirms OSS bench, IDE, vault, Hub, and consumer surfaces |
 | Scaffold verification | `merit.ps1 verify --path C:\DApps\merit-demo` | Same public command | `merit.ps1` is the required gate |
 | Validation closeout | `merit.ps1 closeout --path C:\DApps\merit-demo` | `git diff --check` plus `verify` | Does not include browser E2E, cloud checks, or deployment |
-| Local static smoke | `merit.ps1 e2e --path <repo>` | Same public command | The wrapper prepares and runs the consumer smoke check |
-| Browser E2E | `merit.ps1 e2e:playwright --path <repo>` | Same public command | The wrapper prepares and runs the browser check |
+| Local static smoke | `merit.ps1 e2e --path <repo>` | Same public command | The wrapper runs the consumer smoke check |
+| Browser E2E | `merit.ps1 e2e:playwright --path <repo>` | Same public command | The wrapper runs the browser check when optional browser tools are available |
 | Vercel deployment | `merit.ps1 deploy --path ...` | Vercel CLI/deploy skill internals | Mutating; run only with deployment approval |
 | here.now publication | `merit.ps1 portal --path ...` | here.now publisher internals | Mutating; run only with portal-publication approval |
 
