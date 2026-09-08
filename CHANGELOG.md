@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.17] — 2026-09-08
+
+### Fixed
+- Added a shared consumer API helper that sends `X-Merit-Consumer`, preserves browser credentials, and forwards an available platform session token to hosted journal/AMA APIs.
+- Replaced unsafe AMA API-data `innerHTML` interpolation with safe text and DOM rendering.
+- Added the alpha consumer contract test and documented the `merit-demo` / `merit-test` trial matrix.
+
+The `merit-demo` registration tenant still redirects to the provider commerce guide; the live trial test remains OPEN until provider provisioning is repaired.
+
 ## [0.3.16] — 2026-09-08
 
 ### Added

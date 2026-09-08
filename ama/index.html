@@ -28,12 +28,12 @@
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
+  <script src="/assets/merit-api.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const f = cfg.freemium || {};
     const reg = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
-    const apiBase = (cfg.meteredApiBase || 'https://merit-prod.vercel.app').replace(/\/$/, '');
-    const apiUrl = (path) => `${apiBase}${path}`;
+    const apiRequest = (path, options) => window.MERIT_API.request(path, options);
     document.getElementById('upgrade-link').href = reg;
     document.getElementById('tier-hint').textContent =
       `Free: ${f.ama_questions_per_day ?? 2} questions, ${f.ama_votes_per_day ?? 2} votes/day; top ${f.ama_leaderboard_visible ?? 25} shown.`;
@@ -52,7 +52,7 @@
     }
 
     async function loadBoard() {
-      const res = await fetch(apiUrl('/api/ama'));
+      const res = await apiRequest('/api/ama');
       const data = await res.json();
       const board = document.getElementById('board');
       board.innerHTML = '';
@@ -65,12 +65,20 @@
           who = q.handle || 'Guest';
           if (q.region_geo || q.region_profile) who += ` (${q.region_geo || q.region_profile})`;
         }
-        li.innerHTML = `<strong>${who}</strong> — ${q.body} <button data-id="${q.id}">Vote</button> (${q.votes || 0})`;
+        const strong = document.createElement('strong');
+        strong.textContent = who;
+        const body = document.createTextNode(` — ${String(q.body || '')} `);
+        const vote = document.createElement('button');
+        vote.type = 'button';
+        vote.dataset.id = String(q.id || '');
+        vote.textContent = 'Vote';
+        const count = document.createTextNode(` (${Number(q.votes || 0)})`);
+        li.append(strong, body, vote, count);
         board.appendChild(li);
       });
       board.querySelectorAll('button[data-id]').forEach((btn) => {
         btn.onclick = async () => {
-          const r = await fetch(apiUrl('/api/ama'), {
+          const r = await apiRequest('/api/ama', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }),
@@ -85,7 +93,7 @@
       const text = document.getElementById('question').value.trim();
       if (!text) return;
       const payload = { text, ...privacyPayload() };
-      const res = await fetch(apiUrl('/api/ama'), {
+      const res = await apiRequest('/api/ama', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

@@ -385,6 +385,27 @@ Ownership remains: **A** = Hub/laptop/optional IDE follow-through; **B** = publi
 | Vault unit checks | Selected tests could not run: available Python lacked pytest | Environment limitation, not a demonstrated test failure or a PASS |
 | Earlier IAR evidence | Previous release, commerce, and browser results exist | Historical evidence does not certify the current selected release |
 
+### Supported alpha trial consumer IDs
+
+The public trial matrix is [skills `cfg/alpha_trial_consumers.json`](https://github.com/AgentDraven/merit-agent-skills/blob/main/cfg/alpha_trial_consumers.json). It is intentionally small and explicit:
+
+| Consumer ID | Role | Test use | Current registration result |
+|---|---|---|---|
+| `merit-demo` | Showcase consumer | Primary local consumer contract, guest/free UI, hosted route and subscriber journey | **FAIL / OPEN:** redirects to the developer commerce guide; provider tenant registration must be repaired before free alpha |
+| `merit-test` | Independent clean-clone consumer | Secondary route, cross-tenant isolation, duplicate/replay registration and two-consumer comparison | Registration path remains on `/store/merit-test/register`; subscriber acceptance still requires full browser registration and entitlement evidence |
+| `oc-<lowercase-slug>` | Generated OC consumer | Per-app OC activation and final hosted route; generated IDs are not fixed trial tenants | Requires explicit activation/provisioning before it can enter the alpha matrix |
+
+Tests run the local consumer contract against `merit-demo`, then the public live registration-route check against both fixed IDs. Isolation uses separate browser contexts, subscriber accounts, and provider routes for `merit-demo` and `merit-test`; it never treats a client-supplied ID as proof of identity. A generated `oc-*` ID is added only after the OC receipt records activation, final URLs, and provider acceptance.
+
+### Implementation update — 2026-09-08
+
+| Code slice | Result | Validation |
+|---|---|---|
+| Shared hosted API request helper | Implemented in `assets/merit-api.js`; journal and AMA send `X-Merit-Consumer`, `credentials: include`, and an available platform session bearer token | `npm run test:alpha-contract`; browser route suite |
+| AMA rendering safety | Implemented with text/DOM nodes for provider question, handle, id and vote data | Alpha contract rejects `li.innerHTML`; browser route suite |
+| Trial consumer matrix | Implemented in public skills `cfg/alpha_trial_consumers.json` and live route test | `merit-test` route PASS; `merit-demo` correctly FAILS on developer-guide redirect |
+| Registration and provider entitlement | Not implemented in these repos; provider-owned FR remains OPEN | `FR-ALPHA-002-D`, `FR-ALPHA-003-D`, `FR-ALPHA-005-D`; live trial failure is retained as evidence |
+
 Source pointers: [demo API calls and fallback](../../journal/index.html), [AMA rendering and calls](../../ama/index.html), [browser gate](../../scripts/e2e-playwright.mjs), [version manifest](../../package.json), [consumer service boundary](../../cfg/meritsubs_consumer.json). Public tooling source: merit-agent-skills README release section, Merit-Hub embedded skillsPin, cfg/compatset.skills.json, scripts/test-hub-launcher.ps1. Review statements are observations or risks; no production exploit, charge, or signup was attempted.
 
 ### Bugs to fix

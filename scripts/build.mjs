@@ -74,6 +74,7 @@ fs.writeFileSync(path.join(root, 'config.js'), configBody);
 fs.writeFileSync(path.join(dist, 'config.js'), configBody);
 
 copyFile(path.join(root, 'assets', 'merit-shell.js'), path.join(dist, 'assets', 'merit-shell.js'));
+copyFile(path.join(root, 'assets', 'merit-api.js'), path.join(dist, 'assets', 'merit-api.js'));
 if (fs.existsSync(path.join(root, 'assets', 'merit-surface.css'))) {
   copyFile(path.join(root, 'assets', 'merit-surface.css'), path.join(dist, 'assets', 'merit-surface.css'));
 }

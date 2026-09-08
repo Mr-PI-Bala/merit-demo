@@ -158,3 +158,11 @@ Closeout is permitted only when:
 ## Alpha acceptance extension
 
 The controlling [Gaps to Alpha](MERIT_DEMO_ECOSYSTEM_PLAN.md#gaps-to-alpha) [[IAR/MERIT_DEMO_ECOSYSTEM_PLAN#^gaps-to-alpha|(obsidian)]] section adds BUG-ALPHA-001 through 008, FR-ALPHA-001-A through FR-ALPHA-007-D (the explicit rows in that section), PATH-ALPHA-01 through 08, and four future vault extraction FRs. Every new row starts OPEN; older PASS rows do not certify the alpha journey. Execute the linked red-first TDD protocol and record evidence against each applicable bug, FR and persona pathway. Standard OC must pass with only the two public repos and no private vault/runtime/secrets. Free and paid subscriber gates are separate; a skipped mandatory browser check or registration redirect to a guide blocks acceptance.
+
+### Current code checks
+
+| Check | Command | Expected result |
+|---|---|---|
+| Consumer request/rendering contract | `npm run test:alpha-contract` | `merit-demo` context, browser credentials/session forwarding, and safe AMA rendering pass |
+| Local scaffold and package smoke | `npm run verify` and `npm run e2e` | Build, static routes, pinned package assets and consumer contract pass |
+| Live trial registration matrix | `node ..\merit-agent-skills\scripts\test-alpha-trial-consumers.mjs` | `merit-test` stays on its registration path; `merit-demo` must stop failing on the developer-guide redirect before free alpha |
