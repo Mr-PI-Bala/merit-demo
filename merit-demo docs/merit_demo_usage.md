@@ -1,140 +1,97 @@
-﻿# merit-demo — usage
+# merit-demo — standard usage 🧭
 
-## Step 3 executive checklist (what you should see)
+This is the public demo people use to see MERIT in action. You do not need to run a server, create a cloud account, or understand the files behind the scenes to follow this guide.
 
-When you choose **3 — Try it** in `Merit-Hub.ps1`, Hub starts the demo HTTP server and opens `http://localhost:3000/play/`. Check Hosted Ready, the mounted workbench, hosted **Register free**, and local `/portal/` Marketing portal. Failure or version mismatch must show a labeled fallback with Retry and portal links. A `file://` view is smoke-only evidence.
+## Quick index
 
-`merit-demo` is the public hello-world consumer for MERIT Agent Skills and MERIT Prod. It shows workbench, journal, AMA, Portal, legal pages, and the production registration path without exposing provider billing or metered utility source code.
+- [The standard three-part journey](#the-standard-three-part-journey)
+- [What you should see](#what-you-should-see)
+- [Publish and tour your hosted app](#publish-and-tour-your-hosted-app)
+- [Hosted creator path](#hosted-creator-path)
+- [Advanced reference](#advanced-reference)
 
-**Controlling plan:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
+## The standard three-part journey 🍽️
 
-### Step 3 architecture
+### 1. Start — prepare the laptop
 
-Step 3 is a thin consumer demonstration: the HTML, CSS, JavaScript shell, routes,
-and marketing portal run locally; the pinned `merit_workbench`, registration,
-and production services run on `merit-prod.vercel.app`. No local copy or mimic of
-the cloud workbench is bundled. Hub starts the HTTP server in the background,
-reuses port `3000` when available, and records server output in
-`merit-demo docs/IAR/evidence/hub-serve.log`.
+- Download and run [Merit-Hub.ps1](https://github.com/AgentDraven/merit-agent-skills/blob/main/Merit-Hub/Merit-Hub.ps1) from a tools folder.
+- Choose **Set up this laptop (1)**, then **Get the free MERIT tools (2)**.
+- Choose **Try it (3)**. The Hub downloads or refreshes this demo, starts its local web page, and opens it for you.
 
-Hub reports the free tools as **pinned** to a tested-together version and the demo as
-**refreshed** from `origin/main`. If local edits or divergent history are found,
-Hub stops without overwriting them. Advanced users can use Hub menu **K** to
-review supported skills pins; arbitrary tags are not accepted.
+### 2. Make progress — look around
 
-## Path resolve (agents and operators)
+- Open the `/play/` page and read the **Hello, meritutils** message.
+- Check for **Hosted Ready** and the mounted workbench.
+- Try the guest controls, navigation, and **Register free** link. This is a visitor tour; no account is required.
 
-Do not hardcode `C:\MyMeritApp`. Resolve:
+### 3. Finish — prove what you saw
 
-1. `%MYMERITAPP%` / `$env:MYMERITAPP` (Hub menu **1**)
-2. `%MYMERITAPP%\oss-bench.json` → `demoFolder` / `skillsFolder`
-3. Sibling CLI: `..\merit-agent-skills\merit.ps1 where` (or Hub **W**)
+- Choose **Validate my local demo (3V)** in the Hub whenever you want the guided check again.
+- Confirm the play page, workbench, registration link, and local marketing page behave as described.
+- Save the receipt or a screenshot if you want a record. You can repeat the journey whenever you like.
 
-Skills install to the **IDE skills host** (`~/.cursor/skills`), not a full tree under this repo’s `.cursor`.
+## What you should see ✅
 
-## Local HTTP (required for real play)
+Step 3 is a thin demonstration, not a second copy of the MERIT cloud. The page shell and marketing text run on your laptop; the shared workbench package and MERIT services are loaded from the production package host.
 
-`file://` is smoke-only. Absolute `/config.js` and `/assets/…` need a served origin. Prefer the demo CLI (wraps build + static server):
+The Hub starts or reuses local HTTP port `3000` and records its server note in the evidence folder. If a hosted package cannot load, the page shows a clear offline message with retry guidance—not an endless spinner and not a pretend local replacement.
+
+The demo has separate visitor pages for the home page, play, journal, AMA, legal information, and the marketing portal. The free package and registration links are shared MERIT services; your consumer page remains its own app surface.
+
+## Publish and tour your hosted app ☁️
+
+After the local journey and **3V** check succeed:
+
+1. Choose **OSS in Cloud (OC)** in the Hub.
+   - The Hub checks the demo files and the MERIT host.
+   - It creates or uses your consumer identity.
+   - It prints hosted play, free registration, and marketing links.
+2. Choose **Walk through my hosted demo (OCV)**.
+   - Open each printed link one at a time.
+   - Check the page title, welcome message, controls, and registration route.
+   - Keep the OC receipt if you need to report a problem.
+
+OC does not require a Vercel, Supabase, Square, or here.now account. Those are optional services for people who deliberately want to run their own infrastructure.
+
+## Hosted creator path 🌱
+
+Creators, affiliates, and design partners can stay on the managed MERIT path:
+
+1. **Start — tell MERIT what you want to share.**
+   - Use the hosted partner page or your MERIT invitation.
+   - Choose a name and the audience you want to help.
+   - Keep your first version on the OC-hosted consumer surface.
+2. **Make progress — shape the experience.**
+   - Update your welcome words, branding, and visitor story.
+   - Use OC to publish your consumer-specific play, registration, and marketing pages.
+   - Let MERIT manage the shared hosting, registration, and usage rails.
+3. **Finish — invite people.**
+   - Share the hosted links printed by OC.
+   - Visitors can try the free experience before choosing to register.
+   - If paid features are enabled later, onboarding explains fees, creator share, and payout requirements.
+
+## Standard checks
+
+The normal Hub journey is enough. If you want to repeat it from the demo folder, use the helper the Hub installed:
 
 ```powershell
-cd $env:MYMERITAPP\merit-demo   # or C:\DApps\merit-demo
-.\merit.ps1 serve
-# open http://localhost:3000/play/
-```
-
-Linux/macOS: `./merit.sh serve` when present, or `.\merit.ps1 serve` under pwsh.
-
-Expect **Hosted Ready** (not endless “Loading workbench…”): Hello line shows `data-runtime-state="hosted-ready"`, DualRail shell mounts, and the workbench grid appears. On CDN/shell failure you get a **labeled offline stub** with retry + portal link — not a second local workbench CDN.
-
-Validate without browsing: `.\merit.ps1 verify` then `.\merit.ps1 e2e` (or one-shot `.\merit.ps1 closeout`).
-
-## 3 Steps Over Dinner
-
-### 1. Local Setup
-
-Prefer Hub **1 → 2 → 3** under your chosen `MYMERITAPP`. The supported beginner path is:
-
-```powershell
-# Download Merit-Hub.ps1 from the skills repository, save it (for example) in C:\Tools,
-# then open PowerShell in that folder:
-cd C:\Tools
-.\Merit-Hub.ps1
-# Choose 1, then 2, then 3. Hub pins the compatible skills release and seeds merit-demo.
-# In the seeded consumer:
-cd $env:MYMERITAPP\merit-demo
 .\merit.ps1 verify
 ```
 
-Linux/macOS:
+The check confirms the built pages, hosted package references, visitor routes, and registration link. Use the Hub’s **3V** menu entry for the same checks with a guided explanation.
 
-```bash
-cd "$MYMERITTOOLS"
-pwsh -NoProfile -File ./Merit-Hub.ps1
-# Choose 1, then 2, then 3; Hub resolves the compatible release and consumer paths.
-cd "$MYMERITAPP/merit-demo"
-./merit.sh verify
-```
+## Advanced reference 🔧
 
-### 2. Initialize The Repository
+<details>
+<summary>Open only when you deliberately want engineering, screenshots, or your own cloud services</summary>
 
-`.merit_launch.md` is the one private file you edit. It creates the other required local/machine files for this repo, including `.env.local`, `cfg/flask_deploy.json`, and `cfg/portals.json`.
+### Your own services (optional)
 
-```powershell
-.\merit.ps1 init --path ..\merit-demo
-# edit ..\merit-demo\.merit_launch.md mandatory section
-.\merit.ps1 apply --path ..\merit-demo
-.\merit.ps1 deploy --path ..\merit-demo
-```
+Use [OPERATOR_PROVISION.md](OPERATOR_PROVISION.md) only when you deliberately want your own Vercel deployment, Supabase database, payment-provider relationship, or here.now marketing host. It contains account setup, environment values, migrations, and deployment work that the hosted OC path avoids.
 
-Linux/macOS:
+### Command-line build and deployment
 
-```bash
-./merit.sh init --path ../merit-demo
-# edit ../merit-demo/.merit_launch.md mandatory section
-./merit.sh apply --path ../merit-demo
-./merit.sh deploy --path ../merit-demo
-```
-
-`apply` can generate MERIT config, but Vercel still owns `.vercel/project.json`; `merit deploy` links Vercel automatically when that file is missing and records local deployment state tags in `.env.local`.
-
-### 3. Add Marketing Front-End & Save
-
-Edit the demo Portal in `portal/` when you want a public marketing face:
-
-```powershell
-# edit ..\merit-demo\portal\index.html and portal.json
-.\merit.ps1 portal --path ..\merit-demo
-git -C ..\merit-demo status
-git -C ..\merit-demo add .
-git -C ..\merit-demo commit -m "launch: update Portal"
-git -C ..\merit-demo push
-```
-
-Use `merit-closeout` only if you are operating inside the private MERIT vault workflow. Public creators can use normal Git status/add/commit/push.
-
-## Provider and usage boundary
-
-Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affiliate code `MERITDEMO`. The hosted provider controls the intro credit budget (default $25) and Square checkout; this public repo does not expose or own billing logic.
-
-Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
-
-Hello World / Hosted Ready check: serve the repo over HTTP and open `/play/`. The page should show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from `merit_workbench@0.4.14`. `merit.ps1 e2e` can check this automatically, including the hosted package route and registration link.
-
-Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
-
-Promo ownership:
-
-| Setting | Owner | Purpose |
-|---|---|---|
-| `MERIT_DEFAULT_PROMOCODE` | Consumer `.env.local` / `.merit_launch.md` | Normal subscriber-facing default, usually `MERITAGENT` |
-| `SQUARE_PRODUCTION_TEST_PROMO_CODE` | Consumer `.env.local` only | Operator-only charge/refund probe, usually `ONLY1CENT` |
-| `discount_engine.promo_codes[]` | Hosted meritstore tenant config | Provider-side allowlist and discount behavior for codes such as `MERITAGENT`, `ONLY1CENT`, `ONLY5CENT` |
-
-Do not hardcode a test promo in Playwright. The production charge/refund test should read `SQUARE_PRODUCTION_TEST_PROMO_CODE` from the consumer `.env.local`, submit that code to hosted meritstore, charge through Square Web Payments, and refund the resulting payment when `SQUARE_PRODUCTION_TEST_REFUND_AFTER_CHARGE=true`.
-
-## Build
-
-Use the MERIT wrapper for validation and closeout:
+The public helper can run deeper checks when an experienced builder requests them:
 
 ```powershell
 .\merit.ps1 verify
@@ -142,103 +99,29 @@ Use the MERIT wrapper for validation and closeout:
 .\merit.ps1 closeout
 ```
 
-Linux/macOS:
+These commands are not needed for the standard Hub tour. Public creators should use the Hub and `verify`; operators can use the advanced checklist for their own deployment.
 
-```bash
-./merit.sh verify
-./merit.sh e2e
-./merit.sh closeout
-```
+### Optional picture checks
 
-The wrapper runs the underlying build, scaffold verification, provider checks, route e2e, optional Playwright screenshots, and git whitespace hygiene. Raw `npm run *` commands are implementation details for maintainers.
-
-## Optional picture-check lab 📸
-
-The normal Hub check does not need `npm`. Choose this extra lab only when you want screenshots of every page. `npm install` downloads the small testing tools listed by this demo; it does not install MERIT, change your app, or create an account:
+If you want screenshots of every visitor page, install the demo’s declared Node test tool and run its picture check:
 
 ```powershell
 npm install
 npm run e2e:playwright
 ```
 
-Linux/macOS:
+If this optional installation fails, nothing is wrong with the standard path. Return to the Hub and choose **3V**.
 
-```bash
-npm install
-npm run e2e:playwright
-```
+### Local service boundary
 
-`npm install` reads this demo’s `package.json` and downloads Playwright. The picture-check command opens a temporary browser, checks visitor routes, and saves screenshots under `merit-demo docs/evidence/`. If installation fails or you skip it, run `.\merit.ps1 verify` or the Hub’s **Validate my local demo (3V)**; screenshots are a bonus, not a requirement for trying MERIT.
+The public demo does not ship a local billing or usage-metering service. Its workbench and shared provider references point to MERIT-hosted services. Your own persistent journal/AMA database is only needed for a deliberate self-hosted deployment.
 
-## Usage validation evidence
+### Evidence
 
-The launch check looks at the demo in five simple ways:
+When the optional picture check is installed, screenshots are written under `merit-demo docs/evidence/`. They are supporting evidence for maintainers, not a requirement for trying the demo.
 
-| Dimension | What is checked |
-|---|---|
-| Local routes | `/`, `/portal/`, `/play/`, `/journal/`, `/ama/`, `/admin/`, `/diag/manifest.json` |
-| Provider boundary | Hosted `merit-prod.vercel.app` health and register route |
-| Metered source boundary | No local meritsubs/AMA/journal metered handlers in the public repo |
-| Desktop UX | Playwright screenshots for home, portal, play, journal, AMA, and admin |
-| Mobile UX | Playwright screenshots for portal, play, journal, and AMA |
+</details>
 
-Screenshots are generated under `merit-demo docs/evidence/` when Playwright is installed:
+## When to move beyond the standard path
 
-- `evidence/portal-desktop.png`
-- `evidence/play-desktop.png`
-- `evidence/journal-desktop.png`
-- `evidence/ama-desktop.png`
-- `evidence/admin-desktop.png`
-- `evidence/portal-mobile.png`
-- `evidence/play-mobile.png`
-- `evidence/journal-mobile.png`
-- `evidence/ama-mobile.png`
-
-Latest local validation evidence:
-
-| Pathway | Desktop | Mobile |
-|---|---|---|
-| Home | ![home desktop](evidence/home-desktop.png) | — |
-| Portal | ![portal desktop](evidence/portal-desktop.png) | ![portal mobile](evidence/portal-mobile.png) |
-| Play | ![play desktop](evidence/play-desktop.png) | ![play mobile](evidence/play-mobile.png) |
-| Journal | ![journal desktop](evidence/journal-desktop.png) | ![journal mobile](evidence/journal-mobile.png) |
-| AMA | ![ama desktop](evidence/ama-desktop.png) | ![ama mobile](evidence/ama-mobile.png) |
-| Admin | ![admin desktop](evidence/admin-desktop.png) | — |
-
-## Optional Supabase
-
-For cloud journal/AMA persistence, create your own Supabase project and run:
-
-- `sql/001_merit_demo.sql`
-- `sql/002_ama_daily_activity.sql`
-
-Then set the Supabase values in `.merit_launch.md` and run `merit apply`.
-## When to move from OSS to Vault
-
-Stay in OSS while learning and building on the public hosted rails. Consider
-Vault/VC when private operator controls, tenant-grade gates, private
-configuration, or production ownership become necessary; Vault is optional and
-does not replace the public OC demo.
-
-## Hosted OC tutorial
-
-After `OC` succeeds, the optional `OCV`/`OC-Tutorial.ps1` walkthrough opens
-the hosted play, registration, and marketing pages one at a time. It will show
-what each page demonstrates, what is configurable in this consumer, and record
-the observed URLs and statuses. The reusable runner belongs to
-`merit-agent-skills`; this repo supplies only the consumer-specific launchpad
-content and links.
-
-## Friendly hosted-path FAQ 🌟
-
-**Do I need to create Vercel, Supabase, Square, or here.now accounts to try this demo?**
-No. The Hub and **OSS in Cloud (OC)** use MERIT-managed hosting, package delivery, registration, and usage rails. A beginner can try and share the hosted consumer without managing those services.
-
-**How does this become my app?**
-OC gives the consumer its own `consumer_id`, name, play URL, registration URL, and marketing URL. The shared MERIT building blocks stay managed by MERIT; your words and settings are yours.
-
-**When would I bring my own service?**
-Only for an advanced reason—your own infrastructure, database, payment-provider relationship, or marketing host. That is an optional next adventure, not a prerequisite for the hosted showcase.
-
-**What should I do after OC?**
-Run **OCV** (the hosted walkthrough), open each printed URL, and check the play page, free registration page, and marketing page. If you only want to learn locally, **3V** is enough and no cloud account is needed.
+Stay with OC while it gives you the managed experience you want. Consider the advanced operator route only when you need to own infrastructure, data storage, payment-provider configuration, or a separate deployment policy. The hosted path remains the recommended way to learn, share, and grow.
