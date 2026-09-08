@@ -65,7 +65,7 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
 
 1. **Start**
    - Finish the local build and verification checks first.
-   - Confirm the intended CompatSet and production MERIT base.
+   - Confirm the tested-together tool version and the production MERIT address.
    - Sign in to the target hosting account only when publishing is intended.
 2. **Make progress**
    - Run `OC` from the Hub for the hosted OSS path, or use the deploy command for your own host.
@@ -93,7 +93,7 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
 
 ### Build on the template
 
-Start with `play/`, `portal/`, and `cfg/par_pins.json`. The hosted CompatSet is already pinned; you do not need to manually clone or version `merit-agent-skills`.
+Start with `play/`, `portal/`, and `cfg/par_pins.json`. The tested tool version is already selected; you do not need to manually clone or choose a version of `merit-agent-skills`.
 
 ### Deploy your version
 
@@ -129,7 +129,7 @@ For Linux/macOS, use `./merit.sh quickstart`. Deployment details are in [merit_d
 | Metered utilities | No local stub/API source; uses production MERIT Vercel mounts | — |
 | Register | meritstore | portal/subs/ |
 
-`/play/` is the canonical **Hello, meritutils** proof: DualRail `createAppShell` loads the pinned production-hosted `merit_workbench@0.4.14`, mounts the interactive shell, and reports **Hosted Ready** (or a labeled offline stub on failure). Prefer `.\merit.ps1 serve` (HTTP) — `file://` is smoke-only.
+`/play/` is the main **Hello, meritutils** check: DualRail `createAppShell` loads the production-hosted `merit_workbench@0.4.14`, mounts the interactive shell, and reports **Hosted Ready** (or a clear offline message if it cannot). Prefer `.\merit.ps1 serve` (HTTP) — opening the file directly is only a quick visual look.
 
 <table><tr><td bgcolor="#0d9488"><strong><big><big>🚀 Build & deploy</big></big></strong></td></tr></table>
 
@@ -149,7 +149,7 @@ Optional: Supabase per `merit-demo docs/merit_demo_usage.md` and `sql/001_merit_
 
 <table><tr><td bgcolor="#0d9488"><strong><big><big>💎 Freemium → Plus</big></big></strong></td></tr></table>
 
-| Tier | Limits |
+| Visitor type | Limits |
 |------|--------|
 | Guest / free | Journal 2/day; AMA 2 ask/vote/response/day; top 25 leaderboard |
 | Plus ($10.79/mo) | Uncapped journal + AMA |

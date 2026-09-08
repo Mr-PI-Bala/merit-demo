@@ -17,7 +17,7 @@ the cloud workbench is bundled. Hub starts the HTTP server in the background,
 reuses port `3000` when available, and records server output in
 `merit-demo docs/IAR/evidence/hub-serve.log`.
 
-Hub reports skills as **pinned** to the tested CompatSet and the demo as
+Hub reports the free tools as **pinned** to a tested-together version and the demo as
 **refreshed** from `origin/main`. If local edits or divergent history are found,
 Hub stops without overwriting them. Advanced users can use Hub menu **K** to
 review supported skills pins; arbitrary tags are not accepted.
@@ -118,7 +118,7 @@ Missing promo codes resolve to `MERITAGENT`, and usage attribution reports affil
 
 Production handler policy: public `merit-demo` ships no local meritsubs, AMA, journal, leaderboard, DIRT, or other metered utility handlers. The static shell calls production MERIT Vercel mounts via `MERIT_METERED_API_BASE_URL` and `MERITSUBS_PUBLIC_BASE_URL`.
 
-Hello World / Hosted Ready proof: serve the repo over HTTP and open `/play/`. The page must show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from the pinned `merit_workbench@0.4.14` CompatSet artifact. `merit.ps1 e2e` validates this (smoke + Playwright) along with the hosted registry, meritsubs health, and meritstore registration route.
+Hello World / Hosted Ready check: serve the repo over HTTP and open `/play/`. The page should show **Hello, meritutils**, `data-runtime-state="hosted-ready"`, DualRail `createAppShell`, and a mounted workbench from `merit_workbench@0.4.14`. `merit.ps1 e2e` can check this automatically, including the hosted package route and registration link.
 
 Register path: `https://merit-prod.vercel.app/store/merit-demo/register`
 
@@ -172,7 +172,7 @@ npm install
 
 ## Usage validation evidence
 
-The launch scrub validates the demo from five angles:
+The launch check looks at the demo in five simple ways:
 
 | Dimension | What is checked |
 |---|---|
