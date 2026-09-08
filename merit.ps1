@@ -74,7 +74,16 @@ function Invoke-Serve {
         Write-Host 'Serving repo root over HTTP. Open /play/ for Hosted Ready proof.'
         Write-Host 'Stop with Ctrl+C when done.'
         Write-Host ''
-        node scripts/serve.mjs --port 3000
+        $node = Get-Command node -ErrorAction SilentlyContinue
+        if ($node) {
+            & $node.Source scripts/serve.mjs --port 3000
+        } else {
+            $python = Get-Command python -ErrorAction SilentlyContinue
+            if (-not $python) { $python = Get-Command python3 -ErrorAction SilentlyContinue }
+            if (-not $python) { throw 'MERIT could not find Node.js or Python for the local HTTP preview. Run the Hub setup step, then retry Try it (3).' }
+            Write-Host 'Node.js is not installed; using the MERIT-compatible Python preview server.' -ForegroundColor Yellow
+            & $python.Source -m http.server 3000 --bind 127.0.0.1 --directory $Root
+        }
     } finally {
         Pop-Location
     }
@@ -93,7 +102,16 @@ function Invoke-Quickstart {
         Write-Host 'MERIT Demo ready. Opening the local HTTP showcase at /play/.' -ForegroundColor Green
         Write-Host 'The hosted workbench version is read from cfg/par_pins.json; do not edit package URLs manually.'
         Write-Host ''
-        node scripts/serve.mjs --port 3000
+        $node = Get-Command node -ErrorAction SilentlyContinue
+        if ($node) {
+            & $node.Source scripts/serve.mjs --port 3000
+        } else {
+            $python = Get-Command python -ErrorAction SilentlyContinue
+            if (-not $python) { $python = Get-Command python3 -ErrorAction SilentlyContinue }
+            if (-not $python) { throw 'MERIT could not find Node.js or Python for the local HTTP preview. Run the Hub setup step, then retry quickstart.' }
+            Write-Host 'Node.js is not installed; using the MERIT-compatible Python preview server.' -ForegroundColor Yellow
+            & $python.Source -m http.server 3000 --bind 127.0.0.1 --directory $Root
+        }
     } finally {
         Pop-Location
     }

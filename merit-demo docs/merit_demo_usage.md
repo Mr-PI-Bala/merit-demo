@@ -23,7 +23,7 @@ This is the public demo people use to see MERIT in action. You do not need to ru
 
 - Open the `/play/` page and read the **Hello, meritutils** message.
 - Check for **Hosted Ready** and the mounted workbench.
-- Try the guest controls, navigation, and **Register free** link. This is a visitor tour; no account is required.
+- Try the guest controls and navigation. **Register free** opens the hosted MERIT route; it may first show the MERIT commerce guide when the demo tenant is not provisioned. This is a visitor tour; no account is required.
 
 ### 3. Finish — prove what you saw
 
@@ -39,6 +39,8 @@ Step 3 is a thin demonstration, not a second copy of the MERIT cloud. The page s
 The Hub starts or reuses local HTTP port `3000` and records its server note in the evidence folder. If a hosted package cannot load, the page shows a clear offline message with retry guidance—not an endless spinner and not a pretend local replacement.
 
 The demo has separate visitor pages for the home page, play, journal, AMA, legal information, and the marketing portal. The free package and registration links are shared MERIT services; your consumer page remains its own app surface.
+
+The local `/portal/` page is the demo’s marketing shell. After **OC** publishes your consumer, **OCV** prints and checks the hosted marketing URL on `merit-prod.vercel.app`.
 
 <a id="publish-and-tour-your-hosted-app"></a>
 ## Publish and tour your hosted app ☁️
