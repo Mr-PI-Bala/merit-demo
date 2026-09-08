@@ -1,4 +1,4 @@
-# merit-demo public/operator CLI — hides npm/vercel/git implementation details.
+# merit-demo public/operator CLI — keeps build, test, hosting, and source-control details behind MERIT commands.
 
 param()
 
@@ -14,8 +14,9 @@ merit-demo CLI
 Commands:
   verify      Build and verify the local consumer scaffold
   e2e         Run local/provider e2e plus Playwright screenshots when available
+  e2e:playwright  Run the optional browser route check and screenshots
   serve       Build, then serve the repo over HTTP and print /play/ URL
-  quickstart  Install dependencies, verify, and serve the pinned CompatSet demo
+  quickstart  Verify and serve the pinned CompatSet demo
   deploy      Verify, link Vercel when needed, and deploy production
   closeout    Verify + e2e + git whitespace/status/head evidence
   admin       Forward MERIT admin tasks (for example: admin github access status)
@@ -23,7 +24,7 @@ Commands:
   surface     Alias for where
   help        Print this help
 
-Prefer this wrapper over raw npm/npx/vercel. (npm is still what the wrapper calls under the hood.)
+Prefer this wrapper; it keeps implementation details behind clear MERIT commands.
 "@
 }
 
@@ -68,13 +69,12 @@ function Resolve-MeritAuthority {
 function Invoke-Serve {
     Push-Location $Root
     try {
-        Invoke-Step 'build' { npm run build }
+        Invoke-Step 'build' { node scripts/build.mjs }
         Write-Host ''
         Write-Host 'Serving repo root over HTTP. Open /play/ for Hosted Ready proof.'
         Write-Host 'Stop with Ctrl+C when done.'
         Write-Host ''
-        # serve is a one-liner static server; --yes avoids npx prompt. Port printed by serve.
-        npx --yes serve . -l 3000
+        node scripts/serve.mjs --port 3000
     } finally {
         Pop-Location
     }
@@ -83,16 +83,17 @@ function Invoke-Serve {
 function Invoke-Quickstart {
     Push-Location $Root
     try {
-        if (-not (Get-Command npm -ErrorAction SilentlyContinue)) { throw 'Node.js/npm is required. Install Node.js LTS, then rerun .\merit.ps1 quickstart.' }
-        if (-not (Test-Path -LiteralPath (Join-Path $Root 'node_modules'))) {
-            Invoke-Step 'install dependencies' { npm ci }
+        if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw 'Node.js LTS is required for the local showcase. Install Node.js LTS, then rerun .\merit.ps1 quickstart.' }
+        Invoke-Step 'verify pinned CompatSet' {
+            node scripts/build.mjs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            node scripts/verify.mjs
         }
-        Invoke-Step 'verify pinned CompatSet' { npm run verify }
         Write-Host ''
         Write-Host 'MERIT Demo ready. Opening the local HTTP showcase at /play/.' -ForegroundColor Green
         Write-Host 'The hosted workbench version is read from cfg/par_pins.json; do not edit package URLs manually.'
         Write-Host ''
-        npx --yes serve . -l 3000
+        node scripts/serve.mjs --port 3000
     } finally {
         Pop-Location
     }
@@ -109,7 +110,11 @@ function Invoke-Step {
 function Invoke-Verify {
     Push-Location $Root
     try {
-        Invoke-Step 'verify' { npm run verify }
+        Invoke-Step 'verify' {
+            node scripts/build.mjs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            node scripts/verify.mjs
+        }
         Invoke-Step 'git whitespace check' { git diff --check }
     } finally {
         Pop-Location
@@ -119,8 +124,28 @@ function Invoke-Verify {
 function Invoke-E2E {
     Push-Location $Root
     try {
-        Invoke-Step 'e2e smoke' { npm run e2e }
+        Invoke-Step 'e2e smoke' {
+            node scripts/build.mjs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            node scripts/e2e-smoke.mjs
+        }
         Invoke-Step 'playwright route validation' { node scripts/e2e-playwright.mjs }
+    } finally {
+        Pop-Location
+    }
+}
+
+function Invoke-E2EPlaywright {
+    Push-Location $Root
+    try {
+        if (-not (Test-Path -LiteralPath (Join-Path $Root 'node_modules\playwright'))) {
+            throw 'Optional browser tools are not present. Use the Hub 3V check for the normal proof, or ask an operator to prepare the advanced browser-check environment.'
+        }
+        Invoke-Step 'playwright route validation' {
+            node scripts/build.mjs
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+            node scripts/e2e-playwright.mjs
+        }
     } finally {
         Pop-Location
     }
@@ -137,7 +162,9 @@ function Ensure-VercelLinked {
     $scope = Get-VercelScope
     if (Test-Path (Join-Path $Root '.vercel/project.json')) { return }
     if (-not $scope) { throw 'Missing cfg/flask_deploy.json vercel_scope; run merit apply from merit-agent-skills first.' }
-    Invoke-Step 'vercel link' { npx vercel link --yes --scope $scope }
+    $vercel = Get-Command vercel -ErrorAction SilentlyContinue
+    if (-not $vercel) { throw 'Vercel deployment tool is not available. Stay on the hosted OC path, or ask an operator to prepare the advanced deployment tool.' }
+    Invoke-Step 'vercel link' { & $vercel.Source link --yes --scope $scope }
 }
 
 function Invoke-Deploy {
@@ -146,10 +173,12 @@ function Invoke-Deploy {
     try {
         Ensure-VercelLinked
         $scope = Get-VercelScope
+        $vercel = Get-Command vercel -ErrorAction SilentlyContinue
+        if (-not $vercel) { throw 'Vercel deployment tool is not available. Stay on the hosted OC path, or ask an operator to prepare the advanced deployment tool.' }
         if ($scope) {
-            Invoke-Step 'vercel production deploy' { npx vercel deploy --prod --scope $scope }
+            Invoke-Step 'vercel production deploy' { & $vercel.Source deploy --prod --scope $scope }
         } else {
-            Invoke-Step 'vercel production deploy' { npx vercel deploy --prod }
+            Invoke-Step 'vercel production deploy' { & $vercel.Source deploy --prod }
         }
     } finally {
         Pop-Location
@@ -186,6 +215,7 @@ switch -Regex ($Command) {
     '^(help|\?)$' { Write-MeritHelp; exit 0 }
     '^verify$' { Invoke-Verify; exit 0 }
     '^e2e$' { Invoke-E2E; exit 0 }
+    '^e2e:playwright$' { Invoke-E2EPlaywright; exit 0 }
     '^(serve|play)$' { Invoke-Serve; exit 0 }
     '^quickstart$' { Invoke-Quickstart; exit 0 }
     '^deploy$' { Invoke-Deploy; exit 0 }

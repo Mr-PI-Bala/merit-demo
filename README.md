@@ -134,14 +134,14 @@ For Linux/macOS, use `./merit.sh quickstart`. Deployment details are in [merit_d
 <table><tr><td bgcolor="#0d9488"><strong><big><big>🚀 Build & deploy</big></big></strong></td></tr></table>
 
 ```powershell
-npm install && npm run verify && npm run build
+.\merit.ps1 verify
 ..\merit-agent-skills\merit.ps1 deploy --path .
 ```
 
 Linux/macOS:
 
 ```bash
-npm install && npm run verify && npm run build
+./merit.ps1 verify
 ../merit-agent-skills/merit.sh deploy --path .
 ```
 

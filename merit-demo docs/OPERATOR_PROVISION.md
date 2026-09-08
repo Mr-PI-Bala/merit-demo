@@ -43,7 +43,7 @@
 ```powershell
 # Create/edit local .merit_launch.md → mandatory values at top
 cd merit-demo
-npm run verify
+.\merit.ps1 verify
 # from merit-agent-skills
 .\merit.ps1 init --path C:\path\to\merit-demo
 notepad C:\path\to\merit-demo\.merit_launch.md

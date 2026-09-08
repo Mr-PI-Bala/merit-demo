@@ -103,14 +103,13 @@ These commands are not needed for the standard Hub tour. Public creators should 
 
 ### Optional picture checks
 
-If you want screenshots of every visitor page, install the demo’s declared Node test tool and run its picture check:
+If you want screenshots of every visitor page, let the MERIT helper prepare and run its picture check:
 
 ```powershell
-npm install
-npm run e2e:playwright
+.\merit.ps1 e2e:playwright
 ```
 
-If this optional installation fails, nothing is wrong with the standard path. Return to the Hub and choose **3V**.
+When the optional browser tools are available, the helper opens a temporary browser and saves the pictures under `merit-demo docs/evidence/`. If they are unavailable or the check fails, nothing is wrong with the standard path. Return to the Hub and choose **3V**.
 
 ### Local service boundary
 

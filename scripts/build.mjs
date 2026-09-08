@@ -69,7 +69,7 @@ const configBody = `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
   2
 )};\n`;
 
-// Root copy enables local HTTP from repo root (`npx serve .`); dist is for Vercel.
+// Root copy enables the MERIT-managed local HTTP preview; dist is for Vercel.
 fs.writeFileSync(path.join(root, 'config.js'), configBody);
 fs.writeFileSync(path.join(dist, 'config.js'), configBody);
 

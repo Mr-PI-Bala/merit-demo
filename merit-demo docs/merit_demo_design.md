@@ -57,7 +57,7 @@ Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, m
 | `./merit.ps1 deploy` | Verify, link Vercel when missing, deploy production |
 | `./merit.ps1 closeout` | Verify, e2e, whitespace, git status/head evidence |
 
-Raw `npm run verify`, `npm run e2e`, `git diff --check`, and `npx vercel` are implementation details under the wrapper.
+The wrapper owns build, validation, browser checks, whitespace checks, and deployment details. Readers should use the MERIT commands above instead of calling those tools directly.
 
 ## Provider-consumer decision
 

@@ -34,13 +34,12 @@ $repo = 'C:\DApps\merit-demo'
 
 `verify` validates the public MERIT scaffold. `closeout` runs verify plus whitespace validation and is validation-only; it does not run browser E2E or deploy anything. `law closeout` prints the OSS closeout law and is not itself a test runner.
 
-The repository-level implementation tests are the lower-level checks called by or supplementing the public CLI. Run these from `C:\DApps\merit-demo`:
+The public CLI is the required test surface. It prepares any local test tooling and runs the lower-level checks for you:
 
 ```powershell
-npm run verify
-npm run e2e
-$env:PLAYWRIGHT_EXECUTABLE_PATH="C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
-npm run e2e:playwright
+& "$skills\merit.ps1" verify --path $repo
+& "$skills\merit.ps1" e2e --path $repo
+& "$skills\merit.ps1" e2e:playwright --path $repo
 ```
 
 ### Public CLI equivalence map
@@ -48,16 +47,16 @@ npm run e2e:playwright
 | TDD purpose | Consumer-facing command | Current implementation-level equivalent | Notes |
 |---|---|---|---|
 | Surface discovery | `merit.ps1 where` | — | Zone A prerequisite; confirms OSS bench, IDE, vault, Hub, and consumer surfaces |
-| Scaffold verification | `merit.ps1 verify --path C:\DApps\merit-demo` | `npm run verify` | `merit.ps1` is the required public gate; npm is the repo-level detail |
+| Scaffold verification | `merit.ps1 verify --path C:\DApps\merit-demo` | Same public command | `merit.ps1` is the required gate |
 | Validation closeout | `merit.ps1 closeout --path C:\DApps\merit-demo` | `git diff --check` plus `verify` | Does not include browser E2E, cloud checks, or deployment |
-| Local static smoke | No current public CLI verb | `npm run e2e` | This capability should be exposed or documented as a supported skill/CLI subcommand |
-| Browser E2E | No current public CLI verb | `npm run e2e:playwright` | README advertises `merit.ps1 e2e`, but v0.5.66 rejects that command; track as B-TDD-07 |
+| Local static smoke | `merit.ps1 e2e --path <repo>` | Same public command | The wrapper prepares and runs the consumer smoke check |
+| Browser E2E | `merit.ps1 e2e:playwright --path <repo>` | Same public command | The wrapper prepares and runs the browser check |
 | Vercel deployment | `merit.ps1 deploy --path ...` | Vercel CLI/deploy skill internals | Mutating; run only with deployment approval |
 | here.now publication | `merit.ps1 portal --path ...` | here.now publisher internals | Mutating; run only with portal-publication approval |
 
-The missing public `e2e` verb is a merit-agent-skills enhancement, not a reason to claim Zone C complete. Until it exists, record both the public CLI result and the npm implementation result.
+The public `e2e` verbs are the source of truth. Record their receipts; implementation details stay behind the wrapper.
 
-For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `npm run e2e`. The `file://` protocol is smoke-only; browser acceptance must use local HTTP or a deployed HTTPS origin.
+For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `merit.ps1 e2e --path <repo>`. The `file://` protocol is smoke-only; browser acceptance must use local HTTP or a deployed HTTPS origin.
 
 ## Zone A — Hub, laptop, and Cursor follow-through
 
@@ -90,7 +89,7 @@ For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `npm run e2e`. T
 | ID | Pri | FR | Check / command | Expected result | Evidence | Status | Remediation |
 |---|---|---|---|---|---|---|---|
 | C-TDD-01 | P0 | FR-013-C | `merit.ps1 verify --path C:\DApps\merit-demo` | Public MERIT scaffold verification passes | CLI output | PASS | — |
-| C-TDD-02 | P0 | FR-011-C | `merit.ps1 closeout --path C:\DApps\merit-demo` plus `npm run e2e` | Public closeout passes and implementation smoke checks pass | CLI + npm output | PASS | — |
+| C-TDD-02 | P0 | FR-011-C | `merit.ps1 closeout --path C:\DApps\merit-demo` plus `merit.ps1 e2e --path C:\DApps\merit-demo` | Public closeout passes and implementation smoke checks pass | CLI output | PASS | — |
 | C-TDD-03 | P0 | FR-012-C | `merit.ps1 e2e:playwright --path C:\DApps\merit-demo` with approved browser | Hello provider ready, Hosted Ready state, mounted workbench, and Register link are present | Playwright output/screenshots | OPEN | Resolve Windows EPERM writing existing evidence screenshots; direct Edge browser assertion previously passed |
 | C-TDD-04 | P0 | FR-004-C | Compare `cfg/par_pins.json` to loaded artifact URL and SRI | Configured version, URL, and SRI match the published artifact | Config and browser/network evidence | PASS | Update pin and SRI together |
 | C-TDD-05 | P0 | FR-005-C | Block or delay provider initialization | UI leaves Checking and enters labeled Demo Fallback or Runtime Unavailable; no endless spinner | Failure-fixture screenshot/output | OPEN | Add deterministic failure injection and assertions |
@@ -147,7 +146,7 @@ The bundled Playwright Chromium executable may fail on Windows with `spawn EPERM
 
 Closeout is permitted only when:
 
-- `npm run verify` passes;
+- `merit.ps1 verify --path <repo>` passes;
 - smoke E2E passes;
 - browser E2E passes with recorded executable and evidence;
 - Zone D cloud and portal checks are recorded;

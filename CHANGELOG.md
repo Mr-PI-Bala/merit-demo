@@ -50,13 +50,13 @@ Format: Keep a Changelog–style sections under each version. Versions align wit
 ### Added
 - DualRail Gloss play bootstrap: `merit_ux@0.1.3` `createAppShell` + mounted `merit_workbench@0.4.0` from `merit-prod.vercel.app`
 - Runtime states on `/play/`: Checking → Hosted Ready / Demo Fallback / Runtime Unavailable (labeled offline stub with retry + portal link)
-- `.\merit.ps1 serve` (alias `play`) — build + local HTTP server for Hosted Ready proof without typing raw npm/npx
+- `.\merit.ps1 serve` (alias `play`) — build + local HTTP server for Hosted Ready proof without exposing tool-chain commands
 - Controlling IAR SSOT: `merit-demo docs/IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md` (zones A–D FR matrix, Codex merge changelog)
 - Generated root `config.js` (gitignored) alongside `dist/config.js` for repo-root HTTP serve
 - Playwright assertions for Hosted Ready, workbench mount, and Register free
 
 ### Changed
-- README / usage / design / AGENTS: path resolve via `MYMERITAPP` / `oss-bench`, skills pin **skills-v0.5.66**, prefer `merit.ps1` verbs over raw npm
+- README / usage / design / AGENTS: path resolve via `MYMERITAPP` / `oss-bench`, skills pin **skills-v0.5.66**, prefer `merit.ps1` verbs over raw implementation commands
 - `scripts/build.mjs`: richer `MERIT_DEMO_CONFIG` (par pins, health URL, portal URL); copy `merit-surface.css` into dist
 - `scripts/e2e-smoke.mjs` / `e2e-playwright.mjs`: DualRail + mount checks
 - IAR `SOTU.md`: Pass 1 Hosted Ready note
