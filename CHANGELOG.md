@@ -1,4 +1,4 @@
-# Changelog
+## [0.3.19] — 2026-09-08\n\n### Fixed\n- Make the consumer-owned alpha registration contract test report a normal non-zero result on Windows while allowing fetch cleanup to finish.\n\n# Changelog
 
 ## [0.3.17] — 2026-09-08
 

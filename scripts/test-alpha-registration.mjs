@@ -30,6 +30,9 @@ try {
 
 if (failures.length) {
   console.error(`MERIT-DEMO PROVIDER CONTRACT FAILED\n${failures.map((item) => `- ${item}`).join('\n')}`);
-  process.exit(1);
+  // Let fetch cleanup finish before Node exits; process.exit(1) can trigger a
+  // Windows libuv assertion while AbortSignal.timeout handles are closing.
+  process.exitCode = 1;
+} else {
+  console.log(`MERIT-DEMO PROVIDER CONTRACT OK: consumer_id=${contract.consumer_id}`);
 }
-console.log(`MERIT-DEMO PROVIDER CONTRACT OK: consumer_id=${contract.consumer_id}`);
