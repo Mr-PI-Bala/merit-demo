@@ -9,6 +9,13 @@
 
 The `merit-demo` registration tenant still redirects to the provider commerce guide; the live trial test remains OPEN until provider provisioning is repaired.
 
+## [0.3.18] — 2026-09-08
+
+### Changed
+- Moved the consumer/provider registration contract into `merit-demo`, where `consumer_id`, provider URLs, and expected registration behavior belong.
+- Replaced the generic skills trial matrix with a consumer-owned provider contract test.
+
+
 ## [0.3.16] — 2026-09-08
 
 ### Added

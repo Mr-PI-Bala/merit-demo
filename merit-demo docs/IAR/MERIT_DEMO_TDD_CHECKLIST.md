@@ -165,4 +165,4 @@ The controlling [Gaps to Alpha](MERIT_DEMO_ECOSYSTEM_PLAN.md#gaps-to-alpha) [[IA
 |---|---|---|
 | Consumer request/rendering contract | `npm run test:alpha-contract` | `merit-demo` context, browser credentials/session forwarding, and safe AMA rendering pass |
 | Local scaffold and package smoke | `npm run verify` and `npm run e2e` | Build, static routes, pinned package assets and consumer contract pass |
-| Live trial registration matrix | `node ..\merit-agent-skills\scripts\test-alpha-trial-consumers.mjs` | `merit-test` stays on its registration path; `merit-demo` must stop failing on the developer-guide redirect before free alpha |
+| Consumer/provider registration contract | `npm run test:alpha-registration` | `merit-demo` must stay on `/store/merit-demo/register`; the provider guide redirect blocks free alpha |

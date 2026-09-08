@@ -1,0 +1,13 @@
+{
+  "schema": "merit.consumer_provider_contract.v1",
+  "consumer_id": "merit-demo",
+  "provider_base_url": "https://merit-prod.vercel.app",
+  "register_url": "https://merit-prod.vercel.app/store/merit-demo/register",
+  "expected_register_path": "/store/merit-demo/register",
+  "health_url": "https://merit-prod.vercel.app/api/health",
+  "rules": [
+    "This contract belongs to merit-demo and is not a generic skills default.",
+    "The provider must provision this consumer before registration acceptance.",
+    "A successful HTTP response on a wrong final route is a failure."
+  ]
+}
