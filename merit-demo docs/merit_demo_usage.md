@@ -152,23 +152,23 @@ Linux/macOS:
 
 The wrapper runs the underlying build, scaffold verification, provider checks, route e2e, optional Playwright screenshots, and git whitespace hygiene. Raw `npm run *` commands are implementation details for maintainers.
 
-## E2E Testing Using Playwright (optional)
+## Optional picture-check lab 📸
 
-The first pass can run without installing Node dependencies, but screenshot proof needs Playwright:
+The normal Hub check does not need `npm`. Choose this extra lab only when you want screenshots of every page. `npm install` downloads the small testing tools listed by this demo; it does not install MERIT, change your app, or create an account:
 
 ```powershell
 npm install
-.\merit.ps1 e2e
+npm run e2e:playwright
 ```
 
 Linux/macOS:
 
 ```bash
 npm install
-./merit.sh e2e
+npm run e2e:playwright
 ```
 
-`npm install` installs this repo’s declared test tooling, including `@playwright/test`; postinstall attempts to install Chromium for screenshot capture. If dependencies are missing, the wrapper skips screenshots and still reports the non-visual checks. For launch validation, run this optional section so `merit-demo docs/evidence/` is refreshed.
+`npm install` reads this demo’s `package.json` and downloads Playwright. The picture-check command opens a temporary browser, checks visitor routes, and saves screenshots under `merit-demo docs/evidence/`. If installation fails or you skip it, run `.\merit.ps1 verify` or the Hub’s **Validate my local demo (3V)**; screenshots are a bonus, not a requirement for trying MERIT.
 
 ## Usage validation evidence
 
@@ -228,3 +228,17 @@ what each page demonstrates, what is configurable in this consumer, and record
 the observed URLs and statuses. The reusable runner belongs to
 `merit-agent-skills`; this repo supplies only the consumer-specific launchpad
 content and links.
+
+## Friendly hosted-path FAQ 🌟
+
+**Do I need to create Vercel, Supabase, Square, or here.now accounts to try this demo?**
+No. The Hub and **OSS in Cloud (OC)** use MERIT-managed hosting, package delivery, registration, and usage rails. A beginner can try and share the hosted consumer without managing those services.
+
+**How does this become my app?**
+OC gives the consumer its own `consumer_id`, name, play URL, registration URL, and marketing URL. The shared MERIT building blocks stay managed by MERIT; your words and settings are yours.
+
+**When would I bring my own service?**
+Only for an advanced reason—your own infrastructure, database, payment-provider relationship, or marketing host. That is an optional next adventure, not a prerequisite for the hosted showcase.
+
+**What should I do after OC?**
+Run **OCV** (the hosted walkthrough), open each printed URL, and check the play page, free registration page, and marketing page. If you only want to learn locally, **3V** is enough and no cloud account is needed.
