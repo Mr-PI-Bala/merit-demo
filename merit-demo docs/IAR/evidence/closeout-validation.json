@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "status": "validated",
+  "target": "C:\\DApps\\merit-demo",
+  "validatedAt": "2026-09-08T21:32:26.4922676-07:00",
+  "gitHead": "d5f2825",
+  "gitStatus": [
+    "?? \"merit-demo docs/IAR/evidence/\""
+  ],
+  "lawContractId": "MERIT-CLOSEOUT-1",
+  "lawContractVersion": 1,
+  "lawCommand": "merit.ps1 law closeout",
+  "validationCommand": "merit.ps1 closeout --path <repo> --validate-only",
+  "releaseCommand": "merit.ps1 closeout",
+  "operatorReleaseCommand": "vault scripts/merit.ps1 mXin",
+  "chatThreeThreeRequired": true,
+  "releaseNotPerformed": true
+}
