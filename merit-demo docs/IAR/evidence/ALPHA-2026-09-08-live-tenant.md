@@ -4,7 +4,7 @@
 - **Live reference consumer ID:** `merit-demo-alpha`
 - **Provider:** `https://merit-prod.vercel.app`
 - **Store:** `https://meritstore.vercel.app`
-- **Release under test:** `0.3.23`
+- **Release under test:** `0.3.24`
 
 ## Provider activation
 

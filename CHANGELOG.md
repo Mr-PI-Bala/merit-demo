@@ -1,3 +1,8 @@
+## [0.3.24] — 2026-09-08
+
+### Fixed
+- Keep the explicit free-registration smoke generic for forked consumer IDs; the idempotency key now derives from the configured tenant and the fork contract rejects reference-tenant hardcoding.
+
 ## [0.3.23] — 2026-09-08
 
 ### Fixed

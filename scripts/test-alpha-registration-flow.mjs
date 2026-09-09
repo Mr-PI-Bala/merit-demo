@@ -30,7 +30,7 @@ const registrationResponse = await fetch(`${provider}/api/v1/tenants/${consumerI
       subscriber_id: handle,
     },
     students: [{ plan: 'free' }],
-    idempotency_key: `merit-demo-alpha-${stamp}`,
+    idempotency_key: `${consumerId}-${stamp}`,
   }),
   signal: AbortSignal.timeout(45000),
 });
