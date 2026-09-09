@@ -2,7 +2,13 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
-Version: **0.3.24** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+Version: **0.3.27** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+
+### New user guides
+
+- [Quick Start](merit-demo%20docs/QUICK_START.md) — the short, pictorial path from local launch to provider checks.
+- [Detailed Walkthrough](merit-demo%20docs/DETAILED_WALKTHROUGH.md) — personas, flowcharts, commands, screenshots, and alpha gates.
+- [Alpha executive summary](merit-demo%20docs/IAR/evidence/ALPHA-2026-09-09.md) — exact hosted scenarios, results, and remaining blockers.
 
 <a id="start-here-choose-your-path"></a>
 <table><tr><td bgcolor="#1f6feb"><strong><big><big>🧭 Start here — choose your path</big></big></strong></td></tr></table>

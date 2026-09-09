@@ -1,3 +1,13 @@
+## [0.3.27] — 2026-09-09
+
+### Added
+- Add pictorial Quick Start and Detailed Walkthrough guides with Mermaid pathways, persona steps, screenshots, and alpha release gates.
+- Add the hosted deployment validation executive summary and machine-readable scenario evidence.
+
+### Changed
+- Link the new guides and current validation evidence from the README and documentation index.
+- Keep the README release banner aligned with VERSION and package metadata.
+
 ## [0.3.25] — 2026-09-09
 
 ### Added

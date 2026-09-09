@@ -1,0 +1,60 @@
+{
+  "capturedAt": "2026-09-09T17:18:08.934Z",
+  "results": [
+    {
+      "name": "01-local-play",
+      "requested": "http://localhost:3000/play/",
+      "final": "http://localhost:3000/play/",
+      "status": 200,
+      "title": "MERIT Demo · Workbench"
+    },
+    {
+      "name": "02-local-portal",
+      "requested": "http://localhost:3000/portal/",
+      "final": "http://localhost:3000/portal/",
+      "status": 200,
+      "title": "MERIT Demo Portal"
+    },
+    {
+      "name": "03-v01-portal",
+      "requested": "https://merit-prodv01.vercel.app/portal/",
+      "final": "https://merit-prodv01.vercel.app/portal/",
+      "status": 200,
+      "title": "MERIT Prod Portal"
+    },
+    {
+      "name": "04-v01-health",
+      "requested": "https://merit-prodv01.vercel.app/api/health",
+      "final": "https://merit-prodv01.vercel.app/api/health",
+      "status": 200,
+      "title": ""
+    },
+    {
+      "name": "05-v01-gateway-health",
+      "requested": "https://merit-prodv01.vercel.app/api/gw/meritsubs/api/v1/health",
+      "final": "https://merit-prodv01.vercel.app/api/gw/meritsubs/api/v1/health",
+      "status": 200,
+      "title": ""
+    },
+    {
+      "name": "06-canonical-registration",
+      "requested": "https://merit-prod.vercel.app/store/merit-demo-alpha/register",
+      "final": "https://merit-prod.vercel.app/store/merit-demo-alpha/register",
+      "status": 200,
+      "title": "meritstore"
+    },
+    {
+      "name": "07-canonical-gateway-health",
+      "requested": "https://merit-prod.vercel.app/api/gw/meritsubs/api/v1/health",
+      "final": "https://merit-prod.vercel.app/api/gw/meritsubs/api/v1/health",
+      "status": 404,
+      "title": "404: NOT_FOUND"
+    },
+    {
+      "name": "08-v01-onboarding-result",
+      "requested": "POST https://merit-prodv01.vercel.app/api/gw/meritsubs/api/v1/subscribers/onboard/email",
+      "status": 500,
+      "body": "Internal Server Error"
+    }
+  ]
+}
