@@ -51,6 +51,16 @@ Use this repository as a starting point for a small app of your own:
 
 Journal and AMA show a visible **Connected** state when the provider answers and a **Local demo** state when it does not. Local notes and questions stay in that browser and are never described as cloud-saved. Provider identity, quotas, persistence, registration, and paid access remain outside this public repository.
 
+### Join and continue as a member
+
+On Journal and AMA, **Try this app as a member** explains the three user actions in plain language:
+
+1. **Open hosted registration** opens the app-specific MERIT registration page. Choose the free plan there, then return to this app.
+2. **Continue with email** asks the public MERIT identity rail for a registered-member session for this consumer.
+3. **Start guest preview** starts a provider guest session when the guest rail is available. Guest access is a preview; it does not unlock member-only writes.
+
+The session token is held in the browser tab's `sessionStorage`, scoped by `consumer_id`, and sent through the provider gateway. It is not put in a link or committed to the fork. If the identity or metered rail is unavailable, the page says so and keeps the local demo path available. A fork only needs to change `consumer_id`, provider URLs, and branding in `cfg/`; it does not need to copy provider code or secrets.
+
 The local `/portal/` page is the demo’s marketing shell. After **OC** publishes your consumer, **OCV** prints and checks the hosted marketing URL on `merit-prod.vercel.app`.
 
 <a id="publish-and-tour-your-hosted-app"></a>
@@ -127,7 +137,7 @@ If you want screenshots of every visitor page, let the MERIT helper prepare and 
 .\merit.ps1 e2e:playwright
 ```
 
-When the optional browser tools are available, the helper opens a temporary browser and saves the pictures under `merit-demo docs/evidence/`. If they are unavailable or the check fails, nothing is wrong with the standard path. Return to the Hub and choose **3V**.
+When the optional browser tools are available, the helper opens a temporary browser and saves the pictures under `merit-demo docs/evidence/`. If they are unavailable or the check fails, nothing is wrong with the standard path. Return to the Hub and choose **Validate my local demo** to run the guided checks again.
 
 ### Local service boundary
 

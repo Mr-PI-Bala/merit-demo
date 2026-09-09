@@ -21,6 +21,7 @@
     </section>
 
     <div id="journal-status" class="status-panel" data-state="checking" role="status" aria-live="polite"><strong>Checking</strong><span>Connecting to MERIT Journal…</span></div>
+    <section id="merit-session" class="session-panel" aria-label="Member session"></section>
 
     <div class="surface-grid">
       <section class="surface-card" aria-labelledby="write-heading">
@@ -44,6 +45,7 @@
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
   <script src="/assets/merit-api.js"></script>
+  <script src="/assets/merit-session.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const apiRequest = (path, options) => window.MERIT_API.request(path, options);
@@ -88,7 +90,7 @@
 
     async function load() {
       try {
-        const res = await apiRequest('/api/journal', { signal: AbortSignal.timeout(8000) });
+        const res = await apiRequest(window.MERIT_API.rail('journal'), { signal: AbortSignal.timeout(8000) });
         if (!res.ok) throw new Error(`Provider returned HTTP ${res.status}`);
         const data = await res.json();
         const cloud = (data.entries || []).map((entry) => ({ body: entry.body, created_at: entry.created_at }));
@@ -107,7 +109,7 @@
       const button = document.getElementById('save');
       button.disabled = true;
       try {
-        const res = await apiRequest('/api/journal', {
+        const res = await apiRequest(window.MERIT_API.rail('journal'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text }),

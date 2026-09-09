@@ -2,7 +2,7 @@
 
 > **Who this is for:** MERIT operators and advanced builders who deliberately want their own Vercel, Supabase, payment, or marketing-service setup.
 >
-> **Standard usage:** Start with [merit-demo usage](merit_demo_usage.md). Run the Hub, choose **Try it (3)**, and use **3V** or **OC/OCV**. You do not need this checklist to try, personalize, or share the MERIT-hosted demo.
+> **Standard usage:** Start with [merit-demo usage](merit_demo_usage.md). Run the Hub, choose **Try it** to open the demo, then use **Validate my local demo** or **OSS in Cloud / Walk through my hosted demo**. You do not need this checklist to try, personalize, or share the MERIT-hosted demo.
 >
 > This page is a reference for provisioning services that the hosted OC path normally manages for you. It contains account, environment, migration, and deployment work; skip it unless you have chosen that advanced route.
 

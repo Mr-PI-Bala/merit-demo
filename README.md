@@ -2,17 +2,17 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
-Version: **0.3.23** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+Version: **0.3.24** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
 <a id="start-here-choose-your-path"></a>
 <table><tr><td bgcolor="#1f6feb"><strong><big><big>🧭 Start here — choose your path</big></big></strong></td></tr></table>
 
 The three rows are three fun ways to use MERIT. Read left to right: **Start → Make it → Finish**.
 
-| Your goal | 1. Start | 2. Make it | 3. Finish |
+| Your goal | Start here | Make progress | Finish with |
 |---|---|---|---|
-| 👀 **Try the demo** | [Download the Hub](https://github.com/AgentDraven/merit-agent-skills/blob/main/Merit-Hub/Merit-Hub.ps1), run `.\Merit-Hub.ps1`, choose **3** | [Run the quickstart](#see-the-demo) | [Open `/play/`](#see-the-demo) |
-| 🛠️ **Build an app** | [Run the Hub](https://github.com/AgentDraven/merit-agent-skills#start-here--pick-your-adventure), choose **3**, then open this repo | [Edit branding, app, and `cfg/`](#build-on-the-template) | [Run `.\merit.ps1 verify`](#build-on-the-template) |
+| 👀 **Try the demo** | [Download the Hub](https://github.com/AgentDraven/merit-agent-skills/blob/main/Merit-Hub/Merit-Hub.ps1), run `.\Merit-Hub.ps1`, choose **Try it** (the menu item that starts this demo) | [Run the quickstart](#see-the-demo) | [Open `/play/`](#see-the-demo) |
+| 🛠️ **Build an app** | [Run the Hub](https://github.com/AgentDraven/merit-agent-skills#start-here--pick-your-adventure), choose **Try it** to open this repo | [Edit branding, app, and `cfg/`](#build-on-the-template) | [Run `.\merit.ps1 verify`](#build-on-the-template) |
 | ☁️ **Publish my version** | [Verify locally](#build-on-the-template) | [Run `.\merit.ps1 closeout`, then `deploy`](#deploy-your-version) | [Publish `portal/`](#deploy-your-version) |
 
 > Optional: install IDE skills from [`merit-agent-skills`](https://github.com/AgentDraven/merit-agent-skills#i-want-skills-in-my-ide). The app works without them.
@@ -25,7 +25,7 @@ The three rows are three fun ways to use MERIT. Read left to right: **Start → 
 .\merit.ps1 serve
 ```
 
-Then open the printed `/play/` address. If you are starting from a new laptop, download and run the Hub first, then choose **3 — Try it**; the Hub clones this repo and opens the demo for you.
+Then open the printed `/play/` address. If you are starting from a new laptop, download and run the Hub first, then choose **Try it** (the action that clones this repo, starts the local page, and opens the demo).
 
 ### The three-step cards (what each path actually does) 🧩
 
@@ -35,16 +35,16 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
 
 1. **Start**
    - Open PowerShell and run `.\Merit-Hub.ps1`.
-   - Choose **1 Setup**, then **2 Install OSS** if this is a new laptop.
-   - Choose **3 Try it**; the Hub reuses the existing demo folder when it is clean.
+   - Choose **Set up this laptop** to prepare the local MERIT folder, then choose **Get the free MERIT tools** if this is a new laptop.
+   - Choose **Try it** to reuse the existing clean demo folder, start local HTTP, and open the consumer page.
 2. **Make progress**
    - The Hub starts the local HTTP server on its reusable port.
    - Open the printed `/play/` URL in a browser.
    - Confirm the page says **Hosted Ready** and shows the MERIT workbench.
 3. **Finish**
-   - Run **3V** for the guided validation checklist.
+   - Run **Validate my local demo** to check the routes, hosted workbench, registration link, and local fallback.
    - Try **Register free** to see the hosted registration route.
-   - Use **OC** only when you want the hosted OSS-in-the-Cloud journey.
+   - Use **OSS in Cloud** only when you want the hosted consumer activation journey.
 
 #### 🛠️ Build an app
 
@@ -68,11 +68,11 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
    - Confirm the tested-together tool version and the production MERIT address.
    - Sign in to the target hosting account only when publishing is intended.
 2. **Make progress**
-   - Run `OC` from the Hub for the hosted OSS path, or use the deploy command for your own host.
+   - Run **OSS in Cloud** from the Hub for the hosted OSS path, or use the deploy command for your own host.
    - Watch the live play, register, and marketing URLs printed by the Hub.
    - If a publish step fails, rerun the named phase after fixing the reported cause.
 3. **Finish**
-   - Run **OCV** to validate every hosted endpoint in order.
+   - Run **Walk through my hosted demo** to validate every hosted endpoint in order.
    - Confirm the receipt records the consumer id and all live URLs.
    - Share the hosted link only after the final closeout and 3-3 summary.
 
@@ -94,6 +94,18 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
 ### Build on the template
 
 Start with `play/`, `portal/`, and `cfg/par_pins.json`. The tested tool version is already selected; you do not need to manually clone or choose a version of `merit-agent-skills`.
+
+### Member session and hosted actions
+
+Journal and AMA use MERIT's public gateway rails: `/api/gw/journal` and `/api/gw/ama`. Each request carries the configured `consumer_id`; a provider bearer token is added only after the visitor chooses a member or guest session in the **Try this app as a member** panel. Tokens stay in browser `sessionStorage` for that consumer and are never written to the repository, `localStorage`, or a URL.
+
+The panel explains three choices in plain language:
+
+- **Open hosted registration** opens the live `/store/<consumer_id>/register` page.
+- **Continue with email** requests the provider's registered-member session.
+- **Start guest preview** requests a provider guest session; if the provider is unavailable, the page remains usable in labeled local-demo mode.
+
+The provider owns identity, entitlements, quotas, persistence, and tenant isolation. A fork changes the values in `cfg/merit-sync.json` and branding; the session bridge derives its routes from those values.
 
 ### Make this app yours
 

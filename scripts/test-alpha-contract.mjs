@@ -8,6 +8,7 @@ const sync = JSON.parse(fs.readFileSync(path.join(root, 'cfg/merit-sync.json'), 
 const journal = fs.readFileSync(path.join(root, 'journal/index.html'), 'utf8');
 const ama = fs.readFileSync(path.join(root, 'ama/index.html'), 'utf8');
 const api = fs.readFileSync(path.join(root, 'assets/merit-api.js'), 'utf8');
+const session = fs.readFileSync(path.join(root, 'assets/merit-session.js'), 'utf8');
 const failures = [];
 
 if (!/^[a-z0-9][a-z0-9-]*$/.test(sync.consumer_id)) failures.push(`consumer_id must be URL-safe, got ${sync.consumer_id}`);
@@ -20,6 +21,12 @@ for (const [name, page] of [['journal', journal], ['ama', ama]]) {
 }
 if (!api.includes("'X-Merit-Consumer'")) failures.push('API helper: missing X-Merit-Consumer context');
 if (!api.includes("credentials: 'include'")) failures.push('API helper: missing browser credentials');
+if (!api.includes("rail('meritsubs', `api/v1/subscribers/onboard/${route}`)")) failures.push('API helper: missing public meritsubs onboarding route');
+if (!api.includes('sessionStorage')) failures.push('API helper: session token must be sessionStorage-scoped');
+if (!api.includes('function rail(')) failures.push('API helper: missing metered gateway rail builder');
+if (!session.includes('merit-session-ready')) failures.push('Session bridge: missing ready event');
+if (!session.includes('Open hosted registration')) failures.push('Session bridge: missing hosted registration link');
+if (session.includes('localStorage')) failures.push('Session bridge: must not persist bearer tokens in localStorage');
 if (/li\.innerHTML\s*=/.test(ama)) failures.push('AMA: API data still assigned to li.innerHTML');
 if (!ama.includes('textContent = who') || !ama.includes('textContent = String(question.body || \'\')')) {
   failures.push('AMA: safe text rendering contract missing');

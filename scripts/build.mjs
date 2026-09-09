@@ -70,6 +70,7 @@ const configBody = `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
     plusSku: plus.default || {},
     meritstoreRegisterUrl: sync.meritstore_register_url || '',
     meteredApiBase: meteredBase,
+    gatewayApiPrefix: sync.gateway_api_prefix || '/api/gw',
     meritsubsBase: env.MERITSUBS_PUBLIC_BASE_URL || sync.meritsubs_base || 'https://merit-prod.vercel.app/api/meritsubs',
     portalUrl: portals.here_now_url || portals.portal_url || '/portal/',
     parPins: pins,
@@ -86,6 +87,7 @@ fs.writeFileSync(path.join(dist, 'config.js'), configBody);
 
 copyFile(path.join(root, 'assets', 'merit-shell.js'), path.join(dist, 'assets', 'merit-shell.js'));
 copyFile(path.join(root, 'assets', 'merit-api.js'), path.join(dist, 'assets', 'merit-api.js'));
+copyFile(path.join(root, 'assets', 'merit-session.js'), path.join(dist, 'assets', 'merit-session.js'));
 copyFile(path.join(root, 'assets', 'consumer.css'), path.join(dist, 'assets', 'consumer.css'));
 if (fs.existsSync(path.join(root, 'assets', 'merit-surface.css'))) {
   copyFile(path.join(root, 'assets', 'merit-surface.css'), path.join(dist, 'assets', 'merit-surface.css'));

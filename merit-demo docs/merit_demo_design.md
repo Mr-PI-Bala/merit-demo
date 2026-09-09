@@ -19,8 +19,8 @@
 |------|------|
 | `/`, `/portal/` | Marketing (here.now publishes `portal/` only) |
 | `/play/` | DualRail `createAppShell` + pinned `merit_workbench` PAR `@0.4.14`; runtime states Checking → Hosted Ready / Demo Fallback / Runtime Unavailable |
-| `/journal/` | journal PAR UI; metered API is production provider mount |
-| `/ama/` | AMA UI; metered Q&A/leaderboard API is production provider mount |
+| `/journal/` | journal PAR UI; `/api/gw/journal` metered API and provider session bridge |
+| `/ama/` | AMA UI; `/api/gw/ama` metered Q&A/leaderboard API and provider session bridge |
 | Metered utility APIs | external production MERIT Vercel mounts; no local meritsubs/AMA/journal source in public repo |
 | `/api/admin/pricing` | Operator flexible Plus pricing (Supabase `operator_pricing`) |
 | `/admin/` | MeritAdminGate + pricing UI |
@@ -30,7 +30,7 @@
 
 - **Hosted Ready** only after pin match, CDN load, `createAppShell`, and workbench **mount** (not Hello-only).
 - **Demo Fallback** is a labeled offline stub (reason, retry, portal link)—not a local PAR clone.
-- Config surface: `cfg/par_pins.json` + generated `config.js` (`MERIT_DEMO_CONFIG`: metered bases, register URL, portal URL, expected workbench version).
+- Config surface: `cfg/par_pins.json` + generated `config.js` (`MERIT_DEMO_CONFIG`: metered gateway prefix, register URL, provider bases, portal URL, expected workbench version).
 
 ## White-label
 
@@ -60,6 +60,8 @@ Optional Supabase: `sql/001_merit_demo.sql`, `sql/002_ama_daily_activity.sql`, m
 The wrapper owns build, validation, browser checks, whitespace checks, and deployment details. Readers should use the MERIT commands above instead of calling those tools directly.
 
 ## Provider-consumer decision
+
+The browser session bridge uses the public meritsubs onboarding contract through the provider gateway (`/api/gw/meritsubs/api/v1/subscribers/onboard/email` or `guest`). It stores only the bearer token in `sessionStorage`, scopes every request with `X-Merit-Consumer`, and falls back to local demo mode when identity or metered rails are unavailable. `npm run test:alpha-session` is an explicit live gate because it creates one disposable subscriber; it currently exposes a provider deployment/configuration failure when the gateway route or provider database is unavailable.
 
 | Edge | Decision | Evidence |
 |---|---|---|

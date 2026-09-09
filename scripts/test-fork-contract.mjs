@@ -22,8 +22,13 @@ if (!generated.includes(String(branding.product_name))) {
 }
 const ama = read('ama/index.html');
 const registrationFlow = read('scripts/test-alpha-registration-flow.mjs');
+const api = read('assets/merit-api.js');
+const session = read('assets/merit-session.js');
 if (!ama.includes("cfg.consumer_id || 'merit-demo-alpha'")) failures.push('AMA local storage must use generated consumer_id');
 if (registrationFlow.includes('merit-demo-alpha')) failures.push('registration flow smoke must derive its idempotency key from configured consumer_id');
+if (!sync.gateway_api_prefix) failures.push('cfg/merit-sync.json must provide gateway_api_prefix');
+if (!api.includes('cfg.gatewayApiPrefix || \'/api/gw\'')) failures.push('API helper must derive the gateway prefix from generated config');
+if (session.includes('merit-demo-alpha')) failures.push('session bridge must not hardcode the reference consumer');
 const portal = read('portal/js/portal.js');
 if (!portal.includes('runtimeBrand') || !portal.includes('runtime.meritstoreRegisterUrl')) {
   failures.push('portal must derive brand and registration links from generated runtime config');

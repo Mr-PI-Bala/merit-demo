@@ -1,3 +1,13 @@
+## [0.3.25] — 2026-09-09
+
+### Added
+- Add a branded /play/ welcome flow with clear Journal, AMA, registration, and hosted-workbench paths.
+- Add a provider-backed member session bridge using consumer-scoped sessionStorage and dynamic gateway routes.
+
+### Fixed
+- Make alpha session smoke report a precise gateway-health blocker when the provider route is not deployed.
+- Replace cryptic Hub menu numbers in the beginner usage path with the action names and outcomes.
+
 ## [0.3.24] — 2026-09-08
 
 ### Fixed

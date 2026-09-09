@@ -24,6 +24,7 @@ const required = [
   'portal/js/portal.js',
   'portal/portal.json',
   'scripts/test-fork-contract.mjs',
+  'assets/merit-session.js',
 ];
 const missing = required.filter((r) => !fs.existsSync(path.join(root, r)));
 const forbiddenMeteredHandlers = [
@@ -45,6 +46,8 @@ const checks = [
   ['portal/index.html', '/js/portal.js', 'portal must use a root-compatible deployed script'],
   ['journal/index.html', 'Local demo', 'journal must explain its local fallback'],
   ['ama/index.html', 'Local demo mode', 'AMA must explain its local fallback'],
+  ['journal/index.html', 'merit-session', 'journal must expose the provider session bridge'],
+  ['ama/index.html', 'merit-session', 'AMA must expose the provider session bridge'],
 ];
 const builtFiles = ['dist/css/portal.css', 'dist/js/portal.js', 'dist/portal.json', 'dist/portal/css/portal.css', 'dist/portal/js/portal.js'];
 for (const rel of builtFiles) {

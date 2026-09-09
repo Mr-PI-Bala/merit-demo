@@ -15,6 +15,7 @@
       <h1>Ask something worth answering.</h1>
       <p class="consumer-kicker">A gentle place to ask, vote, and learn together. Start locally, then connect to the hosted MERIT service when it is available.</p>
       <div id="ama-status" class="status-panel" role="status" aria-live="polite"></div>
+      <section id="merit-session" class="session-panel" aria-label="Member session"></section>
     </section>
 
     <section class="surface-grid">
@@ -51,6 +52,7 @@
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
   <script src="/assets/merit-api.js"></script>
+  <script src="/assets/merit-session.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const freemium = cfg.freemium || {};
@@ -123,7 +125,7 @@
 
     async function loadBoard() {
       try {
-        const response = await apiRequest('/api/ama', { signal: AbortSignal.timeout(8000) });
+        const response = await apiRequest(window.MERIT_API.rail('ama'), { signal: AbortSignal.timeout(8000) });
         if (!response.ok) throw new Error(`provider ${response.status}`);
         const data = await response.json();
         const questions = Array.isArray(data.questions) ? data.questions : [];
@@ -140,7 +142,7 @@
 
     async function voteFor(question, button) {
       try {
-        const response = await apiRequest('/api/ama', {
+        const response = await apiRequest(window.MERIT_API.rail('ama'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'vote', question_id: question.id }),

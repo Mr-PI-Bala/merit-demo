@@ -8,7 +8,25 @@
   <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/merit_ux/0.1.3/themes/gloss-aurora.css" integrity="sha384-t2lrh9VYGPmekcUt8/mNthwxEkgOBstLDnLn6g/dhFgWen+h3pDYGx+FLE4u4NiS" crossorigin="anonymous">
   <link rel="stylesheet" href="https://pkg-meritutils.vercel.app/merit_workbench/0.4.14/merit-workbench.css" integrity="sha384-u21263n25R9YNIR6NchCkydfaHjBQvyobfiuzh71m2cXXH7jjPQiP/HP4l0Xbu6j" crossorigin="anonymous">
   <style>
-    .merit-hello { padding: 1rem 1.25rem 0; max-width: 56rem; margin: 0 auto; }
+    .merit-play { max-width: 74rem; margin: 0 auto; padding: 1.2rem 1.25rem 4rem; }
+    .merit-hello { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(16rem, .65fr); gap: 1.5rem; align-items: end; padding: 2.5rem 0 2rem; }
+    .merit-hello h1 { margin: .35rem 0 .8rem; max-width: 12ch; font-size: clamp(2.4rem, 6vw, 5rem); line-height: .98; letter-spacing: -.04em; }
+    .merit-hello .lede { max-width: 42rem; color: #526173; font-size: 1.15rem; }
+    .merit-eyebrow { margin: 0; color: var(--merit-primary, #1d4ed8); font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .merit-play-card { padding: 1.15rem; border: 1px solid #dbe4f0; border-radius: 1.1rem; background: linear-gradient(145deg, #f8fbff, #eef4ff); box-shadow: 0 14px 34px rgba(24, 46, 79, .08); }
+    .merit-play-card strong { display: block; margin-bottom: .35rem; }
+    .merit-play-card p { margin: 0; color: #526173; font-size: .92rem; }
+    .merit-play-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.15rem; }
+    .merit-play-actions a { display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0 .95rem; border-radius: 999px; background: var(--merit-primary, #1d4ed8); color: #fff; font-weight: 750; text-decoration: none; }
+    .merit-play-actions a.secondary { border: 1px solid #c8d3e1; background: #fff; color: #253b67; }
+    .merit-play-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 0 0 1.5rem; }
+    .merit-play-path { padding: 1rem; border: 1px solid #dbe4f0; border-radius: .95rem; background: #fff; }
+    .merit-play-path h2 { margin: 0 0 .3rem; font-size: 1rem; }
+    .merit-play-path p { margin: 0; color: #526173; font-size: .9rem; }
+    .merit-play-path a { display: inline-block; margin-top: .65rem; color: var(--merit-primary, #1d4ed8); font-weight: 750; }
+    .merit-workbench-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin: 1.7rem 0 .6rem; }
+    .merit-workbench-heading h2 { margin: 0; font-size: 1.35rem; }
+    .merit-workbench-heading p { margin: 0; color: #64748b; font-size: .9rem; }
     .merit-runtime-status[data-runtime-state="checking"] { color: #555; }
     .merit-runtime-status[data-runtime-state="hosted-ready"] { color: #166534; }
     .merit-runtime-status[data-runtime-state="demo-fallback"],
@@ -26,21 +44,46 @@
     #merit-app-host { min-height: 50vh; }
     #merit-workbench-mount.merit-workbench-root,
     #app-logic.merit-workbench-root { max-width: none; }
+    @media (max-width: 760px) {
+      .merit-hello, .merit-play-paths { grid-template-columns: 1fr; }
+      .merit-hello { padding-top: 1.7rem; }
+      .merit-workbench-heading { display: block; }
+      .merit-workbench-heading p { margin-top: .35rem; }
+    }
   </style>
 </head>
 <body>
   <header id="merit-header"></header>
-  <section class="merit-hello" aria-labelledby="meritutils-hello-title">
-    <h1 id="meritutils-hello-title">Hello, meritutils</h1>
-    <p id="meritutils-hello-status" class="merit-runtime-status" data-provider-ready="pending" data-runtime-state="checking">
-      Checking hosted merit_workbench@0.4.14 on pkg-meritutils.vercel.app…
-    </p>
-    <p>
-      <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo-alpha/register">Register free</a>
-      · <a href="/portal/">Marketing portal</a>
-    </p>
-  </section>
-  <div id="merit-app-host"></div>
+  <main class="merit-play">
+    <section class="merit-hello" aria-labelledby="meritutils-hello-title">
+      <div>
+        <p class="merit-eyebrow" id="merit-play-eyebrow">A small place to begin</p>
+        <h1 id="meritutils-hello-title">Hello, meritutils</h1>
+        <p id="merit-play-lede" class="lede">Make a little room for what you are learning, noticing, and ready to share.</p>
+        <p id="meritutils-hello-status" class="merit-runtime-status" data-provider-ready="pending" data-runtime-state="checking">
+          Checking hosted merit_workbench@0.4.14 on pkg-meritutils.vercel.app…
+        </p>
+        <div class="merit-play-actions">
+          <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo-alpha/register">Register free</a>
+          <a class="secondary" href="/journal/">Write a journal note</a>
+          <a class="secondary" href="/ama/">Ask the community</a>
+        </div>
+      </div>
+      <aside class="merit-play-card" aria-label="How this demo works">
+        <strong>Hosted tools, simple choices</strong>
+        <p>The workbench loads from the shared MERIT rail. Your journal and AMA keep a local fallback when the network is unavailable.</p>
+      </aside>
+    </section>
+    <section class="merit-play-paths" aria-label="Choose a starting point">
+      <article class="merit-play-path"><h2>Capture a thought</h2><p>Keep a short, private note and return to it later.</p><a href="/journal/">Open Journal →</a></article>
+      <article class="merit-play-path"><h2>Find a perspective</h2><p>Ask a clear question and learn alongside other members.</p><a href="/ama/">Open AMA →</a></article>
+      <article class="merit-play-path"><h2>See the pattern</h2><p>Use the hosted workbench to explore this consumer’s pinned tools.</p><a href="#merit-workbench-heading">View Workbench →</a></article>
+    </section>
+    <section aria-labelledby="merit-workbench-heading">
+      <div class="merit-workbench-heading" id="merit-workbench-heading"><div><h2>Explore the workbench</h2><p>Hosted Ready means the pinned public package mounted successfully.</p></div></div>
+      <div id="merit-app-host"></div>
+    </section>
+  </main>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
   <script src="/assets/merit-shell.js"></script>
@@ -56,6 +99,7 @@
       };
       const cfg = window.MERIT_DEMO_CONFIG || {};
       const appName = (cfg.branding && cfg.branding.product_name) || 'MERIT Demo';
+      const tagline = (cfg.branding && cfg.branding.tagline) || 'Make a little room for what you are learning, noticing, and ready to share.';
       document.title = `${appName} · Workbench`;
       const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo-alpha/register';
       const portalUrl = cfg.portalUrl || EXPECTED.portalPath;
@@ -63,6 +107,10 @@
       const helloStatus = document.getElementById('meritutils-hello-status');
       const registerLink = document.getElementById('merit-register-free');
       if (registerLink) registerLink.href = registerUrl;
+      const lede = document.getElementById('merit-play-lede');
+      if (lede) lede.textContent = tagline;
+      const eyebrow = document.getElementById('merit-play-eyebrow');
+      if (eyebrow) eyebrow.textContent = appName;
 
       const DEMO_ROWS = [
         { id: 'demo-1', hnd: 'Hello', date: '2026-09-05', handle: 'meritutils', levels: 'Free', media: 'CDN', preview: 'Pinned workbench from merit-prod' },
