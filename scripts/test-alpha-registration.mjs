@@ -20,7 +20,7 @@ try {
   const finalPath = new URL(response.url).pathname.replace(/\/$/, '');
   if (!response.ok) failures.push(`registration: HTTP ${response.status}`);
   if (finalPath !== contract.expected_register_path) {
-    failures.push(`registration redirected to ${response.url}; expected ${contract.expected_register_path}`);
+    failures.push(`registration redirected to ${response.url}; expected ${contract.expected_register_path} (provider activation required)`);
   } else {
     console.log(`OK registration route: ${response.url}`);
   }

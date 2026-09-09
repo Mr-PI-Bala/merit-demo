@@ -26,6 +26,16 @@ function copyFile(src, dest) {
   fs.copyFileSync(src, dest);
 }
 
+function copyTree(src, dest) {
+  if (!fs.existsSync(src)) return;
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const from = path.join(src, entry.name);
+    const to = path.join(dest, entry.name);
+    if (entry.isDirectory()) copyTree(from, to);
+    else copyFile(from, to);
+  }
+}
+
 function readJson(rel) {
   const p = path.join(root, rel);
   if (!fs.existsSync(p)) return null;
@@ -75,13 +85,14 @@ fs.writeFileSync(path.join(dist, 'config.js'), configBody);
 
 copyFile(path.join(root, 'assets', 'merit-shell.js'), path.join(dist, 'assets', 'merit-shell.js'));
 copyFile(path.join(root, 'assets', 'merit-api.js'), path.join(dist, 'assets', 'merit-api.js'));
+copyFile(path.join(root, 'assets', 'consumer.css'), path.join(dist, 'assets', 'consumer.css'));
 if (fs.existsSync(path.join(root, 'assets', 'merit-surface.css'))) {
   copyFile(path.join(root, 'assets', 'merit-surface.css'), path.join(dist, 'assets', 'merit-surface.css'));
 }
 
 const portalIndex = path.join(root, 'portal', 'index.html');
+copyTree(path.join(root, 'portal'), path.join(dist, 'portal'));
 copyFile(portalIndex, path.join(dist, 'index.html'));
-copyFile(portalIndex, path.join(dist, 'portal', 'index.html'));
 
 for (const slug of ['play', 'journal', 'ama', 'admin', 'diag']) {
   const src = path.join(root, slug, 'index.html');

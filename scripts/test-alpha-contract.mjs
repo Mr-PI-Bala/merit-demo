@@ -18,7 +18,7 @@ for (const [name, page] of [['journal', journal], ['ama', ama]]) {
 if (!api.includes("'X-Merit-Consumer'")) failures.push('API helper: missing X-Merit-Consumer context');
 if (!api.includes("credentials: 'include'")) failures.push('API helper: missing browser credentials');
 if (/li\.innerHTML\s*=/.test(ama)) failures.push('AMA: API data still assigned to li.innerHTML');
-if (!ama.includes('textContent = who') || !ama.includes('createTextNode(` — ${String(q.body')) {
+if (!ama.includes('textContent = who') || !ama.includes('textContent = String(question.body || \'\')')) {
   failures.push('AMA: safe text rendering contract missing');
 }
 

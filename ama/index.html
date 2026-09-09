@@ -3,27 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AMA</title>
+  <title>Ask the community | MERIT Demo</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
+  <link rel="stylesheet" href="/assets/consumer.css">
 </head>
-<body>
+<body class="consumer-page">
   <header id="merit-header"></header>
-  <main>
-    <h1>Ask Me Anything</h1>
-    <p id="tier-hint"></p>
-    <p><a id="upgrade-link" href="#">Upgrade to Plus</a></p>
-    <fieldset>
-      <legend>Leaderboard identity</legend>
-      <label><input type="radio" name="privacy" value="anon-region" checked> Anonymous + region</label>
-      <label><input type="radio" name="privacy" value="handle"> Handle only</label>
-      <label><input type="radio" name="privacy" value="handle-region"> Handle + region</label>
-      <p><input id="handle" type="text" placeholder="Handle (optional)" /></p>
-      <label><input type="checkbox" id="fine-area" /> Show city when geo-IP available (opt-in)</label>
-    </fieldset>
-    <textarea id="question" placeholder="Your question…"></textarea>
-    <p><button id="ask">Ask</button></p>
-    <h2>Leaderboard</h2>
-    <ol id="board"></ol>
+  <main class="consumer-main">
+    <section class="consumer-hero">
+      <p class="consumer-eyebrow">Community questions</p>
+      <h1>Ask something worth answering.</h1>
+      <p class="consumer-kicker">A gentle place to ask, vote, and learn together. Start locally, then connect to the hosted MERIT service when it is available.</p>
+      <div id="ama-status" class="status-panel" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="surface-grid">
+      <article class="surface-card">
+        <p class="consumer-eyebrow">Your question</p>
+        <h2>What is on your mind?</h2>
+        <p id="tier-hint" class="muted-copy"></p>
+        <label class="form-row" for="question">
+          <span>Question</span>
+          <textarea id="question" rows="5" placeholder="Ask a clear, kind question…"></textarea>
+        </label>
+        <fieldset class="privacy-card">
+          <legend>Choose how your name appears</legend>
+          <label><input type="radio" name="privacy" value="anon-region" checked> Anonymous with region</label>
+          <label><input type="radio" name="privacy" value="handle"> Handle only</label>
+          <label><input type="radio" name="privacy" value="handle-region"> Handle with region</label>
+          <label class="form-row" for="handle"><span>Handle (optional)</span><input id="handle" type="text" placeholder="A name for this question"></label>
+          <label><input type="checkbox" id="fine-area"> Show city when geo-IP is available (opt in)</label>
+        </fieldset>
+        <button id="ask" class="primary-button" type="button">Post question</button>
+        <p class="muted-copy"><a id="upgrade-link" class="text-link" href="#">Upgrade to Plus</a> for higher daily limits.</p>
+      </article>
+
+      <article class="surface-card">
+        <p class="consumer-eyebrow">Community board</p>
+        <h2>Questions people are exploring</h2>
+        <p class="muted-copy">Vote for the questions you would most like to hear answered.</p>
+        <p id="ama-empty" class="empty-state" hidden>No questions yet. Post the first one.</p>
+        <ol id="board" class="question-list"></ol>
+      </article>
+    </section>
   </main>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
@@ -31,79 +53,149 @@
   <script src="/assets/merit-api.js"></script>
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
-    const f = cfg.freemium || {};
-    const reg = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
-    const apiRequest = (path, options) => window.MERIT_API.request(path, options);
-    document.getElementById('upgrade-link').href = reg;
+    const freemium = cfg.freemium || {};
+    const consumerId = cfg.consumerId || 'merit-demo';
+    const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
+    const storageKey = `merit-demo:ama:${consumerId}`;
+    const apiRequest = (path, options = {}) => window.MERIT_API.request(path, options);
+    const board = document.getElementById('board');
+    const status = document.getElementById('ama-status');
+    const empty = document.getElementById('ama-empty');
+    const askButton = document.getElementById('ask');
+    const seedQuestions = [
+      { id: 'local-1', body: 'What small habit helped you this week?', handle: 'Community', votes: 2, anonymous_leaderboard: false },
+      { id: 'local-2', body: 'What would you like to hear about next?', handle: 'Community', votes: 1, anonymous_leaderboard: true },
+    ];
+
+    document.getElementById('upgrade-link').href = registerUrl;
     document.getElementById('tier-hint').textContent =
-      `Free: ${f.ama_questions_per_day ?? 2} questions, ${f.ama_votes_per_day ?? 2} votes/day; top ${f.ama_leaderboard_visible ?? 25} shown.`;
+      `Free: ${freemium.ama_questions_per_day ?? 2} questions, ${freemium.ama_votes_per_day ?? 2} votes per day; top ${freemium.ama_leaderboard_visible ?? 25} shown.`;
+
+    function setStatus(message, tone = 'local') {
+      status.textContent = message;
+      status.className = `status-panel ${tone}`;
+    }
+
+    function readLocal() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(storageKey) || 'null');
+        return Array.isArray(parsed) ? parsed : seedQuestions.slice();
+      } catch {
+        return seedQuestions.slice();
+      }
+    }
+
+    function writeLocal(questions) {
+      localStorage.setItem(storageKey, JSON.stringify(questions.slice(0, 100)));
+    }
 
     function privacyPayload() {
       const mode = document.querySelector('input[name="privacy"]:checked')?.value || 'anon-region';
       const handle = document.getElementById('handle').value.trim();
       const showFine = document.getElementById('fine-area').checked;
-      if (mode === 'handle') {
-        return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: false };
-      }
-      if (mode === 'handle-region') {
-        return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: showFine };
-      }
+      if (mode === 'handle') return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: false };
+      if (mode === 'handle-region') return { handle: handle || 'Guest', anonymous_leaderboard: false, show_fine_area: showFine };
       return { anonymous_leaderboard: true, show_fine_area: showFine, handle: null };
     }
 
-    async function loadBoard() {
-      const res = await apiRequest('/api/ama');
-      const data = await res.json();
-      const board = document.getElementById('board');
-      board.innerHTML = '';
-      (data.questions || []).forEach((q) => {
-        const li = document.createElement('li');
-        let who = 'Anon';
-        if (q.anonymous_leaderboard) {
-          who = `Anon (${q.region_geo || q.region_profile || '—'})`;
-        } else {
-          who = q.handle || 'Guest';
-          if (q.region_geo || q.region_profile) who += ` (${q.region_geo || q.region_profile})`;
-        }
-        const strong = document.createElement('strong');
-        strong.textContent = who;
-        const body = document.createTextNode(` — ${String(q.body || '')} `);
+    function render(questions) {
+      board.replaceChildren();
+      empty.hidden = questions.length > 0;
+      questions.forEach((question) => {
+        const item = document.createElement('li');
+        item.className = 'question-card';
+        const who = question.anonymous_leaderboard ? `Anonymous${question.region_geo || question.region_profile ? ` (${question.region_geo || question.region_profile})` : ''}` : `${question.handle || 'Guest'}${question.region_geo || question.region_profile ? ` (${question.region_geo || question.region_profile})` : ''}`;
+        const meta = document.createElement('p');
+        meta.className = 'question-meta';
+        meta.textContent = who;
+        const body = document.createElement('p');
+        body.className = 'question-body';
+        body.textContent = String(question.body || '');
         const vote = document.createElement('button');
         vote.type = 'button';
-        vote.dataset.id = String(q.id || '');
-        vote.textContent = 'Vote';
-        const count = document.createTextNode(` (${Number(q.votes || 0)})`);
-        li.append(strong, body, vote, count);
-        board.appendChild(li);
-      });
-      board.querySelectorAll('button[data-id]').forEach((btn) => {
-        btn.onclick = async () => {
-          const r = await apiRequest('/api/ama', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'vote', question_id: btn.dataset.id }),
-          });
-          if (r.status === 402) { alert('Daily vote limit. Upgrade to Plus.'); return; }
-          loadBoard();
-        };
+        vote.className = 'secondary-button';
+        vote.textContent = `Vote (${Number(question.votes || 0)})`;
+        vote.addEventListener('click', () => voteFor(question, vote));
+        item.append(meta, body, vote);
+        board.appendChild(item);
       });
     }
 
-    document.getElementById('ask').onclick = async () => {
+    async function loadBoard() {
+      try {
+        const response = await apiRequest('/api/ama', { signal: AbortSignal.timeout(8000) });
+        if (!response.ok) throw new Error(`provider ${response.status}`);
+        const data = await response.json();
+        const questions = Array.isArray(data.questions) ? data.questions : [];
+        render(questions);
+        setStatus('Connected to the hosted community board.', 'cloud');
+        return;
+      } catch {
+        const questions = readLocal();
+        writeLocal(questions);
+        render(questions);
+        setStatus('Local demo mode: questions stay in this browser until the provider is available.', 'local');
+      }
+    }
+
+    async function voteFor(question, button) {
+      try {
+        const response = await apiRequest('/api/ama', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'vote', question_id: question.id }),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (response.status === 402) {
+          setStatus('Daily vote limit reached. Upgrade to Plus to keep voting.', 'limit');
+          return;
+        }
+        if (!response.ok) throw new Error(`provider ${response.status}`);
+        await loadBoard();
+      } catch {
+        const questions = readLocal().map((entry) => entry.id === question.id ? { ...entry, votes: Number(entry.votes || 0) + 1 } : entry);
+        writeLocal(questions);
+        render(questions);
+        setStatus('Saved locally. Your vote will remain in this browser.', 'local');
+      }
+      button.blur();
+    }
+
+    askButton.addEventListener('click', async () => {
       const text = document.getElementById('question').value.trim();
-      if (!text) return;
+      if (!text) {
+        setStatus('Write a question before posting it.', 'error');
+        return;
+      }
+      askButton.disabled = true;
       const payload = { text, ...privacyPayload() };
-      const res = await apiRequest('/api/ama', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.status === 402) { alert('Daily AMA limit. Upgrade to Plus.'); return; }
-      if (res.status === 503) { alert('Configure Supabase for cloud AMA.'); return; }
-      if (!res.ok) { alert('Ask failed'); return; }
-      document.getElementById('question').value = '';
-      loadBoard();
-    };
+      try {
+        const response = await apiRequest('/api/ama', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (response.status === 402) {
+          setStatus('Daily AMA limit reached. Upgrade to Plus to ask more.', 'limit');
+          return;
+        }
+        if (!response.ok) throw new Error(`provider ${response.status}`);
+        document.getElementById('question').value = '';
+        await loadBoard();
+      } catch {
+        const questions = readLocal();
+        questions.unshift({ id: `local-${Date.now()}`, body: text, votes: 0, ...privacyPayload() });
+        writeLocal(questions);
+        render(questions);
+        document.getElementById('question').value = '';
+        setStatus('Saved locally. This question will be here when you return on this device.', 'local');
+      } finally {
+        askButton.disabled = false;
+      }
+    });
+
+    render(readLocal());
     loadBoard();
   </script>
 </body>

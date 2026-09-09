@@ -65,9 +65,9 @@ The wrapper owns build, validation, browser checks, whitespace checks, and deplo
 |---|---|---|
 | `meritutils → merit-demo` | **ACCEPT** | pinned `merit_workbench@0.4.14` (+ `merit_ux@0.1.3` shell) load from the production package host; Playwright asserts Hosted Ready + mount |
 | `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
-| `meritstore → merit-demo` | **ACCEPT** | Tenant route `https://merit-prod.vercel.app/store/merit-demo/register` is provisioned and returns 200. |
+| `meritstore → merit-demo` | **OPEN / PROVIDER GATE** | The expected route is retained as the consumer contract, but the deployed provider currently redirects it to `/portal/developers/sku-commerce/`; `scripts/test-alpha-registration.mjs` and Playwright fail closed on that redirect. |
 
-**Decision: ACCEPT** all three provider-consumer edges above for this public reference-consumer baseline.
+**Decision: ACCEPT** the workbench and MeritSubs edges for this public reference-consumer baseline. Registration remains an explicit provider activation blocker for alpha onboarding.
 
 This acceptance covers the public reference-consumer contract. It does not promote the hosted providers beyond their independently declared release stages.
 ## OC tutorial ownership

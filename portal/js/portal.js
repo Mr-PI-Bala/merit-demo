@@ -15,6 +15,7 @@
 
   function render(cfg) {
     cfg = cfg || {};
+    var runtime = window.MERIT_DEMO_CONFIG || {};
     var brand = cfg.brand || {};
     text('brand.name', brand.name);
     text('brand.tagline', brand.tagline);
@@ -24,18 +25,24 @@
 
     var ctas = document.getElementById('portal-ctas');
     (cfg.ctas || []).forEach(function (cta, idx) {
-      ctas.appendChild(link(cta.label, cta.href, idx > 0));
+      var href = cta.href;
+      if (/workbench/i.test(cta.label || '')) href = '/play/';
+      if (/register/i.test(cta.label || '')) href = runtime.meritstoreRegisterUrl || href;
+      ctas.appendChild(link(cta.label, href, idx > 0));
     });
 
     var cards = document.getElementById('provider-cards');
     (cfg.providers || []).forEach(function (provider) {
       var card = document.createElement('article');
       card.className = 'card';
-      card.innerHTML = '<h3></h3><p></p><a></a>';
-      card.querySelector('h3').textContent = provider.name || 'MERIT provider';
-      card.querySelector('p').textContent = provider.summary || '';
-      card.querySelector('a').href = provider.href || cfg.appBaseUrl || '#';
-      card.querySelector('a').textContent = provider.statusPath ? 'Open ' + provider.statusPath : 'Open';
+      var heading = document.createElement('h3');
+      var summary = document.createElement('p');
+      var anchor = document.createElement('a');
+      heading.textContent = provider.name || 'MERIT provider';
+      summary.textContent = provider.summary || '';
+      anchor.href = provider.href || cfg.appBaseUrl || '#';
+      anchor.textContent = provider.statusPath ? 'Open ' + provider.statusPath : 'Open';
+      card.append(heading, summary, anchor);
       cards.appendChild(card);
     });
 
@@ -47,7 +54,7 @@
     });
   }
 
-  fetch('portal.json', { cache: 'no-store' })
+  fetch('/portal/portal.json', { cache: 'no-store' })
     .then(function (res) { return res.json(); })
     .then(render)
     .catch(function () { render({}); });

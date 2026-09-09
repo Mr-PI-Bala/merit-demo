@@ -133,8 +133,18 @@ async function providerCheck() {
   ];
   for (const [url, label, required] of checks) {
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
-      if (!res.ok && required) failures.push(`${label}: HTTP ${res.status}`);
+      const res = await fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(30000) });
+      if (label.includes('hosted register path')) {
+        const expected = new URL(url).pathname;
+        const location = res.headers.get('location');
+        if (res.status >= 300 && res.status < 400) {
+          failures.push(`${label}: redirected to ${location || '(missing location)'}; expected provider to serve ${expected}`);
+        } else if (!res.ok) {
+          failures.push(`${label}: HTTP ${res.status}; expected provider to serve ${expected}`);
+        } else {
+          console.log(`OK provider ${label}`);
+        }
+      } else if (!res.ok && required) failures.push(`${label}: HTTP ${res.status}`);
       else if (!res.ok) console.log(`WARN provider ${label}: HTTP ${res.status}`);
       else console.log(`OK provider ${label}`);
     } catch (error) {

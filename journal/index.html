@@ -3,19 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Journal</title>
+  <title>Journal · MERIT Demo</title>
   <link rel="stylesheet" href="/assets/merit-surface.css">
-  <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/journal/0.2.2/journal.css" integrity="sha384-5yxx9KbJ9X6gcIyv2XdjIbc5GyCn5N0KRHwmWIIWG9mI3Z7+iwu6IwJGqd+Pxdj2" crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/consumer.css">
+  <link rel="stylesheet" href="https://merit-prod.vercel.app/pkg/meritutils/journal/0.2.2/journal.css" integrity="sha384-5yxx9KbJ9X6gcIyv2XdjIbc5GyCnN5KRHwmWIIWG9mI3Z7+iwu6IwJGqd+Pxdj2" crossorigin="anonymous">
 </head>
 <body>
   <header id="merit-header"></header>
-  <main>
-    <h1>Journal</h1>
-    <p id="tier-hint"></p>
-    <textarea id="entry" placeholder="Write an entry…"></textarea>
-    <p><button id="save">Save entry</button></p>
-    <ul id="list"></ul>
-    <div id="journal-par-mount"></div>
+  <main class="consumer-page">
+    <section class="consumer-hero">
+      <div>
+        <p class="consumer-eyebrow">A private pause</p>
+        <h1>Write what is true today.</h1>
+        <p>Keep a small record of what you noticed, learned, or want to carry forward. This reference app stays useful while the hosted service is unavailable and tells you where each entry lives.</p>
+      </div>
+      <div class="consumer-kicker"><strong id="tier-hint">Checking your access…</strong><span>Free entries are metered by the provider. Local demo entries remain on this device.</span></div>
+    </section>
+
+    <div id="journal-status" class="status-panel" data-state="checking" role="status" aria-live="polite"><strong>Checking</strong><span>Connecting to MERIT Journal…</span></div>
+
+    <div class="surface-grid">
+      <section class="surface-card" aria-labelledby="write-heading">
+        <h2 id="write-heading">Write a note</h2>
+        <p>One honest paragraph is enough. You can return to it later.</p>
+        <label for="entry">Your note</label>
+        <textarea id="entry" placeholder="What is on your mind?" maxlength="4000"></textarea>
+        <button id="save" type="button">Save entry</button>
+        <a class="text-link" href="/play/">Back to the workbench</a>
+      </section>
+
+      <section class="surface-card" aria-labelledby="entries-heading">
+        <h2 id="entries-heading">Your notes</h2>
+        <p id="entries-help">Cloud entries appear here when the provider accepts the request.</p>
+        <ul id="list" class="entry-list" aria-describedby="entries-help"></ul>
+        <p id="empty-state" class="empty-state">Your first note will appear here.</p>
+      </section>
+    </div>
   </main>
   <footer id="merit-footer"></footer>
   <script src="/config.js"></script>
@@ -24,50 +47,93 @@
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const apiRequest = (path, options) => window.MERIT_API.request(path, options);
+    const consumerId = String(cfg.consumer_id || 'merit-demo');
+    const localKey = `merit-demo:journal:${consumerId}`;
     const hint = document.getElementById('tier-hint');
+    const status = document.getElementById('journal-status');
+    const list = document.getElementById('list');
+    const empty = document.getElementById('empty-state');
     const cap = cfg.freemium?.journal_entries_per_day ?? 2;
-    hint.textContent = `Free tier: ${cap} entries per day. Plus uncaps via meritstore.`;
+
+    hint.textContent = `Free tier: ${cap} cloud entries per day · Plus removes the daily cap.`;
+
+    function localEntries() {
+      try { return JSON.parse(localStorage.getItem(localKey) || '[]'); } catch { return []; }
+    }
+
+    function setStatus(state, title, message) {
+      status.dataset.state = state;
+      status.innerHTML = '';
+      const strong = document.createElement('strong');
+      strong.textContent = title;
+      const span = document.createElement('span');
+      span.textContent = message;
+      status.append(strong, span);
+    }
+
+    function render(entries) {
+      list.replaceChildren();
+      empty.hidden = entries.length > 0;
+      for (const entry of entries) {
+        const li = document.createElement('li');
+        li.className = 'entry-card';
+        const time = document.createElement('time');
+        time.textContent = entry.local ? 'Saved on this device' : 'Saved to MERIT Journal';
+        const body = document.createElement('div');
+        body.textContent = String(entry.body || '');
+        li.append(time, body);
+        list.append(li);
+      }
+    }
 
     async function load() {
-      const res = await apiRequest('/api/journal');
-      const data = await res.json();
-      const list = document.getElementById('list');
-      list.innerHTML = '';
-      (data.entries || []).forEach((e) => {
-        const li = document.createElement('li');
-        li.textContent = e.body;
-        list.appendChild(li);
-      });
-      if (data.mode === 'local_only') {
-        const local = JSON.parse(localStorage.getItem('merit-demo-journal') || '[]');
-        local.forEach((t) => {
-          const li = document.createElement('li');
-          li.textContent = t + ' (local)';
-          list.appendChild(li);
-        });
+      try {
+        const res = await apiRequest('/api/journal', { signal: AbortSignal.timeout(8000) });
+        if (!res.ok) throw new Error(`Provider returned HTTP ${res.status}`);
+        const data = await res.json();
+        const cloud = (data.entries || []).map((entry) => ({ body: entry.body, created_at: entry.created_at }));
+        render([...cloud, ...localEntries()]);
+        setStatus('cloud', 'Connected', 'Cloud entries are loaded from the MERIT provider.');
+      } catch (error) {
+        render(localEntries());
+        setStatus('local', 'Local demo', `The provider is unavailable (${error.message}). Notes saved now stay on this device.`);
       }
     }
 
     document.getElementById('save').onclick = async () => {
-      const text = document.getElementById('entry').value.trim();
+      const field = document.getElementById('entry');
+      const text = field.value.trim();
       if (!text) return;
-      const res = await apiRequest('/api/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }) });
-      if (res.status === 402) {
-        alert('Daily limit reached. Upgrade to Plus.');
-        return;
+      const button = document.getElementById('save');
+      button.disabled = true;
+      try {
+        const res = await apiRequest('/api/journal', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text }),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (res.status === 402) {
+          setStatus('limit', 'Daily limit reached', 'Upgrade to Plus to continue saving cloud entries. Your note is still in the box.');
+          return;
+        }
+        if (!res.ok) throw new Error(`Provider returned HTTP ${res.status}`);
+        field.value = '';
+        setStatus('cloud', 'Saved', 'Your note was saved to MERIT Journal.');
+        await load();
+      } catch (error) {
+        const entries = localEntries();
+        entries.unshift({ body: text, created_at: new Date().toISOString(), local: true });
+        localStorage.setItem(localKey, JSON.stringify(entries.slice(0, 100)));
+        field.value = '';
+        render(entries);
+        setStatus('local', 'Saved on this device', `Cloud save was unavailable (${error.message}). Nothing was claimed as cloud-saved.`);
+      } finally {
+        button.disabled = false;
       }
-      if (res.status === 503) {
-        const local = JSON.parse(localStorage.getItem('merit-demo-journal') || '[]');
-        local.push(text);
-        localStorage.setItem('merit-demo-journal', JSON.stringify(local.slice(-cap)));
-        document.getElementById('entry').value = '';
-        load();
-        return;
-      }
-      if (!res.ok) { alert('Save failed'); return; }
-      document.getElementById('entry').value = '';
-      load();
     };
+
+    render(localEntries());
     load();
   </script>
   <script type="module" src="https://merit-prod.vercel.app/pkg/meritutils/journal/0.2.2/journal.mjs" integrity="sha384-uN5FVzY4tGN5Z4CtuSNyfe3pZKmC/3Fu5Ht9ArYIFFpPKHzJmOHTlUo9EbWSabwm" crossorigin="anonymous"></script>

@@ -10,7 +10,7 @@
   "ctas": [
     {
       "label": "Open Workbench",
-      "href": "https://merit-demo.vercel.app/play/"
+      "href": "/play/"
     },
     {
       "label": "Register Plus",
@@ -27,13 +27,13 @@
     {
       "name": "Journal",
       "summary": "Local-first journal demo with cloud backup hooks when a subscriber upgrades.",
-      "href": "https://merit-demo.vercel.app/journal/",
+      "href": "/journal/",
       "statusPath": "/journal/"
     },
     {
       "name": "AMA",
       "summary": "Question, voting, and leaderboard demo for community interaction.",
-      "href": "https://merit-demo.vercel.app/ama/",
+      "href": "/ama/",
       "statusPath": "/ama/"
     },
     {

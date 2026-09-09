@@ -34,4 +34,4 @@ Default promo is `MERITAGENT`; affiliate code is `MERITDEMO`. M4FI is intentiona
 
 ## Closeout note
 
-Provider validation completed upstream: meritsubs default promo tests pass and meritstore MERITAGENT hosted intro-credit checkout Playwright passes.
+Provider health, registry, and MeritSubs health pass. Registration remains blocked upstream: the deployed provider redirects the `merit-demo` route to the developer commerce guide, and the consumer tests report that as a failure rather than treating any HTTP 200 destination as registration. A real consumer registration route must be provisioned before alpha onboarding.

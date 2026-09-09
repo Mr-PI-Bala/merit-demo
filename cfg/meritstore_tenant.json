@@ -38,6 +38,6 @@
     "processing_fee_percent": 4,
     "processing_fee_fixed_usd": 0.5
   },
-  "status": "ACCEPT",
-  "notes": "Provisioned on meritstore and verified through https://merit-prod.vercel.app/store/merit-demo/register on 2026-07-13."
+  "status": "PENDING_PROVIDER_ACTIVATION",
+  "notes": "Consumer contract is ready, but the deployed provider currently redirects https://merit-prod.vercel.app/store/merit-demo/register to the developer commerce guide. Do not claim subscriber registration until the provider provisions this consumer route."
 }

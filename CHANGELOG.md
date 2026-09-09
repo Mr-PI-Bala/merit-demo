@@ -1,4 +1,17 @@
-## [0.3.19] — 2026-09-08\n\n### Fixed\n- Make the consumer-owned alpha registration contract test report a normal non-zero result on Windows while allowing fetch cleanup to finish.\n\n# Changelog
+## [0.3.20] — 2026-09-08
+
+### Fixed
+- Ship the portal's CSS, JavaScript, and config with the Vercel build so `/` and `/portal/` render the same branded consumer shell.
+- Make Journal and AMA local-first when provider routes are unavailable, with explicit cloud, local, limit, and error states.
+- Make browser registration checks fail closed when merit-prod redirects the expected consumer route to the developer guide.
+- Record the current `merit-demo` commerce tenant as pending provider activation instead of claiming registration is ready.
+
+## [0.3.19] — 2026-09-08
+
+### Fixed
+- Make the consumer-owned alpha registration contract test report a normal non-zero result on Windows while allowing fetch cleanup to finish.
+
+# Changelog
 
 ## [0.3.17] — 2026-09-08
 

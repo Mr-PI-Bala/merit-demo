@@ -19,6 +19,10 @@ const required = [
   'sql/002_ama_daily_activity.sql',
   '.env.local.example',
   'cfg/meritsubs_consumer.json',
+  'assets/consumer.css',
+  'portal/css/portal.css',
+  'portal/js/portal.js',
+  'portal/portal.json',
 ];
 const missing = required.filter((r) => !fs.existsSync(path.join(root, r)));
 const forbiddenMeteredHandlers = [
@@ -33,6 +37,20 @@ if (forbiddenMeteredHandlers.length) {
 if (missing.length) {
   console.error('verify FAILED:', missing.join(', '));
   process.exit(1);
+}
+const checks = [
+  ['portal/index.html', '/config.js', 'portal must load runtime config'],
+  ['portal/index.html', '/portal/css/portal.css', 'portal must use an absolute deployed stylesheet'],
+  ['portal/index.html', '/portal/js/portal.js', 'portal must use an absolute deployed script'],
+  ['journal/index.html', 'Local demo', 'journal must explain its local fallback'],
+  ['ama/index.html', 'Local demo mode', 'AMA must explain its local fallback'],
+];
+for (const [rel, needle, message] of checks) {
+  const source = fs.readFileSync(path.join(root, rel), 'utf8');
+  if (!source.includes(needle)) {
+    console.error(`verify FAILED: ${message}`);
+    process.exit(1);
+  }
 }
 console.log('verify OK: merit-demo consumer scaffold');
 process.exit(0);
