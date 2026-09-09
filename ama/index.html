@@ -54,7 +54,7 @@
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const freemium = cfg.freemium || {};
-    const consumerId = cfg.consumerId || 'merit-demo';
+    const consumerId = String(cfg.consumer_id || 'merit-demo');
     const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
     const storageKey = `merit-demo:ama:${consumerId}`;
     const apiRequest = (path, options = {}) => window.MERIT_API.request(path, options);

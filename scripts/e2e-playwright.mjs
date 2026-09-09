@@ -15,6 +15,9 @@ const failures = [];
 const routes = [
   { path: '/', label: 'home' },
   { path: '/portal/', label: 'portal' },
+  { path: '/portal/ama/', label: 'portal-ama' },
+  { path: '/portal/journal/', label: 'portal-journal' },
+  { path: '/portal/subs/', label: 'portal-subs' },
   { path: '/play/', label: 'play' },
   { path: '/journal/', label: 'journal' },
   { path: '/ama/', label: 'ama' },
@@ -114,6 +117,13 @@ async function browserCheck(base) {
   } else {
     console.log('OK Register free present');
   }
+  await page.goto(`${base}/portal/subs/`, { waitUntil: 'networkidle' });
+  const registerHref = await page.locator('#register-link').getAttribute('href');
+  if (!registerHref || !registerHref.includes(`/store/${consumerId}/register`)) {
+    failures.push(`Portal subscription CTA: expected /store/${consumerId}/register, got ${registerHref || '(missing)'}`);
+  } else {
+    console.log('OK portal subscription CTA uses consumer registration path');
+  }
   await page.setViewportSize({ width: 390, height: 844 });
   for (const route of ['/portal/', '/play/', '/journal/', '/ama/']) {
     const label = route.replaceAll('/', '') || 'home';
@@ -121,6 +131,30 @@ async function browserCheck(base) {
     await page.screenshot({ path: path.join(evidenceDir, `${label}-mobile.png`), fullPage: true });
     console.log(`OK screenshot ${label}-mobile.png`);
   }
+  const localPage = await browser.newPage({ viewport: { width: 1024, height: 900 } });
+  await localPage.route(/https:\/\/merit-prod\.vercel\.app\/api\//, (route) => route.abort());
+  await localPage.goto(`${base}/journal/`, { waitUntil: 'networkidle' });
+  await localPage.locator('#journal-status[data-state="local"]').waitFor({ timeout: 10000 });
+  await localPage.locator('#entry').fill('A local-first journal check.');
+  await localPage.locator('#save').click();
+  await localPage.getByText('A local-first journal check.').waitFor({ timeout: 10000 });
+  if ((await localPage.locator('#list').textContent()).includes('A local-first journal check.') !== true) {
+    failures.push('Journal local fallback: saved text did not render after provider outage');
+  } else {
+    console.log('OK Journal local fallback save');
+  }
+  await localPage.goto(`${base}/ama/`, { waitUntil: 'networkidle' });
+  await localPage.locator('#ama-status.local').waitFor({ timeout: 10000 });
+  await localPage.locator('#question').fill('A local-first AMA check.');
+  await localPage.locator('#ask').click();
+  await localPage.getByText('A local-first AMA check.').waitFor({ timeout: 10000 });
+  const localAmaText = await localPage.locator('#board').textContent();
+  if (localAmaText.includes('A local-first AMA check.') !== true) {
+    failures.push('AMA local fallback: saved question did not render after provider outage');
+  } else {
+    console.log('OK AMA local fallback post');
+  }
+  await localPage.close();
   await browser.close();
 }
 

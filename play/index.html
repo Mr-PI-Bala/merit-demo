@@ -55,6 +55,8 @@
         portalPath: '/portal/',
       };
       const cfg = window.MERIT_DEMO_CONFIG || {};
+      const appName = (cfg.branding && cfg.branding.product_name) || 'MERIT Demo';
+      document.title = `${appName} · Workbench`;
       const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
       const portalUrl = cfg.portalUrl || EXPECTED.portalPath;
       const expectedVersion = cfg.expectedWorkbenchVersion || EXPECTED.version;
@@ -99,7 +101,7 @@
         }
         const layout = new wb.MeritWorkbenchLayout({
           theme: 'merit-light',
-          gridTitle: 'merit-demo showcase',
+          gridTitle: `${appName} showcase`,
           rows: DEMO_ROWS,
           columns: [
             { id: 'hnd', label: 'Entry' },
@@ -136,7 +138,7 @@
           host: appHost,
           theme: 'gloss-aurora',
           brand: {
-            name: (cfg.branding && cfg.branding.product_name) || 'MERIT Demo',
+            name: appName,
             tagline: 'Hello, meritutils — CompatSet consumer',
           },
           freemium: {

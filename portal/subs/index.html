@@ -1,14 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Subscribe — MERIT Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Membership | MERIT</title>
+  <link rel="stylesheet" href="/css/portal.css">
+  <style>
+    .subpage { max-width: 880px; margin: 0 auto; padding: 5rem 0; }
+    .subpage .panel { margin-top: 2rem; }
+    .subpage .button { display: inline-block; margin-top: 1rem; }
+    .subpage .eyebrow { color: #69f0c2; }
+  </style>
 </head>
 <body>
-  <header><h1>Plus — $10.79/month</h1></header>
-  <p>Less than a coffee per week. Uncapped journal + AMA.</p>
-  <p><a href="https://merit-prod.vercel.app/store/merit-demo/register">Register / upgrade</a></p>
-  <footer><small>MERIT Powered</small></footer>
+  <main class="shell subpage">
+    <nav class="topline"><a href="/">Portal</a><span>MERIT Powered</span></nav>
+    <section class="hero">
+      <p class="eyebrow">Membership</p>
+      <h1>Choose the access that fits.</h1>
+      <p class="lede">Start with the free experience. If your app offers Plus, the MERIT provider handles registration, checkout, entitlement, and return routing.</p>
+      <a id="register-link" class="button" href="/store/register">Register free</a>
+    </section>
+    <section class="panel">
+      <h2>What Plus changes</h2>
+      <p>The reference app uses Plus for higher journal and AMA limits. Forks can change the offering copy and price in their own provider configuration.</p>
+      <p><a href="/">Back to the app portal</a></p>
+    </section>
+  </main>
+  <footer><a href="/legal.html">Legal</a><a href="/terms.html">Terms</a><span>MERIT Powered</span></footer>
+  <script src="/config.js"></script>
+  <script>
+    var cfg = window.MERIT_DEMO_CONFIG || {};
+    var link = document.getElementById('register-link');
+    if (link && cfg.meritstoreRegisterUrl) link.href = cfg.meritstoreRegisterUrl;
+    fetch('/portal.json', { cache: 'no-store' }).then(function (response) { return response.json(); }).then(function (portal) {
+      var cta = (portal.ctas || []).find(function (item) { return /register|join/i.test(item.label || ''); });
+      if (link && cta && cta.href && !cfg.meritstoreRegisterUrl) link.href = cta.href;
+    }).catch(function () {});
+  </script>
 </body>
 </html>

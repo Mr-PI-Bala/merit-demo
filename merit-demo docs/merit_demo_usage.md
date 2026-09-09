@@ -40,6 +40,17 @@ The Hub starts or reuses local HTTP port `3000` and records its server note in t
 
 The demo has separate visitor pages for the home page, play, journal, AMA, legal information, and the marketing portal. The free package and registration links are shared MERIT services; your consumer page remains its own app surface.
 
+### Make a fork
+
+Use this repository as a starting point for a small app of your own:
+
+1. Change the product name, colors, welcome copy, and contact address in `cfg/branding.json`.
+2. Change `consumer_id` and the provider registration URL in `cfg/merit-sync.json` after MERIT activates your app.
+3. Run `.\merit.ps1 verify` and `.\merit.ps1 serve`, then walk through the four visitor routes.
+4. Use **OSS in Cloud** from the Hub for a hosted identity and matching URLs. Do not reuse the reserved `merit-demo` showcase slug for subscriber onboarding.
+
+Journal and AMA show a visible **Connected** state when the provider answers and a **Local demo** state when it does not. Local notes and questions stay in that browser and are never described as cloud-saved. Provider identity, quotas, persistence, registration, and paid access remain outside this public repository.
+
 The local `/portal/` page is the demo’s marketing shell. After **OC** publishes your consumer, **OCV** prints and checks the hosted marketing URL on `merit-prod.vercel.app`.
 
 <a id="publish-and-tour-your-hosted-app"></a>

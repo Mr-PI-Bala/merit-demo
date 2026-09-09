@@ -1,15 +1,16 @@
 {
   "name": "merit-demo",
-  "version": "0.3.20",
+  "version": "0.3.21",
   "description": "MERIT freemium showcase consumer — workbench, journal, AMA, meritsubs",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "verify": "node scripts/build.mjs && node scripts/verify.mjs",
+    "verify": "node scripts/build.mjs && node scripts/verify.mjs && node scripts/test-fork-contract.mjs",
     "e2e": "node scripts/build.mjs && node scripts/e2e-smoke.mjs",
     "e2e:playwright": "node scripts/build.mjs && node scripts/e2e-playwright.mjs",
     "test:alpha-contract": "node scripts/test-alpha-contract.mjs",
+    "test:fork-contract": "node scripts/build.mjs && node scripts/test-fork-contract.mjs",
     "test:alpha-registration": "node scripts/test-alpha-registration.mjs"
   },
   "dependencies": {

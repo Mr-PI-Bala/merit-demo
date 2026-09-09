@@ -16,7 +16,12 @@
   function render(cfg) {
     cfg = cfg || {};
     var runtime = window.MERIT_DEMO_CONFIG || {};
-    var brand = cfg.brand || {};
+    var runtimeBrand = runtime.branding || {};
+    var brand = Object.assign({
+      name: runtimeBrand.product_name ? runtimeBrand.product_name + ' Portal' : '',
+      tagline: runtimeBrand.tagline || '',
+      description: runtimeBrand.description || '',
+    }, runtimeBrand, cfg.brand || {});
     text('brand.name', brand.name);
     text('brand.tagline', brand.tagline);
     text('brand.description', brand.description);
@@ -40,8 +45,17 @@
       var anchor = document.createElement('a');
       heading.textContent = provider.name || 'MERIT provider';
       summary.textContent = provider.summary || '';
-      anchor.href = provider.href || cfg.appBaseUrl || '#';
-      anchor.textContent = provider.statusPath ? 'Open ' + provider.statusPath : 'Open';
+      var href = provider.href || cfg.appBaseUrl || '#';
+      if (/workbench/i.test(provider.name || '')) href = '/play/';
+      if (/journal/i.test(provider.name || '')) href = '/journal/';
+      if (/ama/i.test(provider.name || '')) href = '/ama/';
+      if (/meritsubs|subscription/i.test(provider.name || '')) href = runtime.meritstoreRegisterUrl || href;
+      anchor.href = href;
+      var statusPath = provider.statusPath || '';
+      if (/meritsubs|subscription/i.test(provider.name || '') && runtime.consumer_id) {
+        statusPath = '/store/' + runtime.consumer_id + '/register';
+      }
+      anchor.textContent = statusPath ? 'Open ' + statusPath : 'Open';
       card.append(heading, summary, anchor);
       cards.appendChild(card);
     });
@@ -54,7 +68,7 @@
     });
   }
 
-  fetch('/portal/portal.json', { cache: 'no-store' })
+  fetch('/portal.json', { cache: 'no-store' })
     .then(function (res) { return res.json(); })
     .then(render)
     .catch(function () { render({}); });

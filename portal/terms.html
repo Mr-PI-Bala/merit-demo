@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>MERIT Demo — Subscription Terms</title>
+  <title>Subscription Terms | MERIT</title>
   <style>
     body { font-family: system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; line-height: 1.55; color: #1a1a1a; }
     h1 { font-size: 1.35rem; } h2 { font-size: 1.05rem; margin-top: 1.5rem; }
@@ -13,8 +13,8 @@
   </style>
 </head>
 <body>
-  <h1>MERIT Demo — Subscription Terms</h1>
-  <p>These terms apply to paid <strong>Plus</strong> subscriptions purchased via <a href="https://merit-prod.vercel.app/store/merit-demo/register">MERIT production</a> for consumer <code>merit-demo</code>.</p>
+  <h1><span data-product>MERIT</span> — Subscription Terms</h1>
+  <p>These terms apply to paid <strong>Plus</strong> subscriptions purchased via <a id="register-link" href="/store/register">MERIT production</a> for app <code id="consumer-id">your-app</code>.</p>
   <p><a href="/legal.html">← Legal &amp; Privacy</a></p>
 
   <h2>1. Relationship to open-source license</h2>
@@ -24,18 +24,36 @@
   <p>Default monthly price: <strong>$10.79 USD</strong> (equivalent to $2.49/week, rounded up). Optional prepay: 20% discount for 6 months; 50% discount for annual billing. Approved alternate price points may appear at registration.</p>
 
   <h2>3. Payment processing</h2>
-  <p>Payments are processed by the payment provider configured for the merit-demo meritstore tenant. Processing fees (approximately 4% + $0.50 per transaction) are deducted before operator and platform revenue allocation.</p>
+  <p>Payments are processed by the payment provider configured for this app's MERIT store. Processing fees (approximately 4% + $0.50 per transaction) are deducted before operator and platform revenue allocation.</p>
 
   <h2>4. Cancellation</h2>
   <p>You may cancel per meritstore account settings. Access continues through the paid period unless otherwise stated at checkout.</p>
 
   <h2>5. Identity</h2>
-  <p>meritsubs OAuth links your subscription to the <code>merit-demo</code> consumer namespace on this host. Your subscription does not transfer to other consumer products.</p>
+  <p>meritsubs OAuth links your subscription to this app's namespace on the MERIT host. Your subscription does not transfer to other apps.</p>
 
   <h2>6. Demonstration product</h2>
-  <p>MERIT Demo is a reference showcase. Production operators should publish their own subscription terms using vault templates under <code>templates/legal/</code>.</p>
+  <p>This is a reference showcase. Production operators should publish their own subscription terms using their approved legal templates.</p>
 
   <h2>7. Contact</h2>
   <p>Platform abuse and billing escalation: <a href="mailto:meritlabs@protonmail.com">meritlabs@protonmail.com</a>.</p>
+  <script src="/config.js"></script>
+  <script>
+    (function () {
+      var cfg = window.MERIT_DEMO_CONFIG || {};
+      var product = cfg.branding && cfg.branding.product_name || 'MERIT';
+      document.querySelectorAll('[data-product]').forEach(function (node) { node.textContent = product; });
+      var id = document.getElementById('consumer-id');
+      if (id) id.textContent = cfg.consumer_id || 'your-app';
+      var link = document.getElementById('register-link');
+      if (link && cfg.meritstoreRegisterUrl) link.href = cfg.meritstoreRegisterUrl;
+      fetch('/portal.json', { cache: 'no-store' }).then(function (response) { return response.json(); }).then(function (portal) {
+        var cta = (portal.ctas || []).find(function (item) { return /register|join/i.test(item.label || ''); });
+        if (link && cta && cta.href && !cfg.meritstoreRegisterUrl) link.href = cta.href;
+        var portalProduct = portal.brand && portal.brand.name;
+        if (portalProduct) document.querySelectorAll('[data-product]').forEach(function (node) { node.textContent = portalProduct; });
+      }).catch(function () {});
+    }());
+  </script>
 </body>
 </html>

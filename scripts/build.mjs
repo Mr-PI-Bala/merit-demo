@@ -53,6 +53,7 @@ fs.mkdirSync(dist, { recursive: true });
 
 const branding = readJson('cfg/branding.json') || {};
 const sync = readJson('cfg/merit-sync.json') || {};
+const consumerId = sync.consumer_id || 'merit-demo';
 const limits = readJson('cfg/freemium_limits.json') || {};
 const plus = readJson('cfg/plus_sku.json') || {};
 const pins = readJson('cfg/par_pins.json') || {};
@@ -61,7 +62,7 @@ const meteredBase = (env.MERIT_METERED_API_BASE_URL || sync.metered_api_base || 
 
 const configBody = `window.MERIT_DEMO_CONFIG = ${JSON.stringify(
   {
-    consumer_id: sync.consumer_id || 'merit-demo',
+    consumer_id: consumerId,
     supabaseUrl: url,
     supabaseAnonKey: anon,
     branding,
@@ -92,6 +93,10 @@ if (fs.existsSync(path.join(root, 'assets', 'merit-surface.css'))) {
 
 const portalIndex = path.join(root, 'portal', 'index.html');
 copyTree(path.join(root, 'portal'), path.join(dist, 'portal'));
+// The same portal folder is independently published at a site root (here.now)
+// and served at both / and /portal/ on Vercel. Keep root assets available so
+// one checked portal artifact works in all three placements.
+copyTree(path.join(root, 'portal'), dist);
 copyFile(portalIndex, path.join(dist, 'index.html'));
 
 for (const slug of ['play', 'journal', 'ama', 'admin', 'diag']) {
@@ -107,7 +112,7 @@ if (fs.existsSync(path.join(root, 'portal', 'terms.html'))) {
 }
 
 const diag = {
-  consumer: sync.consumer_id || 'merit-demo',
+  consumer: consumerId,
   version,
   builtAt: new Date().toISOString(),
   surfaces: ['/', '/play/', '/journal/', '/ama/', '/admin/', '/diag/'],
@@ -117,5 +122,5 @@ const diag = {
 fs.mkdirSync(path.join(dist, 'diag'), { recursive: true });
 fs.writeFileSync(path.join(dist, 'diag', 'manifest.json'), `${JSON.stringify(diag, null, 2)}\n`);
 
-console.log('Built dist/ for merit-demo', version);
+console.log(`Built dist/ for ${consumerId}`, version);
 console.log('  Supabase:', url ? 'configured' : '(optional — set in .env.local for cloud AMA/journal)');

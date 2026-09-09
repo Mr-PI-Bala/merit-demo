@@ -1,11 +1,7 @@
 {
   "schema": "merit.portal.v1",
-  "brand": {
-    "name": "MERIT Demo Portal",
-    "tagline": "A clean hello-world consumer for MERIT Agent Skills and MERIT Prod.",
-    "description": "MERIT Demo shows how a public consumer can use the free skills, local-first play surfaces, and production MERIT provider routes without exposing provider internals."
-  },
-  "appBaseUrl": "https://merit-demo.vercel.app",
+  "brand": {},
+  "appBaseUrl": "/",
   "audience": "First-time MERIT users and subscriber operators",
   "ctas": [
     {
@@ -13,7 +9,7 @@
       "href": "/play/"
     },
     {
-      "label": "Register Plus",
+      "label": "Register free",
       "href": "https://merit-prod.vercel.app/store/merit-demo/register"
     }
   ],
@@ -21,7 +17,7 @@
     {
       "name": "Workbench",
       "summary": "Free MERIT play shell using published package pins from MERIT Prod.",
-      "href": "https://merit-demo.vercel.app/play/",
+      "href": "/play/",
       "statusPath": "/play/"
     },
     {
@@ -38,7 +34,7 @@
     },
     {
       "name": "MeritSubs",
-      "summary": "Production subscription and entitlement route for the merit-demo consumer.",
+      "summary": "Production registration, subscription, and entitlement route for this app.",
       "href": "https://merit-prod.vercel.app/store/merit-demo/register",
       "statusPath": "/store/merit-demo/register"
     }
@@ -46,7 +42,7 @@
   "notes": [
     "This repo is the public demo consumer; paid provider code stays behind MERIT Prod.",
     "New users can clone merit-agent-skills, run the CLI, and compare their result with this Portal.",
-    "Use public promo or affiliate codes only; never put secrets in this static folder."
+    "This public app contains no provider secrets; identity, limits, and subscriptions stay on MERIT services."
   ],
   "footer": "MERIT Powered"
 }

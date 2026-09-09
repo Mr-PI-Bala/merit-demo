@@ -1,3 +1,11 @@
+## [0.3.21] — 2026-09-08
+
+### Fixed
+- Make branding, consumer identity, registration paths, and local storage fork from generated configuration instead of keeping reference deployment URLs in the visitor surfaces.
+- Make the portal tree render correctly when served from Vercel `/`, Vercel `/portal/`, or an independently published here.now site rooted at `portal/`.
+- Add styled AMA, Journal, and Membership marketing pages plus dynamic legal and terms links.
+- Add fork-contract and browser outage tests, including local Journal save and AMA post behavior.
+
 ## [0.3.20] — 2026-09-08
 
 ### Fixed

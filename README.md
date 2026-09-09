@@ -2,7 +2,7 @@
 
 Public **MERIT freemium showcase** under Mr-PI-Bala — workbench, journal, AMA, meritsubs, and meritstore. White-label operator branding with **MERIT Powered** footer (SomaTune header/footer shell).
 
-Version: **0.3.20** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
+Version: **0.3.21** — see [`VERSION`](VERSION) / [`CHANGELOG.md`](CHANGELOG.md).
 
 <a id="start-here-choose-your-path"></a>
 <table><tr><td bgcolor="#1f6feb"><strong><big><big>🧭 Start here — choose your path</big></big></strong></td></tr></table>
@@ -94,6 +94,16 @@ Every beginner path follows the same **Start → Make progress → Finish** rhyt
 ### Build on the template
 
 Start with `play/`, `portal/`, and `cfg/par_pins.json`. The tested tool version is already selected; you do not need to manually clone or choose a version of `merit-agent-skills`.
+
+### Make this app yours
+
+The smallest fork changes three files:
+
+1. Open `cfg/branding.json` and change the product name, colors, welcome words, and abuse contact.
+2. Open `cfg/merit-sync.json` and set your own `consumer_id` and the provider URLs supplied by MERIT. Keep the registration URL under your app's provider path.
+3. Run `.\merit.ps1 verify`, then open `.\merit.ps1 serve` and check `/play/`, `/journal/`, `/ama/`, and `/portal/`.
+
+For a hosted app, use the Hub's **OSS in Cloud** action. It creates or reuses your app identity and prints the matching play, registration, and marketing URLs. The reference slug `merit-demo` is reserved as a showcase and is not a live store tenant; a fork must use its own app identity before inviting subscribers. Keep provider activation, identity, limits, and checkout on MERIT services. The fork only owns its branding, copy, and consumer presentation.
 
 ### Deploy your version
 

@@ -1,13 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Journal — MERIT Demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private journal | MERIT</title>
+  <link rel="stylesheet" href="/css/portal.css">
+  <style>
+    .subpage { max-width: 880px; margin: 0 auto; padding: 5rem 0; }
+    .subpage .panel { margin-top: 2rem; }
+    .subpage .button { display: inline-block; margin-top: 1rem; }
+    .subpage .eyebrow { color: #69f0c2; }
+  </style>
 </head>
 <body>
-  <header><h1>Journal</h1></header>
-  <p><a href="https://merit-demo.vercel.app/journal/">Open journal app</a></p>
-  <footer><small>MERIT Powered</small></footer>
+  <main class="shell subpage">
+    <nav class="topline"><a href="/">Portal</a><span>MERIT Powered</span></nav>
+    <section class="hero">
+      <p class="eyebrow">Private journal</p>
+      <h1>Make space for what matters.</h1>
+      <p class="lede">A quiet writing surface for your app. Notes can stay on the device during a local demo or use the hosted journal rail when a subscriber is signed in.</p>
+      <a class="button" href="/journal/">Open the journal app</a>
+    </section>
+    <section class="panel">
+      <h2>Data boundary</h2>
+      <p>Local demo entries are labeled and stored in the browser. Hosted persistence, identity, quotas, and access decisions belong to the MERIT provider.</p>
+      <p><a href="/">Back to the app portal</a></p>
+    </section>
+  </main>
+  <footer><a href="/legal.html">Legal</a><a href="/terms.html">Terms</a><span>MERIT Powered</span></footer>
 </body>
 </html>

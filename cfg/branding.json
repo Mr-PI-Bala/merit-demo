@@ -1,6 +1,8 @@
 {
   "schema": "merit.branding.v1",
   "product_name": "MERIT Demo",
+  "tagline": "A calm, practical place to learn and share.",
+  "description": "A small MERIT app that combines a hosted workbench with local-first journal and community question spaces.",
   "logo_url": "/portal/assets/logo.svg",
   "primary_color": "#1d4ed8",
   "header_style": "somatune_v1",
