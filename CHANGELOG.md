@@ -1,3 +1,8 @@
+## [0.3.23] — 2026-09-08
+
+### Fixed
+- Align the README release banner with VERSION, package metadata, and the tested release tag.
+
 ## [0.3.22] — 2026-09-08
 
 ### Changed
