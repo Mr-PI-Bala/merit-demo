@@ -90,7 +90,7 @@ For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `merit.ps1 e2e -
 |---|---|---|---|---|---|---|---|
 | C-TDD-01 | P0 | FR-013-C | `merit.ps1 verify --path C:\DApps\merit-demo` | Public MERIT scaffold verification passes | CLI output | PASS | — |
 | C-TDD-02 | P0 | FR-011-C | `merit.ps1 closeout --path C:\DApps\merit-demo --validate-only` plus `merit.ps1 e2e --path C:\DApps\merit-demo` | Public closeout passes and implementation smoke checks pass | CLI output | PASS | — |
-| C-TDD-03 | P0 | FR-012-C | `merit.ps1 e2e:playwright --path C:\DApps\merit-demo` with approved browser | Hello provider ready, Hosted Ready state, mounted workbench, and Register link are present | Playwright output/screenshots | FAIL | Local browser surfaces pass, but the required provider registration assertion fails because merit-prod redirects the `merit-demo` route to the developer guide |
+| C-TDD-03 | P0 | FR-012-C | `merit.ps1 e2e:playwright --path C:\DApps\merit-demo` with approved browser | Hello provider ready, Hosted Ready state, mounted workbench, and Register link are present | Playwright output/screenshots | PASS | Live reference tenant is `merit-demo-alpha`; the provider-reserved `merit-demo` alias is not used for subscriber acceptance |
 | C-TDD-04 | P0 | FR-004-C | Compare `cfg/par_pins.json` to loaded artifact URL and SRI | Configured version, URL, and SRI match the published artifact | Config and browser/network evidence | PASS | Update pin and SRI together |
 | C-TDD-05 | P0 | FR-005-C | Block or delay provider initialization | UI leaves Checking and enters labeled Demo Fallback or Runtime Unavailable; no endless spinner | Failure-fixture screenshot/output | OPEN | Add deterministic failure injection and assertions |
 | C-TDD-06 | P0 | FR-006-C | Run with CDN/module/network failure | Offline stub shows reason, retry action, and portal/status link | Failure-fixture evidence | OPEN | Harden fallback state |
@@ -100,6 +100,7 @@ For deployed smoke checks, set `MERIT_CONSUMER_BASE_URL` before `merit.ps1 e2e -
 | C-TDD-10 | P1 | FR-007-C | Inspect every non-ready state | Portal link is available in fallback and unavailable states | State screenshots/DOM assertions | OPEN | Add portal link to all failure states |
 | C-TDD-11 | P2 | FR-013-C | Compare `dist` against source packaging | CSS, portal, config, and runtime assets are present in `dist` | Build manifest | PASS | — |
 | C-TDD-12 | P1 | FR-006-C / FR-ALPHA-004-C | Playwright aborts provider API calls, then saves a Journal note and posts an AMA question | Local fallback labels the outage and preserves the new content in the browser | Playwright output/screenshots | PASS | — |
+| C-TDD-13 | P0 | FR-ALPHA-002-D | `npm run test:alpha-registration:flow` against the configured trial tenant | A disposable free registration returns a provider registration ID and completes the no-payment checkout path with `free: true` and `status: "paid"` | Live-tenant evidence; command output | PASS | Explicit smoke only; creates one synthetic provider trial record |
 
 ## Zone D — merit-prod and here.now cloud plane
 
@@ -164,7 +165,8 @@ The controlling [Gaps to Alpha](MERIT_DEMO_ECOSYSTEM_PLAN.md#gaps-to-alpha) [[IA
 
 | Check | Command | Expected result |
 |---|---|---|
-| Consumer request/rendering contract | `npm run test:alpha-contract` | `merit-demo` context, browser credentials/session forwarding, and safe AMA rendering pass |
+| Consumer request/rendering contract | `npm run test:alpha-contract` | Configured consumer context, browser credentials/session forwarding, and safe AMA rendering pass |
 | Local scaffold and package smoke | `npm run verify` and `npm run e2e` | Build, static routes, pinned package assets and consumer contract pass |
-| Consumer/provider registration contract | `npm run test:alpha-registration` | `merit-demo` must stay on `/store/merit-demo/register`; the provider guide redirect blocks free alpha |
+| Consumer/provider registration contract | `npm run test:alpha-registration` | Configured reference tenant stays on `/store/<consumer_id>/register`; the provider-reserved showcase alias is excluded |
+| Disposable free registration flow | `npm run test:alpha-registration:flow` | Explicitly creates a synthetic free trial record, then verifies provider checkout completes without payment |
 | Fork identity and portal contract | `npm run test:fork-contract` | Generated consumer identity and branding flow into AMA storage, portal links, legal pages, and independent portal assets |

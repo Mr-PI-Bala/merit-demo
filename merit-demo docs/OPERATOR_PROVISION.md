@@ -6,7 +6,7 @@
 >
 > This page is a reference for provisioning services that the hosted OC path normally manages for you. It contains account, environment, migration, and deployment work; skip it unless you have chosen that advanced route.
 
-**Consumer:** `merit-demo` · **Purpose:** optional self-hosted/operator setup
+**Consumer repository:** `merit-demo` · **Live reference tenant:** `merit-demo-alpha` · **Purpose:** optional self-hosted/operator setup
 
 ## Status matrix
 
@@ -27,13 +27,13 @@
 
 ## 1. Supabase (consumer project + auth path)
 
-1. Create a **new** Supabase project for `merit-demo` (not vault SSOT).
+1. Create a **new** Supabase project for your consumer (the checked-in reference tenant is `merit-demo-alpha`; do not reuse it for a fork).
 2. SQL Editor — run in order:
    - `sql/001_merit_demo.sql`
    - `sql/002_ama_daily_activity.sql`
    - Hosted MERIT provider manages subscriber entitlements and usage authority.
 3. Copy `.env.local.example` → `.env.local` with URL + keys.
-4. Vercel project env: same `SUPABASE_*`, `MERIT_CONSUMER_ID=merit-demo`.
+4. Vercel project env: same `SUPABASE_*`, `MERIT_CONSUMER_ID=merit-demo-alpha` for this reference checkout (use your provisioned ID for a fork).
 5. **Seamless auth:** meritsubs OAuth, journal, AMA, leaderboard, and other metered utility calls go to production MERIT Vercel mounts. The public demo repo must not ship local metering or entitlement handlers.
 
 ---
@@ -68,7 +68,7 @@ Seed: `cfg/meritstore_tenant.json` (`status: pending_platform_provision`).
 # Provision merit-demo tenant on meritstore from offerings_seed
 ```
 
-Register URL: `https://merit-prod.vercel.app/store/merit-demo/register`
+Register URL: `https://merit-prod.vercel.app/store/merit-demo-alpha/register` (replace with your provisioned tenant for a fork)
 
 Admin flexible pricing: `/admin/` → saves to `operator_pricing` table; sync offerings to meritstore manually until webhook automation (Phase 3).
 

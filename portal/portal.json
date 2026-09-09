@@ -10,7 +10,7 @@
     },
     {
       "label": "Register free",
-      "href": "https://merit-prod.vercel.app/store/merit-demo/register"
+      "href": "https://merit-prod.vercel.app/store/merit-demo-alpha/register"
     }
   ],
   "providers": [
@@ -35,8 +35,8 @@
     {
       "name": "MeritSubs",
       "summary": "Production registration, subscription, and entitlement route for this app.",
-      "href": "https://merit-prod.vercel.app/store/merit-demo/register",
-      "statusPath": "/store/merit-demo/register"
+      "href": "https://merit-prod.vercel.app/store/merit-demo-alpha/register",
+      "statusPath": "/store/merit-demo-alpha/register"
     }
   ],
   "notes": [

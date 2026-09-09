@@ -1,6 +1,6 @@
 # merit-demo — design
 
-**consumer_id:** `merit-demo`
+**consumer_id:** `merit-demo-alpha` (live reference tenant; repository name remains `merit-demo`)
 **Host:** `{operator}.vercel.app` (Angle-4 operators use their own Vercel scope)
 **Plan SSOT:** [IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md](IAR/MERIT_DEMO_ECOSYSTEM_PLAN.md)
 
@@ -65,9 +65,9 @@ The wrapper owns build, validation, browser checks, whitespace checks, and deplo
 |---|---|---|
 | `meritutils → merit-demo` | **ACCEPT** | pinned `merit_workbench@0.4.14` (+ `merit_ux@0.1.3` shell) load from the production package host; Playwright asserts Hosted Ready + mount |
 | `meritsubs → merit-demo` | **ACCEPT** | External production mount only; `https://merit-prod.vercel.app/api/meritsubs/api/v1/health` passes. No provider source is embedded. |
-| `meritstore → merit-demo` | **OPEN / PROVIDER GATE** | The expected route is retained as the consumer contract, but the deployed provider currently redirects it to `/portal/developers/sku-commerce/`; `scripts/test-alpha-registration.mjs` and Playwright fail closed on that redirect. |
+| `meritstore → merit-demo-alpha` | **ACCEPT** | Provider activation is live; `https://merit-prod.vercel.app/store/merit-demo-alpha/register` returns the app registration page and the consumer contract tests assert the exact final path. |
 
-**Decision: ACCEPT** the workbench and MeritSubs edges for this public reference-consumer baseline. Registration remains an explicit provider activation blocker for alpha onboarding.
+**Decision: ACCEPT** the workbench, MeritSubs, and live registration edges for this public reference-consumer baseline. The provider's `merit-demo` slug remains reserved as a non-commerce showcase alias; forks must provision their own slug.
 
 This acceptance covers the public reference-consumer contract. It does not promote the hosted providers beyond their independently declared release stages.
 ## OC tutorial ownership

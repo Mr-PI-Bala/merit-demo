@@ -1,8 +1,8 @@
 {
   "schema": "meritstore.tenant.v1",
-  "consumer_id": "merit-demo",
+  "consumer_id": "merit-demo-alpha",
   "source_project": "merit-demo",
-  "registration_slug": "merit-demo",
+  "registration_slug": "merit-demo-alpha",
   "offerings_seed": [
     {
       "id": "free",
@@ -38,6 +38,6 @@
     "processing_fee_percent": 4,
     "processing_fee_fixed_usd": 0.5
   },
-  "status": "PENDING_PROVIDER_ACTIVATION",
-  "notes": "Consumer contract is ready, but the deployed provider currently redirects https://merit-prod.vercel.app/store/merit-demo/register to the developer commerce guide. Do not claim subscriber registration until the provider provisions this consumer route."
+  "status": "PROVIDER_ACTIVATED",
+  "notes": "Provider activation verified for https://merit-prod.vercel.app/store/merit-demo-alpha/register. The repository name remains merit-demo; forks must choose their own consumer_id and provider registration URL."
 }

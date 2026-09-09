@@ -36,7 +36,7 @@
       Checking hosted merit_workbench@0.4.14 on pkg-meritutils.vercel.app…
     </p>
     <p>
-      <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo/register">Register free</a>
+      <a id="merit-register-free" href="https://merit-prod.vercel.app/store/merit-demo-alpha/register">Register free</a>
       · <a href="/portal/">Marketing portal</a>
     </p>
   </section>
@@ -57,7 +57,7 @@
       const cfg = window.MERIT_DEMO_CONFIG || {};
       const appName = (cfg.branding && cfg.branding.product_name) || 'MERIT Demo';
       document.title = `${appName} · Workbench`;
-      const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo/register';
+      const registerUrl = cfg.meritstoreRegisterUrl || 'https://merit-prod.vercel.app/store/merit-demo-alpha/register';
       const portalUrl = cfg.portalUrl || EXPECTED.portalPath;
       const expectedVersion = cfg.expectedWorkbenchVersion || EXPECTED.version;
       const helloStatus = document.getElementById('meritutils-hello-status');

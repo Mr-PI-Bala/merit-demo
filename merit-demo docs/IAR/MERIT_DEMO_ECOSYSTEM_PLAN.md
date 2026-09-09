@@ -381,13 +381,13 @@ Ownership remains: **A** = Hub/laptop/optional IDE follow-through; **B** = publi
 | merit-demo | VERSION 0.3.15; HEAD c47c8bf; eight commits after v0.3.15; package.json 0.3.10 | Thin consumer exists; version surfaces and tested release need reconciliation |
 | merit-private-vault | vault-v0.5.56 at 98f3228 | Private operator plane exists; not a required subscriber checkout |
 | Fresh checks | Hub launcher regression suite and demo scaffold verification passed; gateway health, meritsubs health, workbench 0.4.14 JS returned 200 | Infrastructure/scaffold evidence only; no complete registration/payment/browser acceptance test was run |
-| Register free | /store/merit-demo/register resolved to /portal/developers/sku-commerce/ with final 200 | Guidance for store activation, not completed registration; must not pass subscriber acceptance |
+| Register free | /store/merit-demo-alpha/register returns the app registration page; /store/merit-demo/register remains a provider-reserved guide redirect | Live reference tenant passes subscriber-route acceptance; the reserved repository-named alias is not an onboarding tenant |
 | Vault unit checks | Selected tests could not run: available Python lacked pytest | Environment limitation, not a demonstrated test failure or a PASS |
 | Earlier IAR evidence | Previous release, commerce, and browser results exist | Historical evidence does not certify the current selected release |
 
 ### Consumer-owned alpha/provider contract
 
-The consumer-owned contract is [`cfg/alpha_trial_consumer.json`](../../cfg/alpha_trial_consumer.json). It defines only `merit-demo`, its `merit-prod` base, health URL, registration URL, and expected final registration path. Consumer-specific IDs and provider routes stay in this repository; the generic skills distribution has no consumer matrix.
+The consumer-owned contract is [`cfg/alpha_trial_consumer.json`](../../cfg/alpha_trial_consumer.json). It defines the live reference tenant `merit-demo-alpha`, its `merit-prod` base, health URL, registration URL, and expected final registration path. The repository name and provider tenant are intentionally separate: `merit-demo` remains reserved by the provider, while a fork chooses its own consumer-specific ID and route. Consumer-specific IDs and provider routes stay in this repository; the generic skills distribution has no consumer matrix.
 
 `npm run test:alpha-registration` checks provider health, follows the registration URL, and fails on a wrong final route even when the response is HTTP 200. Cross-tenant comparison belongs to the independent `merit-test` consumer/provider evidence, not to the generic skills repo. Generated `oc-*` IDs enter their own consumer contract only after OC activation records the final URLs and provider acceptance.
 
@@ -397,8 +397,8 @@ The consumer-owned contract is [`cfg/alpha_trial_consumer.json`](../../cfg/alpha
 |---|---|---|
 | Shared hosted API request helper | Implemented in `assets/merit-api.js`; journal and AMA send `X-Merit-Consumer`, `credentials: include`, and an available platform session bearer token | `npm run test:alpha-contract`; browser route suite |
 | AMA rendering safety | Implemented with text/DOM nodes for provider question, handle, id and vote data | Alpha contract rejects `li.innerHTML`; browser route suite |
-| Consumer/provider registration contract | Implemented in `cfg/alpha_trial_consumer.json` and `scripts/test-alpha-registration.mjs` | Provider health passes; `merit-demo` correctly FAILS on developer-guide redirect |
-| Registration and provider entitlement | Not implemented in these repos; provider-owned FR remains OPEN | `FR-ALPHA-002-D`, `FR-ALPHA-003-D`, `FR-ALPHA-005-D`; live trial failure is retained as evidence |
+| Consumer/provider registration contract | Implemented in `cfg/alpha_trial_consumer.json` and `scripts/test-alpha-registration.mjs` | Provider health and the live `merit-demo-alpha` registration route pass; the reserved `merit-demo` alias remains intentionally excluded |
+| Registration and provider entitlement | The live reference tenant now has a verified free registration and no-payment checkout flow; identity isolation, recovery, paid entitlement, and cross-tenant tests remain provider-owned | `npm run test:alpha-registration:flow` passes for `merit-demo-alpha`; `FR-ALPHA-002-D` is partially evidenced, while `FR-ALPHA-003-D` and `FR-ALPHA-005-D` remain OPEN |
 
 Source pointers: [demo API calls and fallback](../../journal/index.html), [AMA rendering and calls](../../ama/index.html), [browser gate](../../scripts/e2e-playwright.mjs), [version manifest](../../package.json), [consumer service boundary](../../cfg/meritsubs_consumer.json). Public tooling source: merit-agent-skills README release section, Merit-Hub embedded skillsPin, cfg/compatset.skills.json, scripts/test-hub-launcher.ps1. Review statements are observations or risks; no production exploit, charge, or signup was attempted.
 

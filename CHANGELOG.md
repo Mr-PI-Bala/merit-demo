@@ -1,3 +1,11 @@
+## [0.3.22] — 2026-09-08
+
+### Changed
+- Activated the app-specific provider tenant `merit-demo-alpha` and aligned the consumer/provider contract, registration CTA, diagnostics, and portal publication slugs with that live tenant.
+- Kept the repository name `merit-demo` separate from the provider's reserved showcase slug; forks must set their own `consumer_id` and registration URL.
+- Made alpha contract checks derive identity from consumer configuration instead of asserting a generic hardcoded slug.
+- Kept browser evidence under the repository-owned `merit-demo docs/evidence/` path when a fork changes its provider identity.
+
 ## [0.3.21] — 2026-09-08
 
 ### Fixed

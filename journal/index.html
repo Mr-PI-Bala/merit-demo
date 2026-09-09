@@ -47,7 +47,7 @@
   <script type="module">
     const cfg = window.MERIT_DEMO_CONFIG || {};
     const apiRequest = (path, options) => window.MERIT_API.request(path, options);
-    const consumerId = String(cfg.consumer_id || 'merit-demo');
+    const consumerId = String(cfg.consumer_id || 'merit-demo-alpha');
     const localKey = `merit-demo:journal:${consumerId}`;
     const hint = document.getElementById('tier-hint');
     const status = document.getElementById('journal-status');

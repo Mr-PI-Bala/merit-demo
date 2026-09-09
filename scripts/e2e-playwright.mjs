@@ -10,7 +10,7 @@ const serveRoot = process.env.MERIT_E2E_ROOT
   : path.join(root, 'dist');
 const sync = JSON.parse(fs.readFileSync(path.join(root, 'cfg/merit-sync.json'), 'utf8').replace(/^\uFEFF/, ''));
 const consumerId = sync.consumer_id;
-const evidenceDir = path.join(root, `${consumerId} docs`, 'evidence');
+const evidenceDir = path.join(root, 'merit-demo docs', 'evidence');
 const failures = [];
 const routes = [
   { path: '/', label: 'home' },

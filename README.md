@@ -103,7 +103,7 @@ The smallest fork changes three files:
 2. Open `cfg/merit-sync.json` and set your own `consumer_id` and the provider URLs supplied by MERIT. Keep the registration URL under your app's provider path.
 3. Run `.\merit.ps1 verify`, then open `.\merit.ps1 serve` and check `/play/`, `/journal/`, `/ama/`, and `/portal/`.
 
-For a hosted app, use the Hub's **OSS in Cloud** action. It creates or reuses your app identity and prints the matching play, registration, and marketing URLs. The reference slug `merit-demo` is reserved as a showcase and is not a live store tenant; a fork must use its own app identity before inviting subscribers. Keep provider activation, identity, limits, and checkout on MERIT services. The fork only owns its branding, copy, and consumer presentation.
+For a hosted app, use the Hub's **OSS in Cloud** action. This checkout uses the live reference tenant `merit-demo-alpha`; the repository slug `merit-demo` is reserved as a provider showcase alias. The Hub creates or reuses your app identity and prints the matching play, registration, and marketing URLs. A fork must use its own app identity before inviting subscribers. Keep provider activation, identity, limits, and checkout on MERIT services. The fork only owns its branding, copy, and consumer presentation.
 
 ### Deploy your version
 

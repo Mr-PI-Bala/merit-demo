@@ -2,7 +2,7 @@
  * entitlements, quotas, and tenant isolation. */
 (function meritApi() {
   const cfg = window.MERIT_DEMO_CONFIG || {};
-  const consumerId = String(cfg.consumer_id || 'merit-demo');
+  const consumerId = String(cfg.consumer_id || 'merit-demo-alpha');
   const apiBase = String(cfg.meteredApiBase || 'https://merit-prod.vercel.app').replace(/\/$/, '');
 
   function sessionToken() {

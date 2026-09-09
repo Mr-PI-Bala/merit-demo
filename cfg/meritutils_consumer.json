@@ -1,6 +1,6 @@
 {
   "schema": "meritutils.consumer.v1",
-  "consumer_id": "merit-demo",
+  "consumer_id": "merit-demo-alpha",
   "provider_id": "meritutils",
   "promocode_default": "MERITAGENT",
   "affiliate_code": "MERITDEMO",

@@ -21,7 +21,7 @@ if (!generated.includes(String(branding.product_name))) {
   failures.push('generated config.js does not carry cfg/branding.json product_name');
 }
 const ama = read('ama/index.html');
-if (!ama.includes("cfg.consumer_id || 'merit-demo'")) failures.push('AMA local storage must use generated consumer_id');
+if (!ama.includes("cfg.consumer_id || 'merit-demo-alpha'")) failures.push('AMA local storage must use generated consumer_id');
 const portal = read('portal/js/portal.js');
 if (!portal.includes('runtimeBrand') || !portal.includes('runtime.meritstoreRegisterUrl')) {
   failures.push('portal must derive brand and registration links from generated runtime config');

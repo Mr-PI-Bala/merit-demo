@@ -1,8 +1,8 @@
-# merit-demo SOTU - 2026-09-05
+# merit-demo SOTU - 2026-09-08
 
 ## Executive status
 
-merit-demo remains the static showcase consumer for the meritutils provider lane. **Pass 1 (2026-09-05):** `/play/` DualRail `createAppShell` + pinned `merit_workbench@0.4.14` mount reports **Hosted Ready** (or labeled offline stub). It is still not a billing/entitlement/provider authority.
+merit-demo remains the public reference consumer for the meritutils provider lane. The checked-in live tenant is `merit-demo-alpha`; the repository slug `merit-demo` remains reserved by the provider as a showcase alias. **Pass 1 (2026-09-05):** `/play/` DualRail `createAppShell` + pinned `merit_workbench@0.4.14` mount reports **Hosted Ready** (or labeled offline stub). It is still not a billing/entitlement/provider authority.
 
 ## 2026-07-11 production metered-mount boundary
 
@@ -34,4 +34,4 @@ Default promo is `MERITAGENT`; affiliate code is `MERITDEMO`. M4FI is intentiona
 
 ## Closeout note
 
-Provider health, registry, and MeritSubs health pass. Registration remains blocked upstream: the deployed provider redirects the `merit-demo` route to the developer commerce guide, and the consumer tests report that as a failure rather than treating any HTTP 200 destination as registration. A real consumer registration route must be provisioned before alpha onboarding.
+Provider health, registry, MeritSubs health, and the app-specific registration route pass for `merit-demo-alpha`. The reserved `merit-demo` alias still redirects to the developer commerce guide by provider policy; the consumer contract and fork instructions therefore use the live app tenant and require every fork to provision a distinct slug.

@@ -1,6 +1,6 @@
 {
   "schema": "meritsubs.consumer.v1",
-  "consumer_id": "merit-demo",
+  "consumer_id": "merit-demo-alpha",
   "mount_prefix": "external_production_mount",
   "public_base_url": "https://merit-prod.vercel.app/api/meritsubs",
   "embed_status": "production_mount_reference_only",

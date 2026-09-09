@@ -53,7 +53,7 @@ fs.mkdirSync(dist, { recursive: true });
 
 const branding = readJson('cfg/branding.json') || {};
 const sync = readJson('cfg/merit-sync.json') || {};
-const consumerId = sync.consumer_id || 'merit-demo';
+const consumerId = sync.consumer_id || 'merit-demo-alpha';
 const limits = readJson('cfg/freemium_limits.json') || {};
 const plus = readJson('cfg/plus_sku.json') || {};
 const pins = readJson('cfg/par_pins.json') || {};
