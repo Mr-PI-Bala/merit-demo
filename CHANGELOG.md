@@ -1,3 +1,9 @@
+## [0.3.28] — 2026-09-09
+
+### Fixed
+- Refresh the IAR SOTU with the current canonical `merit-prod.vercel.app` deployment evidence and explicitly keep vMERIT/V01 status separate.
+- Correct the stale MeritSubs health claim; canonical gateway health is currently blocked by HTTP 404.
+
 ## [0.3.27] — 2026-09-09
 
 ### Added

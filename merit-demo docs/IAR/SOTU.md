@@ -1,4 +1,26 @@
-# merit-demo SOTU - 2026-09-08
+# merit-demo SOTU - 2026-09-09
+
+## Current live status — canonical merit-prod plane
+
+**Consumer release:** `v0.3.28`
+**Consumer ID:** `merit-demo-alpha`
+**Provider:** `https://merit-prod.vercel.app`
+
+| Gate | Current result | Evidence |
+|---|---|---|
+| Consumer verification | PASS | `npm run verify` passes for the released checkout. |
+| Provider health | PASS, HTTP 200 | `GET /api/health` reports the canonical MERIT gateway. |
+| Registration | PASS, HTTP 200 | `/store/merit-demo-alpha/register` resolves to the expected page. |
+| MeritSubs gateway health | BLOCKED, HTTP 404 | `/api/gw/meritsubs/api/v1/health` is not deployed on canonical production. |
+| Member session/onboarding | BLOCKED | The consumer test stops at gateway health and will not claim a session-ready result. |
+
+### Release decision
+
+`merit-demo` is **not subscriber-alpha ready**. The consumer shell and registration edge work, but the canonical provider gateway route is missing. The provider owner must deploy the gateway route, then prove onboarding, token issuance, consumer isolation, and the member browser pathway before alpha invitations.
+
+This SOTU covers only `merit-demo` → `merit-prod.vercel.app`. V01/vMERIT testing belongs to the separate `merit-vdemo` plane and is not a readiness signal for this consumer.
+
+The detailed command output and screenshots are in [ALPHA-2026-09-09.md](evidence/ALPHA-2026-09-09.md).
 
 ## Executive status
 
