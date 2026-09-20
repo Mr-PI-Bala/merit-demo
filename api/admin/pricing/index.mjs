@@ -9,15 +9,21 @@ function readJson(rel) {
   return JSON.parse(fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, ''));
 }
 
+function authorized(req) {
+  const expected = process.env.MERITDEMO_ADMIN_KEY || '';
+  const auth = req.headers.authorization || '';
+  return Boolean(expected && auth.startsWith('Bearer ') && auth.slice(7) === expected);
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.status(204).end();
 
-  const consumerId = process.env.MERIT_CONSUMER_ID || 'merit-demo-alpha';
-  const gate = process.env.OPERATOR_GATE_HASH_SLOT_1 || '';
+  if (!authorized(req)) return res.status(401).json({ error: 'admin_auth_required' });
 
+  const consumerId = process.env.MERIT_CONSUMER_ID || 'merit-demo-alpha';
   if (req.method === 'GET') {
     const plus = readJson('cfg/plus_sku.json');
     const tenant = readJson('cfg/meritstore_tenant.json');

@@ -5,6 +5,7 @@
   "framework": null,
   "rewrites": [
     { "source": "/api/admin/pricing", "destination": "/api/admin/pricing" },
+    { "source": "/api/admin/ui", "destination": "/api/admin/ui" },
     { "source": "/legal/terms", "destination": "/legal/terms.html" },
     { "source": "/play", "destination": "/play/index.html" },
     { "source": "/play/", "destination": "/play/index.html" },

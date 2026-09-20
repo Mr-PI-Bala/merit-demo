@@ -1,3 +1,9 @@
+## [0.3.29] — 2026-09-20
+
+### Security
+- Protect the admin page and pricing API behind the dedicated `MERITDEMO_ADMIN_KEY`; unauthenticated visitors receive only a generic key-required shell.
+- Keep the authenticated pricing workbench out of the public static admin page and disable caching on its server response.
+
 ## [0.3.28] — 2026-09-09
 
 ### Fixed
