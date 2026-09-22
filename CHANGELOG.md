@@ -1,3 +1,14 @@
+## [0.3.31] — 2026-09-22
+
+### Maintenance
+- closeout: preserve the current V01 provider configuration and diagnostics manifest.
+
+## [0.3.30] — 2026-09-20
+
+### V01 provider cutover
+
+- Pointed active provider, commerce, health, and metering configuration at V01 hosts.
+
 ## [0.3.29] — 2026-09-20
 
 ### Security

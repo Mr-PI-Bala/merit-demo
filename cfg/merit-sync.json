@@ -1,10 +1,10 @@
 ﻿{
   "schema": "merit.merit_sync.v1",
   "consumer_id": "merit-demo-alpha",
-  "metered_api_base": "https://merit-prod.vercel.app",
+  "metered_api_base": "https://merit-prodv01.vercel.app",
   "gateway_api_prefix": "/api/gw",
-  "meritsubs_base": "https://merit-prod.vercel.app/api/meritsubs",
-  "meritstore_register_url": "https://merit-prod.vercel.app/store/merit-demo-alpha/register",
+  "meritsubs_base": "https://merit-prodv01.vercel.app/api/meritsubs",
+  "meritstore_register_url": "https://merit-prodv01.vercel.app/store/merit-demo-alpha/register",
   "freemium_limits": "cfg/freemium_limits.json",
   "plus_sku": "cfg/plus_sku.json"
 }

@@ -2,10 +2,16 @@
   "schemaVersion": 1,
   "status": "validated",
   "target": "C:\\DApps\\merit-demo",
-  "validatedAt": "2026-09-08T21:32:26.4922676-07:00",
-  "gitHead": "d5f2825",
+  "validatedAt": "2026-09-22T16:08:17.8842702-07:00",
+  "gitHead": "37b34be",
   "gitStatus": [
-    "?? \"merit-demo docs/IAR/evidence/\""
+    " M CHANGELOG.md",
+    " M VERSION",
+    " M assets/merit-api.js",
+    " M cfg/alpha_trial_consumer.json",
+    " M cfg/merit-sync.json",
+    " M diag/manifest.json",
+    " M \"merit-demo docs/IAR/evidence/closeout-validation.json\""
   ],
   "lawContractId": "MERIT-CLOSEOUT-1",
   "lawContractVersion": 1,

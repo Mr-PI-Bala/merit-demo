@@ -3,7 +3,7 @@
 (function meritApi() {
   const cfg = window.MERIT_DEMO_CONFIG || {};
   const consumerId = String(cfg.consumer_id || 'merit-demo-alpha');
-  const apiBase = String(cfg.meteredApiBase || 'https://merit-prod.vercel.app').replace(/\/$/, '');
+  const apiBase = String(cfg.meteredApiBase || 'https://merit-prodv01.vercel.app').replace(/\/$/, '');
   const gatewayPrefix = String(cfg.gatewayApiPrefix || '/api/gw').replace(/\/$/, '');
   const sessionKey = `merit-demo:session:${consumerId}`;
 
